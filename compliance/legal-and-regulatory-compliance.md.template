@@ -1,0 +1,105 @@
+<!--
+TEMPLATE: This is the "compliance obligations register" — the documented way [COMPANY] knows
+which laws, regulations, and contractual requirements apply to it and how each is met. For a
+healthcare SaaS handling PHI the anchors are HIPAA/HITECH and the state breach laws of every
+state where patients/customers reside (these vary and often exceed HIPAA). HAVE COUNSEL maintain
+the actual obligation list — this template gives the structure and a starter set. Keep the
+register current as you enter new states/markets or as regulations change.
+-->
+
+# Legal & Regulatory Compliance
+
+| Field | Value |
+|---|---|
+| Document ID | POL-CMP-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Compliance Lead / Security Officer] |
+| Approver | [CEO / General Counsel] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce, in-scope systems, and the ISMS |
+
+> **Status:** [DRAFT — requires legal review before approval. Counsel maintains the obligation register.]
+
+---
+
+## 1. Purpose
+This policy establishes how [COMPANY] identifies, tracks, and meets its applicable legal, regulatory, statutory, and contractual obligations, and maintains a register of those obligations with the controls and evidence that satisfy them. As a healthcare SaaS handling PHI, this is essential to maintaining HIPAA/HITECH compliance, honoring state breach-notification laws, and demonstrating compliance to regulators, customers, and assessors.
+
+## 2. Scope
+Applies to all obligations arising from law, regulation, and contract that bear on the security and privacy of information within the ISMS scope (`../governance/isms-scope-statement.md.template`), across all in-scope systems ([AWS], [Snowflake], [GitHub]) and all workforce members and contractors.
+
+## 3. Policy
+1. [COMPANY] **shall** maintain a compliance obligations register identifying each applicable law, regulation, and material contractual requirement, the obligations it imposes, the responsible owner, and how it is met.
+2. The register **shall** be reviewed and updated at least [annually] and upon any change in law, market/jurisdiction entered, or material contract.
+3. Each obligation **shall** be mapped to the policy/control and evidence that satisfies it, and gaps **shall** be tracked as corrective actions (`../governance/corrective-action-poam.md.template`).
+4. Legal counsel **shall** be engaged to confirm applicability and interpretation, particularly for state breach-notification laws and contractual notification clauses.
+5. PHI-related obligations (HIPAA Privacy, Security, and Breach Notification Rules) **shall** be treated as mandatory and **non-waivable** via the exceptions process.
+6. Changes to obligations **shall** be communicated to affected owners and reflected in the relevant policies and the Statement of Applicability.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Compliance Lead / Security Officer] | Owns the register; coordinates updates; maps obligations to controls. |
+| [Privacy Officer] | Owns HIPAA privacy and breach obligations. |
+| [Legal / General Counsel] | Confirms applicability; monitors regulatory change; interprets obligations. |
+| Obligation Owners | Maintain the controls/evidence satisfying assigned obligations. |
+| [CEO / Board] | Accountable for the organization's compliance posture. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Identifying Applicable Requirements
+Applicable requirements are identified from: the nature of [COMPANY]'s business (handling PHI as a [Business Associate / Covered Entity]); the jurisdictions of its customers and the patients/individuals whose data it processes; the [AWS]/[Snowflake]/[GitHub] subservice relationships; and customer contracts and Business Associate Agreements. New markets, products, or data types trigger a reassessment with counsel.
+
+## 6. Compliance Obligations Register
+<!-- TEMPLATE: Counsel maintains the authoritative list. Rows below are a STARTER set; expand for
+every state where you have patients/customers and for sectoral/contractual obligations. -->
+
+| Ref | Law / Regulation / Contract | Jurisdiction | Key Obligations | Owner | Satisfied By (policy / control) | Status |
+|---|---|---|---|---|---|---|
+| LR-01 | HIPAA Privacy Rule (45 CFR 164.500–534) | US Federal | Permitted uses/disclosures, minimum necessary, individual rights, NPP | [Privacy Officer] | `../healthcare/notice-of-privacy-practices.md.template`; `../healthcare/individual-rights-procedure.md.template` | [Implemented] |
+| LR-02 | HIPAA Security Rule (45 CFR 164.302–318) | US Federal | Administrative, physical, technical safeguards for ePHI | [Security Officer] | `../governance/information-security-policy.md.template`; access/encryption policies | [Implemented] |
+| LR-03 | HIPAA Breach Notification Rule (45 CFR 164.400–414) | US Federal | Breach risk assessment and notification timelines | [Privacy Officer] | `../healthcare/hipaa-breach-notification-procedure.md.template` | [Implemented] |
+| LR-04 | HITECH Act | US Federal | BA direct liability; breach provisions; enforcement | [Privacy Officer] | BAAs; breach procedure; `../vendor/third-party-risk-management-policy.md.template` | [Implemented] |
+| LR-05 | State breach-notification laws | [Each state where individuals reside] | Often shorter deadlines; AG/credit-bureau notice; broader data scope | [Legal] | Breach procedure §8 state overlays | [In Progress] |
+| LR-06 | [State privacy law — e.g. CCPA/CPRA, etc.] | [State] | [Consumer rights; may exempt PHI/HIPAA-covered data] | [Legal] | [Privacy policies] | [Assess] |
+| LR-07 | Business Associate Agreements (customer BAAs) | Contractual | Safeguards, breach notice timelines, subcontractor flow-down | [Legal] | BAAs; `../vendor/third-party-risk-management-policy.md.template` | [Implemented] |
+| LR-08 | Customer security/contractual commitments | Contractual | Security obligations in MSAs/DPAs | [Legal] | Relevant policies; SoA | [Track] |
+| LR-[NN] | [Law / regulation / contract] | [Jurisdiction] | [Obligations] | [Owner] | [Policy/control] | [Status] |
+
+## 7. Monitoring Regulatory Change
+[COMPANY] **shall** monitor for changes to applicable laws and regulations through [counsel, regulatory alerts, industry associations]. Identified changes are assessed for impact, the register updated, and any required control changes tracked as corrective actions and reviewed at management review.
+
+## 8. Exceptions
+Compliance obligations imposed by law, regulation, or binding contract are **not** waivable through the exceptions process (`../governance/exceptions-and-waivers.md.template`). Internal implementation choices may use exceptions, but the underlying legal obligation must still be met.
+
+## 9. Compliance, Monitoring & Enforcement
+The register's completeness and currency are verified at internal audit and management review. Obligation owners are accountable for maintaining satisfying controls and evidence. Noncompliance is escalated to [General Counsel] and leadership; workforce conduct issues are handled per `../people/hr-security-policy.md.template`.
+
+## 10. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 06.a Compliance with Legal Requirements; 06.c Regulation of Cryptographic Controls; 13 Privacy |
+| HIPAA | 164.306; 164.316; Privacy/Security/Breach Rules; HITECH |
+| SOC 2 (TSC) | CC2.x, CC3.x; P-series (Privacy) |
+| ISO 27001:2022 | A.5.31 Legal, statutory, regulatory and contractual requirements; A.5.34 Privacy/PII |
+
+## 11. Related Documents
+- `../governance/information-security-policy.md.template`
+- `../governance/isms-scope-statement.md.template`
+- `../governance/statement-of-applicability.md.template`
+- `../governance/corrective-action-poam.md.template`
+- `../governance/management-review.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+- `../healthcare/notice-of-privacy-practices.md.template`
+- `../vendor/third-party-risk-management-policy.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft (pending legal review) |

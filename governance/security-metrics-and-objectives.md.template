@@ -1,0 +1,109 @@
+<!--
+TEMPLATE: Objectives are the "what we're trying to achieve"; metrics/KPIs are how you know
+you're getting there. HITRUST and ISO 27001 (Clause 6.2 / 9.1) both expect measurable
+objectives and a defined approach to monitoring and measurement. Keep targets realistic and
+sourced from systems you actually run (AWS, Snowflake, GitHub, your scanner, your LMS). The
+example metrics below are a starter set — keep the SLA numbers as [PLACEHOLDERS] so each
+adopter sets thresholds appropriate to their risk appetite.
+-->
+
+# Security Metrics & Objectives
+
+| Field | Value |
+|---|---|
+| Document ID | POL-GOV-06 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CEO / Board] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | The ISMS and all control owners |
+
+> **Status:** [DRAFT until approved. Targets must be set by leadership to reflect risk appetite.]
+
+---
+
+## 1. Purpose
+This document defines [COMPANY]'s information security objectives and the key performance indicators (KPIs) and metrics used to measure whether those objectives are being met. It satisfies the requirement to set measurable security objectives and to monitor, measure, analyze, and evaluate ISMS performance, and it provides the quantitative inputs to the Security Steering Committee and management review.
+
+## 2. Scope
+Applies to all in-scope systems, controls, and control owners per `isms-scope-statement.md.template`. Metrics are drawn from authoritative sources including [AWS] monitoring/Security Hub, [Snowflake] access and query logs, [GitHub] CI/CD and dependency scanning, the vulnerability scanner, the learning management system, and the ticketing/POA&M system.
+
+## 3. Policy
+1. [COMPANY] **shall** maintain measurable security objectives aligned to the apex Information Security Policy and the risk profile.
+2. Each objective **shall** have one or more defined metrics with a source, owner, measurement frequency, and target.
+3. Metrics **shall** be collected on the defined cadence and reported to the Security Steering Committee and management review.
+4. Metrics consistently missing target **shall** trigger corrective action per `corrective-action-poam.md.template`.
+5. Objectives and targets **shall** be reviewed at least annually and adjusted as risk and maturity evolve.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns the objectives and metrics program; reports results. |
+| Metric / Control Owners | Produce accurate metric data on schedule. |
+| Security Steering Committee | Reviews trends; directs corrective action. |
+| [CEO / Board] | Sets risk appetite and approves objectives. |
+
+See `roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Security Objectives
+<!-- TEMPLATE: 4-8 high-level objectives. Each should be measurable via the KPIs in section 6. -->
+1. Protect the confidentiality, integrity, and availability of PHI and in-scope data.
+2. Achieve and maintain HITRUST certification and HIPAA compliance.
+3. Remediate vulnerabilities and misconfigurations within risk-based SLAs.
+4. Ensure all workforce members are trained and access is appropriately governed.
+5. Detect and respond to security incidents quickly and effectively.
+6. Continually improve the ISMS based on measurement and review.
+
+## 6. Key Metrics / KPIs
+<!-- TEMPLATE: These are EXAMPLE metrics with placeholder targets. Add/remove to fit. -->
+
+| Metric | Definition | Source | Frequency | Target |
+|---|---|---|---|---|
+| Patch / remediation SLA adherence | % of vulnerabilities remediated within SLA by severity | [Scanner / AWS Inspector / GitHub Dependabot] | Monthly | ≥ [95]% |
+| Vulnerability aging | # and age of open vulns past SLA by severity | [Scanner / Security Hub] | Monthly | [0] critical past SLA |
+| Security awareness training completion | % of workforce completing required training on time | [LMS] | Quarterly | ≥ [98]% |
+| Incident MTTR | Mean time to resolve security incidents by severity | [Ticketing / IR records] | Per incident / Monthly | ≤ [X] hrs (Sev-1) |
+| Incident MTTD | Mean time to detect security incidents | [SIEM / monitoring] | Monthly | ≤ [X] hrs |
+| Access recertification completion | % of in-scope access reviews completed on schedule | [Access review tooling] | Quarterly | [100]% |
+| Privileged access coverage | % of privileged accounts with MFA and JIT/just-in-time | [AWS IAM / IdP] | Monthly | [100]% |
+| Phishing simulation failure rate | % of workforce failing simulated phishing | [Awareness platform] | Quarterly | ≤ [X]% |
+| Backup / restore test success | % of scheduled restore tests passing | [Backup tooling] | Quarterly | [100]% |
+| Change failure / unauthorized change rate | % of changes that are unauthorized or cause incidents | [GitHub / change records] | Monthly | ≤ [X]% |
+| POA&M on-time closure | % of corrective actions closed by due date | [POA&M register] | Monthly | ≥ [90]% |
+| Vendor reassessment currency | % of critical vendors reassessed within cycle | [Vendor register] | Quarterly | [100]% |
+
+## 7. Reporting & Review
+Metrics are compiled into a dashboard/scorecard and reported to the Security Steering Committee at each meeting (`security-steering-committee-charter.md.template`) and summarized at management review (`management-review.md.template`). Trends, not just point values, are evaluated. Sustained underperformance is escalated and tracked as corrective action.
+
+## 8. Exceptions
+A temporary deviation from a target (e.g., a known backlog with a remediation plan) may be documented as an exception per `exceptions-and-waivers.md.template`, time-bound and approved by the [Security Officer].
+
+## 9. Compliance, Monitoring & Enforcement
+The integrity of metric data is subject to internal audit. Metric owners are accountable for timely, accurate reporting; failure to report is an ISMS deficiency. Disciplinary matters follow `../people/hr-security-policy.md.template`.
+
+## 10. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 00 Information Security Management Program; performance measurement |
+| HIPAA | 164.308(a)(1)(ii)(D) Information System Activity Review; 164.308(a)(8) Evaluation |
+| SOC 2 (TSC) | CC4.1, CC4.2 (Monitoring) |
+| ISO 27001:2022 | Clause 6.2 Objectives; Clause 9.1 Monitoring, measurement, analysis, evaluation |
+
+## 11. Related Documents
+- `information-security-policy.md.template`
+- `security-steering-committee-charter.md.template`
+- `management-review.md.template`
+- `corrective-action-poam.md.template`
+- `../risk/risk-management-methodology.md.template`
+- `../operations/vulnerability-and-patch-management.md.template`
+- `../people/security-awareness-training-policy.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

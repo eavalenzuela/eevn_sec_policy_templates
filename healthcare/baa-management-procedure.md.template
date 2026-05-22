@@ -1,0 +1,106 @@
+<!--
+TEMPLATE: This procedure governs Business Associate Agreement (BAA) lifecycle management.
+A BAA is required (45 CFR §§ 164.502(e), 164.308(b), 164.314(a)) whenever a third party
+creates, receives, maintains, or transmits PHI on [COMPANY]'s behalf — and when [COMPANY]
+is itself a BA, with its subcontractors (flow-down). Required BAA contents are at
+§ 164.504(e). Cross-references the vendor/third-party-risk-management-policy. HAVE COUNSEL
+REVIEW THIS and every executed BAA — BAA terms (especially breach timelines and
+indemnity) carry real legal weight.
+-->
+
+# Business Associate Agreement (BAA) Management Procedure
+
+| Field | Value |
+|---|---|
+| Document ID | POL-HIP-06 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Privacy Officer] |
+| Approver | [CEO / General Counsel] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members involved in vendor, partner, and customer relationships touching PHI |
+
+> **Status:** [DRAFT — requires legal review before approval.]
+
+---
+
+## 1. Purpose
+This procedure defines how [COMPANY] determines when a Business Associate Agreement (BAA) is required, ensures BAAs contain the content mandated by 45 CFR § 164.504(e), and executes, tracks, flows down, and monitors BAAs throughout their lifecycle. It applies whether [COMPANY] is the **Covered Entity / upstream BA** engaging a downstream party, or is the **Business Associate** receiving a BAA from a customer Covered Entity.
+
+## 2. Scope
+Applies to all relationships in which a third party creates, receives, maintains, or transmits PHI on [COMPANY]'s behalf, and to all of [COMPANY]'s own subcontractors that handle PHI. Covers cloud/infrastructure providers ([AWS], [Snowflake]), SaaS subprocessors, contractors, and any AI/model provider that may process PHI.
+
+## 3. When a BAA Is Required
+1. A BAA **shall** be executed **before** PHI is disclosed to a third party that performs a function or service involving the creation, receipt, maintenance, or transmission of PHI on [COMPANY]'s behalf (45 CFR §§ 164.502(e), 164.308(b)(1)).
+2. A BAA (or subcontractor BAA) is required for **subcontractors** of a Business Associate that handle PHI — the obligation **flows down** the chain (§ 164.308(b)(2), § 164.502(e)(1)(ii)).
+3. A BAA is **not** required for: mere **conduits** (entities that only transport PHI without routine access, e.g., some courier/ISP services); disclosures **to the individual**; disclosures for **treatment** to a provider; or members of [COMPANY]'s own **workforce** (covered instead by policies/sanctions).
+4. When in doubt about whether an entity is a Business Associate or a conduit, the [Privacy Officer] and [Legal / Counsel] **shall** make and document the determination.
+
+## 4. Required BAA Contents (45 CFR § 164.504(e))
+Every BAA **shall**, at minimum, require the Business Associate to:
+1. Use/disclose PHI only as **permitted by the contract** or required by law.
+2. Implement **appropriate safeguards** (including the Security Rule's administrative, physical, and technical safeguards for ePHI) to prevent unauthorized use/disclosure.
+3. **Report** to [COMPANY] any use/disclosure not provided for, and any **security incident or breach** of unsecured PHI — within a defined timeframe (state the BAA timeline explicitly; it is often **far shorter** than HIPAA's 60-day outer limit).
+4. Ensure **subcontractors** that handle PHI agree to the **same restrictions and conditions** (flow-down).
+5. Make PHI available to satisfy **individual rights** (access, amendment, accounting) per §§ 164.524, 164.526, 164.528.
+6. Make its **practices, books, and records** available to **HHS** for compliance review.
+7. **Return or destroy** all PHI at termination where feasible, or extend protections if not feasible.
+8. Authorize **termination** of the contract if the Business Associate violates a material term.
+
+## 5. Executing & Tracking BAAs
+1. The [Privacy Officer] / [Legal / Counsel] **shall** review and approve every BAA before execution; non-standard terms (breach timelines, indemnity, liability caps, data location) **shall** be flagged to counsel.
+2. Every executed BAA **shall** be recorded in the **[BAA / vendor tracker register]** with: counterparty, role (downstream BA vs. customer CE), effective/renewal/termination dates, PHI categories, applicable subprocessors, breach-notification timeline, and document location.
+3. The register **shall** be reviewed at least [quarterly] for missing, expired, or out-of-date BAAs, and reconciled against the vendor inventory in `../vendor/third-party-risk-management-policy.md.template`.
+4. No production PHI integration with a new vendor **shall** go live until the BAA is executed and recorded.
+
+## 6. Subcontractor Flow-Down
+1. Where [COMPANY] is a Business Associate, it **shall** obtain a compliant **subcontractor BAA** from each subcontractor (e.g., [AWS], [Snowflake], SaaS subprocessors) that handles PHI **before** sharing PHI.
+2. Subcontractor BAA terms **shall** be **no less protective** than [COMPANY]'s obligations to the upstream Covered Entity / BA.
+3. The subprocessor chain **shall** be documented and kept current in the [subprocessor list / register].
+
+## 7. Monitoring & Lifecycle
+1. Business Associates and subcontractors **shall** be risk-assessed at onboarding and **periodically** thereafter per `../vendor/third-party-risk-management-policy.md.template` (e.g., review of SOC 2 / HITRUST reports, security questionnaires).
+2. The [Privacy Officer] **shall** track BAA **renewals and terminations**, and ensure **return/destruction of PHI** is confirmed at offboarding.
+3. Known or suspected **breaches by a Business Associate** trigger `hipaa-breach-notification-procedure.md.template`; the BAA's reporting timeline controls.
+4. Material BAA violations **shall** be escalated to [Legal / Counsel] for remediation or termination.
+
+## 8. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Privacy Officer] | Owns this procedure; determines BA status; maintains the BAA register; tracks lifecycle. |
+| [Legal / Counsel] | Drafts/reviews/approves BAA terms; handles violations and terminations. |
+| [Security Officer] | Performs vendor security assessments; verifies safeguards and subprocessor controls. |
+| [Procurement / Vendor Owner] | Routes new PHI-touching vendors through BAA review before go-live. |
+| All Workforce | Do not share PHI with any third party absent a confirmed, executed BAA. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 9. Exceptions
+Exceptions require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Privacy Officer] and [General Counsel], time-bound, and recorded in the exceptions log. The requirement for a BAA before PHI disclosure **may not** be waived.
+
+## 10. Compliance, Monitoring & Enforcement
+The [Privacy Officer] reports BAA coverage and exceptions in management review. Gaps (PHI shared without a BAA) are treated as significant findings and remediated immediately. Workforce violations are handled per `../people/hr-security-policy.md.template` and the HIPAA workforce sanctions process (`sanctions-policy.md.template`).
+
+## 11. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 09.e Service Delivery; 05.i Third-Party Agreements; 09.f Monitoring Third-Party Services |
+| HIPAA | 164.502(e) Business Associate contracts; 164.504(e) Required contract content; 164.308(b) Business Associate Contracts; 164.314(a) Organizational requirements |
+| SOC 2 (TSC) | CC9.2 Vendor & business partner risk; CC2.x |
+| ISO 27001:2022 | A.5.19–A.5.22 Supplier relationships; A.5.23 Cloud services |
+
+## 12. Related Documents
+- `../vendor/third-party-risk-management-policy.md.template`
+- `hipaa-breach-notification-procedure.md.template`
+- `de-identification-and-limited-data-set.md.template` (Data Use Agreements)
+- `notice-of-privacy-practices.md.template`
+- `../governance/roles-and-responsibilities.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft (pending legal review) |

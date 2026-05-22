@@ -1,0 +1,126 @@
+<!--
+TEMPLATE: This is the canonical role-definition document. Other policies REFERENCE this file
+rather than re-defining roles. HIPAA requires a designated Security Officer (164.308(a)(2))
+and a Privacy Officer (164.530(a)(1)) — these MUST be named individuals, not "the security
+team". Keep the role list and the RACI in sync with your actual org chart. Where a role is
+held by one person wearing several hats (common in a startup), say so explicitly rather than
+implying a larger team than exists.
+-->
+
+# Roles & Responsibilities
+
+| Field | Value |
+|---|---|
+| Document ID | POL-GOV-04 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CEO / Board] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and contractors |
+
+> **Status:** [DRAFT until approved. The designated HIPAA Security Officer and Privacy Officer must be named before approval.]
+
+---
+
+## 1. Purpose
+This document defines the security and privacy roles within [COMPANY], their responsibilities, and their decision authority, so that accountability for the ISMS is explicit and unambiguous. It satisfies the HIPAA requirement to designate a Security Officer and a Privacy Officer, and provides the authoritative role definitions referenced by every other policy in the set.
+
+## 2. Scope
+Applies to all workforce members (employees, contractors, interns, temporary staff) and to all roles that own, operate, or oversee in-scope systems and data per `isms-scope-statement.md.template`. Roles are functional; one individual may hold several roles, and a role may be shared, provided accountability remains clear.
+
+## 3. Policy
+1. [COMPANY] **shall** designate, in writing, a HIPAA Security Officer and a HIPAA Privacy Officer, identified by name and kept current.
+2. Every security responsibility in the ISMS **shall** map to an accountable role defined in this document.
+3. Roles **shall** observe separation of duties where practical; where segregation is not feasible due to size, compensating controls and oversight **shall** be documented.
+4. Role assignments **shall** be reviewed at least annually and upon organizational change, and reflected here and in access entitlements.
+5. All workforce members **shall** understand and acknowledge the responsibilities applicable to their role as part of onboarding and annual training.
+
+## 4. Role Definitions
+
+### 4.1 Executive Sponsor / [CEO / Board]
+Accountable for the security program; owns the apex Information Security Policy; provides budget, staffing, and authority; accepts residual risk on behalf of the organization; chairs or sponsors the Security Steering Committee.
+
+### 4.2 HIPAA Security Officer / [CISO]
+The designated Security Officer under 45 CFR § 164.308(a)(2). Owns and operates the ISMS, the policy set, the risk program, and technical/administrative safeguards for ePHI. Reports security posture and risk to leadership and the steering committee.
+
+### 4.3 HIPAA Privacy Officer
+The designated Privacy Officer under 45 CFR § 164.530(a)(1). Owns privacy policies, the Notice of Privacy Practices, individual rights, minimum-necessary determinations, and leads breach determinations per `../healthcare/hipaa-breach-notification-procedure.md.template`.
+
+### 4.4 Security Steering Committee
+Cross-functional governance body that sets security priorities, reviews risk, and approves major decisions. Defined in `security-steering-committee-charter.md.template`.
+
+### 4.5 Compliance / Audit Lead
+Owns the HITRUST/SOC 2 assessment lifecycle, MyCSF, the Statement of Applicability, the internal audit program, and corrective-action tracking. May be the Security Officer in a small org.
+
+### 4.6 Engineering / Platform Leads
+Accountable for secure design, build, and operation of in-scope [AWS], [Snowflake], and [GitHub] systems; implement and evidence technical controls; act as control owners.
+
+### 4.7 System / Control Owners
+Named owners of specific systems or controls; maintain configuration, access, monitoring, and evidence for their area; keep their SoA entries accurate.
+
+### 4.8 People / HR
+Owns onboarding/offboarding, background checks, the sanctions process, and ensuring training completion; partners on workforce-related controls.
+
+### 4.9 Legal / Counsel
+Confirms legal and regulatory obligations, reviews BAAs and breach notifications, and advises on state-law overlays.
+
+### 4.10 All Workforce Members
+Comply with all applicable policies; complete required training; protect credentials and PHI; report security incidents and suspected breaches promptly.
+
+## 5. RACI Matrix
+<!-- TEMPLATE: R=Responsible (does the work), A=Accountable (owns it, one per row),
+C=Consulted, I=Informed. Adjust to your org; collapse columns you don't have. -->
+
+| Activity | Exec Sponsor / CEO | Security Officer | Privacy Officer | Steering Committee | Eng / Platform | HR | All Workforce |
+|---|---|---|---|---|---|---|---|
+| Approve apex security policy | A | R | C | C | I | I | I |
+| Operate the ISMS | I | A/R | C | C | R | C | I |
+| Risk assessment & treatment | A | R | C | C | R | C | I |
+| Maintain SoA & HITRUST scope | I | A/R | C | I | C | I | I |
+| Incident response | I | A/R | C | I | R | C | R (report) |
+| PHI breach determination | C | R | A | I | C | I | R (report) |
+| Access provisioning & recertification | I | A | C | I | R | C | R (own access) |
+| Vendor / BAA risk management | A | R | C | C | C | I | I |
+| Security awareness training | I | A | C | I | C | R | R (complete) |
+| Workforce sanctions | A | C | C | I | I | R | I |
+| Management review | A/R | R | C | R | C | C | I |
+
+## 6. Designated Officers (Record)
+| Role | Name | Effective Date |
+|---|---|---|
+| HIPAA Security Officer | [Name] | [YYYY-MM-DD] |
+| HIPAA Privacy Officer | [Name] | [YYYY-MM-DD] |
+| Executive Sponsor | [Name] | [YYYY-MM-DD] |
+
+## 7. Exceptions
+Deviations from defined role assignments (e.g., temporary combination of segregated duties) require documented risk acceptance with compensating controls per `exceptions-and-waivers.md.template`, approved by the [Security Officer] and [CEO].
+
+## 8. Compliance, Monitoring & Enforcement
+Role assignments are reviewed at management review and verified during internal audit and access recertification. Failure to perform assigned responsibilities is addressed per `../people/hr-security-policy.md.template`, including the HIPAA sanctions process.
+
+## 9. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 00 Information Security Management Program; 02.a Roles and Responsibilities |
+| HIPAA | 164.308(a)(2) Assigned Security Responsibility; 164.530(a)(1) Privacy Officer |
+| SOC 2 (TSC) | CC1.3, CC1.4, CC1.5 |
+| ISO 27001:2022 | Clause 5.3 Roles, responsibilities, authorities; A.5.2 |
+
+## 10. Related Documents
+- `information-security-policy.md.template`
+- `security-steering-committee-charter.md.template`
+- `management-review.md.template`
+- `isms-scope-statement.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+- `../people/hr-security-policy.md.template`
+- `../access/access-control-policy.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

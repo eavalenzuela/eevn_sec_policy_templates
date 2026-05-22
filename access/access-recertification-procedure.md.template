@@ -1,0 +1,94 @@
+<!--
+TEMPLATE: This procedure is the "Check" half of access control — assessors will ask for
+the last completed review, the evidence, and proof that flagged access was actually
+revoked. Set review frequencies you can sustain and evidence. Keep the scope table in
+sync with the systems listed in the Access Control Policy.
+-->
+
+# Access Recertification Procedure
+
+| Field | Value |
+|---|---|
+| Document ID | POL-AC-05 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members, non-human identities, and in-scope systems |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This procedure defines how [COMPANY] periodically reviews and recertifies access entitlements to confirm they remain appropriate, least-privilege, and aligned to current business need. Recertification detects and removes access that has accumulated through role changes, missed offboarding, or scope creep, and produces the evidence assessors require.
+
+## 2. Scope
+Applies to access entitlements across all in-scope systems — the [IdP — e.g. Okta], [AWS] (IAM Identity Center / IAM), [Snowflake] (roles and grants), the [GitHub] organization, federated [SaaS] applications, and the production application — covering human users, service/non-human accounts, and privileged roles. Reviews give particular attention to access to PHI. This procedure operationalizes the review requirements of `access-control-policy.md.template`.
+
+## 3. Frequency
+| Access type | Minimum review frequency |
+|---|---|
+| Privileged / administrative access (AWS root & admin, Snowflake ACCOUNTADMIN/SECURITYADMIN, GitHub org owners, IdP super-admins) | [Quarterly] |
+| Access to PHI / production data | [Quarterly] |
+| Standard user access | [Semi-annually] |
+| Service / non-human accounts | [Semi-annually] |
+| Event-driven (org change, M&A, incident, audit finding) | As triggered |
+
+## 4. Scope of Each Review & Reviewers
+1. For each cycle, [IT / Security] **shall** generate an entitlement report per system from the authoritative source (IdP assignments, AWS IAM Identity Center / Access Analyzer, Snowflake `ACCOUNT_USAGE` grants and access-history views, GitHub team/member exports).
+2. The **reviewer** for each entitlement is the relevant [System / Resource Owner] or [Manager] — i.e., someone with authority and knowledge to confirm business need. Reviewers **shall not** certify their own access.
+3. Reviewers **shall** confirm each entitlement is still required, at the right level, and consistent with least privilege and SoD; PHI access is confirmed as minimum-necessary.
+4. Reports **shall** be reconciled against HR records to surface accounts for terminated or moved personnel and orphaned/stale accounts.
+
+## 5. Evidence
+The following **shall** be retained for each cycle as audit evidence: the entitlement reports reviewed, reviewer identities and decisions (certify / revoke / modify), dates, the resulting revocation tickets, and confirmation of completed revocations. Evidence is retained per `../governance/document-control.md.template` (and at least six years where it relates to PHI access).
+
+## 6. Revocation of Unneeded Access
+1. Any entitlement marked **revoke** or **modify** **shall** generate a remediation ticket.
+2. Revocations **shall** be completed within **[N business days]** of the review decision; privileged-access revocations within **[N business days / immediately]**.
+3. Revocation is performed via the [IdP]/system-native controls (see the deprovisioning checklist in `joiner-mover-leaver-procedure.md.template`) and **shall** be confirmed and evidenced.
+4. The cycle is **not complete** until all flagged access is remediated or formally risk-accepted via §7.
+
+## 7. Exceptions
+Where access flagged for removal must be retained, an exception **shall** be documented per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 8. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns this procedure; schedules cycles; ensures completion and evidence quality. |
+| [IT / Identity Administrators] | Generate entitlement reports; execute and confirm revocations. |
+| [System / Resource Owners] & [Managers] | Review and certify access within their domains; cannot self-certify. |
+| Internal Audit | Independently verifies that reviews occurred and revocations completed. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 9. Compliance, Monitoring & Enforcement
+Completion of each cycle within schedule is tracked as a control metric and reported in management review (`../governance/management-review.md.template`). Overdue reviews and unremediated revocations are escalated. Patterns of excess access feed back into role definitions and the SoD matrix. Violations are handled per `../people/hr-security-policy.md.template`.
+
+## 10. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 01.e Review of User Access Rights; 01.c Privilege Management; 02.i Removal of Access Rights |
+| HIPAA | 164.308(a)(4) Access Management; 164.308(a)(1)(ii)(D) Information System Activity Review; 164.312(a)(1) Access Control |
+| SOC 2 (TSC) | CC6.1, CC6.2, CC6.3 |
+| ISO 27001:2022 | A.5.18 Access rights (review); A.8.2 Privileged access rights |
+
+## 11. Related Documents
+- `access-control-policy.md.template`
+- `privileged-access-management.md.template`
+- `joiner-mover-leaver-procedure.md.template`
+- `identity-and-authentication-policy.md.template`
+- `../governance/management-review.md.template`
+- `../governance/document-control.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

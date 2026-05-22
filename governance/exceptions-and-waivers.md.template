@@ -1,0 +1,106 @@
+<!--
+TEMPLATE: This is the process EVERY other policy points to for its Exceptions section — so it
+must stand on its own and be airtight. The three non-negotiables assessors look for in an
+exception: it is (1) TIME-BOUND (has an expiry, not "permanent"), (2) RISK-ACCEPTED by an
+authority with the standing to accept that risk, and (3) REVIEWED before it expires. PHI/breach
+notification obligations are NOT waivable. Keep the exceptions log; an empty, well-maintained
+log is fine — a missing one is a finding.
+-->
+
+# Exceptions & Waivers
+
+| Field | Value |
+|---|---|
+| Document ID | POL-GOV-11 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CEO / Board] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and all ISMS policies |
+
+> **Status:** [DRAFT until approved. This is the single, authoritative exception process referenced by every other policy.]
+
+---
+
+## 1. Purpose
+This policy defines how [COMPANY] requests, evaluates, approves, tracks, and reviews exceptions (waivers) to its security policies and controls. It ensures that any deviation from a stated requirement is a deliberate, time-bound, risk-accepted decision made by an appropriate authority — not an undocumented gap — and that the accepted risk is visible and revisited.
+
+## 2. Scope
+Applies to requested deviations from any ISMS policy, standard, or control within the ISMS scope (`isms-scope-statement.md.template`), for all workforce members and systems. Certain obligations are explicitly **not** waivable (see §6).
+
+## 3. Policy
+1. Any deviation from a security requirement **shall** be requested and approved through this process before it is relied upon, except for emergency situations which **shall** be documented retroactively without undue delay.
+2. Every exception **shall** be **time-bound**, with a defined expiry date no longer than [12 months]; perpetual exceptions are prohibited.
+3. Every exception **shall** include a documented risk assessment and explicit **risk acceptance** by an authority commensurate with the risk level.
+4. Every exception **shall** define compensating controls that reduce the residual risk where feasible.
+5. Every exception **shall** be recorded in the exceptions log (§7) and reviewed before expiry; lapsed exceptions are automatically void and the underlying requirement re-applies.
+6. Exceptions **shall** be reported to the Steering Committee and management review and may be cross-referenced from the POA&M register where they defer remediation.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| Requestor | Submits the request with business justification and proposed compensating controls. |
+| [Security Officer / CISO] | Assesses risk; recommends; approves within authority; maintains the log. |
+| [CEO / Board] | Approves high-risk exceptions and acceptances above the Security Officer's authority. |
+| Steering Committee | Reviews open exceptions in aggregate. |
+| Control Owner | Implements compensating controls; supports review. |
+
+See `roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Process
+1. **Request:** submit policy/control affected, business justification, scope, duration sought, and proposed compensating controls.
+2. **Assess:** the [Security Officer] evaluates the risk (likelihood/impact, PHI exposure) per `../risk/risk-management-methodology.md.template`.
+3. **Decide:** approve, approve with conditions, or deny at the appropriate authority level (§ approval authority below).
+4. **Record:** log the exception with all fields, expiry, and risk acceptance.
+5. **Monitor:** verify compensating controls are in place and operating.
+6. **Review/Renew/Close:** review before expiry; renew only with fresh risk assessment, or let it lapse and remediate.
+
+| Residual Risk Level | Approval Authority |
+|---|---|
+| Low | [Security Officer] |
+| Medium | [Security Officer] + [Control Owner's leader] |
+| High | [Security Officer] + [CEO] |
+| Any exception touching PHI exposure | [Security Officer] + [Privacy Officer] + [CEO] |
+
+## 6. Non-Waivable Obligations
+The following may **not** be granted as exceptions: legal and regulatory obligations (including HIPAA breach notification per `../healthcare/hipaa-breach-notification-procedure.md.template`), contractual/BAA requirements, and any control whose absence would directly and materially expose PHI without compensating controls.
+
+## 7. Exceptions Log Template
+<!-- TEMPLATE: The register. Maintained in [ticketing/GRC tool]; this is the canonical schema.
+Example rows are illustrative. A clean, current log is the evidence. -->
+
+| ID | Date Approved | Policy / Control | Requestor | Justification | Compensating Controls | Residual Risk | Approved By (risk accepted) | Expiry Date | Status | Review Date |
+|---|---|---|---|---|---|---|---|---|---|---|
+| EXC-[0001] | [YYYY-MM-DD] | Patch SLA — legacy [EC2] instance | [Name] | Vendor dependency blocks OS upgrade until [Q] | Network isolation; enhanced monitoring | Medium | [Security Officer + Lead] | [YYYY-MM-DD] | Active | [YYYY-MM-DD] |
+| EXC-[0002] | [YYYY-MM-DD] | MFA on service account ([GitHub] CI) | [Name] | Automation cannot use interactive MFA | Scoped token; IP allowlist; secret rotation | Low | [Security Officer] | [YYYY-MM-DD] | Active | [YYYY-MM-DD] |
+| EXC-[NNNN] | [YYYY-MM-DD] | [Policy/control] | [Name] | [Justification] | [Compensating controls] | [Risk] | [Approver] | [YYYY-MM-DD] | [Active/Expired/Closed] | [YYYY-MM-DD] |
+
+## 8. Compliance, Monitoring & Enforcement
+The exceptions log is reviewed at each Steering Committee meeting and at management review. Operating outside policy without an approved exception is a policy violation handled per `../people/hr-security-policy.md.template`. Expired exceptions that are still being relied upon are treated as findings in the POA&M register (`corrective-action-poam.md.template`).
+
+## 9. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 00 Information Security Management Program; risk acceptance / exceptions |
+| HIPAA | 164.308(a)(1)(ii)(B) Risk Management; 164.316 Policies and Procedures |
+| SOC 2 (TSC) | CC3.x Risk Assessment; CC5.x |
+| ISO 27001:2022 | Clause 6.1.3(f) Risk acceptance; Clause 8.3 |
+
+## 10. Related Documents
+- `information-security-policy.md.template`
+- `corrective-action-poam.md.template`
+- `security-steering-committee-charter.md.template`
+- `management-review.md.template`
+- `../risk/risk-management-methodology.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+- `../people/hr-security-policy.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

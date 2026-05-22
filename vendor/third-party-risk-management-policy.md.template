@@ -1,0 +1,132 @@
+<!--
+TEMPLATE: This policy governs third-party / vendor risk across the relationship
+lifecycle. The non-negotiable healthcare requirement is the BAA: ANY vendor that
+creates, receives, maintains, or transmits PHI on [COMPANY]'s behalf MUST have an
+executed Business Associate Agreement BEFORE PHI is shared. BAA execution and tracking
+are handled in the BAA Management Procedure (../healthcare/baa-management-procedure.md.template),
+which this policy references. Keep risk tiers and review cadence tuned to your risk
+appetite. Delete <!-- TEMPLATE: ... --> comments once each section is written.
+-->
+
+# Third-Party Risk Management Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-VEN-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO / CEO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members procuring or managing vendors, and all third parties handling [COMPANY] data |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy ensures that third parties — vendors, suppliers, subprocessors, and service providers — who access, process, store, or transmit [COMPANY] information (including PHI) are assessed for security and privacy risk, bound by appropriate contractual obligations, and monitored throughout the relationship. It protects [COMPANY] and the individuals whose PHI it holds from risks introduced through the supply chain.
+
+## 2. Scope
+This policy applies to all third parties that create, receive, maintain, or transmit [COMPANY] data, or that are integrated into [COMPANY]'s systems or [AWS]/[Snowflake]/[GitHub] environments — including SaaS subprocessors, infrastructure providers, contractors, and downstream subcontractors. It applies to all workforce members who select, procure, or manage such relationships. **Any vendor that touches PHI is a Business Associate** and is additionally subject to `../healthcare/baa-management-procedure.md.template`.
+
+## 3. Policy
+1. No third party **shall** be granted access to [COMPANY] data or systems until it has completed due diligence (§5) appropriate to its risk tier (§4).
+2. **Any vendor that creates, receives, maintains, or transmits PHI shall have an executed Business Associate Agreement (BAA) in place BEFORE any PHI is shared.** No BAA, no PHI — without exception.
+3. A central **vendor/BAA register** (`[vendor & BAA tracker register]`) **shall** be maintained, recording each vendor, the data it accesses, its risk tier, review status, contract/BAA status and dates, and offboarding state.
+4. Contracts with third parties handling [COMPANY] data **shall** include the security, privacy, breach-notification, audit, and data-handling clauses required by this policy (§7).
+5. Third parties **shall** be reassessed on a cadence driven by their risk tier (§8), and on material change (incident, scope change, ownership change).
+6. Subprocessors engaged by a vendor to handle PHI **shall** themselves be bound by equivalent (BAA-flow-down) obligations.
+7. On termination, the third party **shall** return or securely destroy all [COMPANY] data, and access **shall** be revoked, per the offboarding process (§9).
+
+## 4. Risk Tiering
+Each vendor is assigned a tier at onboarding based on data sensitivity and access:
+
+| Tier | Criteria | Examples |
+|---|---|---|
+| **Tier 1 — Critical** | Accesses/processes PHI, or has privileged access to production. **BAA required.** | [AWS], [Snowflake], [PHI-processing subprocessors] |
+| **Tier 2 — High** | Accesses confidential (non-PHI) data or integrates with production. | [GitHub], [error monitoring], [analytics with no PHI] |
+| **Tier 3 — Moderate** | Limited/internal data, no production access. | [internal tooling SaaS] |
+| **Tier 4 — Low** | No access to [COMPANY] data or systems. | [office supplies, marketing tools] |
+
+## 5. Due Diligence & Security Review
+Before onboarding, the [Security Officer] (or delegate) performs a security and privacy review proportionate to the tier. Tier 1–2 reviews **shall** evaluate, at minimum:
+- Independent assurance ([SOC 2 Type II], [HITRUST], [ISO 27001]) or a completed security questionnaire.
+- Data handling: what data is accessed, where it is stored/processed (region/residency), and encryption in transit and at rest.
+- Subprocessor list and flow-down controls.
+- Incident/breach history and notification commitments.
+- For PHI vendors: HIPAA compliance posture and willingness to sign a BAA.
+
+Findings and residual risk are documented in the vendor register; unacceptable risk must be remediated, risk-accepted per `../governance/exceptions-and-waivers.md.template`, or the vendor rejected.
+
+## 6. BAA Requirement for PHI Vendors
+Any Tier 1 vendor handling PHI **shall** execute a BAA that meets 45 CFR § 164.504(e) before PHI is shared. BAA negotiation, execution, storage, and renewal are managed through `../healthcare/baa-management-procedure.md.template`, and BAA status is tracked in the vendor/BAA register. A breach by a Business Associate triggers `../healthcare/hipaa-breach-notification-procedure.md.template`.
+
+## 7. Contractual Requirements
+Contracts with Tier 1–2 vendors **shall** include, as applicable:
+- Confidentiality and permitted-use restrictions.
+- Required security controls and the right to audit or obtain assurance reports.
+- Breach/incident notification within a defined timeframe (PHI: per the BAA, often **24–72 hours**).
+- Data location/residency and subprocessor approval/notification.
+- Return or secure destruction of data on termination, with certification.
+- Compliance with applicable law (HIPAA, state privacy laws).
+
+## 8. Ongoing Monitoring & Reassessment
+| Tier | Reassessment Cadence | Monitoring |
+|---|---|---|
+| Tier 1 | [Annually] + on material change | Review refreshed assurance report; confirm BAA current; track incidents |
+| Tier 2 | [Annually / 24 months] | Confirm assurance report; review access |
+| Tier 3 | [As needed / 24 months] | Lightweight check |
+| Tier 4 | [None / on change] | — |
+
+Monitoring includes tracking vendor security incidents, expiring/expired contracts and BAAs in the register, and changes to subprocessor lists.
+
+## 9. Offboarding & Data Deletion
+When a relationship ends or PHI/data access is no longer needed:
+1. Revoke all vendor access to [COMPANY] systems, [AWS]/[Snowflake]/[GitHub] accounts, and credentials/keys.
+2. Require the vendor to **return or securely destroy** all [COMPANY] data and obtain written certification of destruction.
+3. Confirm subprocessors have likewise deleted data.
+4. Update the vendor/BAA register to reflect offboarded status and retain the BAA and destruction certificate per retention requirements.
+
+## 10. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns this policy; approves Tier 1–2 onboarding; oversees the vendor register. |
+| [Privacy Officer] | Confirms BAA requirement and adequacy for PHI vendors. |
+| [Legal / Counsel] | Reviews and negotiates contracts and BAAs. |
+| [Procurement / Vendor Owner] | Initiates reviews; maintains the vendor relationship and register entries. |
+| [Finance] | Ensures no PHI vendor is onboarded without security/BAA sign-off. |
+| All Workforce | Route any new vendor handling [COMPANY] data through this process before sharing data. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 11. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log. **The BAA-before-PHI requirement (§3.2) may not be excepted.**
+
+## 12. Compliance, Monitoring & Enforcement
+Compliance is verified through periodic review of the vendor/BAA register for completeness, current assurance reports, executed BAAs for all PHI vendors, and timely reassessments, reported to management review (`../governance/management-review.md.template`). Violations are handled per `../people/hr-security-policy.md.template`.
+
+## 13. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 05.i Identification of Risks Related to External Parties; 05.k Addressing Security in Third-Party Agreements; 09.e Service Delivery; 09.f Monitoring and Review of Third-Party Services |
+| HIPAA | 164.308(b)(1) Business Associate Contracts; 164.314(a) Organizational Requirements; 164.504(e) BAA provisions |
+| SOC 2 (TSC) | CC9.2, CC3.2 |
+| ISO 27001:2022 | A.5.19–A.5.22 Supplier relationships; A.5.23 Cloud services |
+
+## 14. Related Documents
+- `../healthcare/baa-management-procedure.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+- `[vendor & BAA tracker register]`
+- `../governance/roles-and-responsibilities.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+- `../people/hr-security-policy.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

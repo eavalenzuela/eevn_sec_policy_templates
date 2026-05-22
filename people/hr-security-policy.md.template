@@ -1,0 +1,119 @@
+<!--
+TEMPLATE: This policy covers the security aspects of the employment lifecycle — before,
+during, and after employment. It is the home of the disciplinary process referenced by
+most other policies; the HIPAA workforce sanctions specifics live in
+../healthcare/sanctions-policy.md.template, which this policy cross-references. Background
+check scope and disciplinary steps must be reviewed by HR/Legal for local employment law.
+Keep specifics as [PLACEHOLDERS]. Delete <!-- TEMPLATE: ... --> comments once each section
+is written.
+-->
+
+# HR Security Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-HR-02 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Head of People / HR] |
+| Approver | [CEO / Security Officer] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and contractors of [COMPANY] |
+
+> **Status:** [DRAFT until approved — review disciplinary and background-check provisions with HR/Legal for applicable employment law before approval.]
+
+---
+
+## 1. Purpose
+This policy defines the security controls applied across the employment lifecycle — screening before hire, security obligations during employment, and access removal at offboarding — so that workforce members are trustworthy, understand their responsibilities, and cannot retain access or data after they leave. It is the basis for [COMPANY]'s disciplinary response to security and privacy violations.
+
+## 2. Scope
+This policy applies to all workforce members (employees, contractors, interns, temporary staff) and, where contractually appropriate, third-party personnel who access [COMPANY] systems or PHI. It covers screening, agreements, onboarding, conduct, offboarding, and the disciplinary/sanctions process.
+
+## 3. Policy
+1. **Background screening** appropriate to the role and to applicable law **shall** be completed before a workforce member is granted access to PHI or production systems (§4).
+2. All workforce members **shall** sign a **confidentiality / non-disclosure agreement** and acknowledge the acceptable-use and security policies before access is granted (§5).
+3. **Onboarding** **shall** provision access on a least-privilege basis and ensure security awareness training is assigned per `security-awareness-training-policy.md.template` (§6).
+4. Workforce members **shall** adhere to acceptable conduct standards (§7) and report suspected incidents per `../resilience/incident-response-plan.md.template`.
+5. **Offboarding** **shall** revoke all access promptly and recover all assets and data (§8).
+6. Violations of security or privacy policy **shall** be addressed through a documented disciplinary process, including the HIPAA workforce sanctions process in `../healthcare/sanctions-policy.md.template` (§9).
+7. Security responsibilities **shall** persist after employment ends to the extent of any surviving confidentiality obligations.
+
+## 4. Background Screening
+Prior to granting access to PHI or production systems, [COMPANY] **shall** conduct background screening proportionate to the role and permitted by applicable law, which may include [identity verification, criminal history, employment/education verification, and references]. Results are evaluated by [HR / Security Officer]; adverse findings are handled per applicable law and may preclude access. Screening for contractors is addressed in their agreements or via the third-party process (`../vendor/third-party-risk-management-policy.md.template`).
+
+## 5. Confidentiality & Agreements
+Before access is granted, each workforce member **shall** execute:
+- A **confidentiality / non-disclosure agreement** covering PHI and [COMPANY] confidential information, with obligations surviving termination.
+- An **acceptable use** and **policy acknowledgment** attestation.
+Contractors are bound by equivalent terms in their contracts.
+
+## 6. Onboarding Security
+1. Access is provisioned on **least privilege** / need-to-know per `../access/access-control-policy.md.template`.
+2. Accounts in [identity provider], [AWS], [Snowflake], and [GitHub] are created per approved role; MFA is enforced.
+3. Security and privacy awareness training is assigned and must be completed per `security-awareness-training-policy.md.template`.
+4. Equipment is issued and configured to [endpoint baseline].
+
+## 7. Acceptable Conduct
+Workforce members **shall**:
+- Protect credentials; never share accounts; use MFA.
+- Access PHI only as needed for their job (minimum necessary).
+- Follow clean desk / clear screen and physical security per `physical-and-environmental-security-policy.md.template`.
+- Use [COMPANY] systems acceptably per `[acceptable-use-policy]`; not install unauthorized software or exfiltrate data.
+- Report suspected incidents or breaches immediately.
+
+## 8. Offboarding Security
+On termination or role change, the [HR]/[IT]/[Security] teams **shall**, within [TARGET — e.g. same day / immediately for involuntary terminations]:
+1. Disable accounts and revoke access across [identity provider], [AWS], [Snowflake], [GitHub], and all SaaS.
+2. Revoke credentials, tokens, SSH/API keys, and VPN access.
+3. Recover all [COMPANY] assets (laptops, tokens, badges) and confirm no [COMPANY] data remains on personal devices.
+4. Transfer ownership of data/resources and document completion in [offboarding checklist].
+Surviving confidentiality obligations are reaffirmed at exit.
+
+## 9. Disciplinary / Sanctions Process
+Violations of this or any security/privacy policy are subject to a **documented, consistently applied disciplinary process** proportionate to the severity and intent of the violation, up to and including termination and, where applicable, legal action. Sanctions involving PHI or HIPAA violations follow the HIPAA workforce sanctions process in `../healthcare/sanctions-policy.md.template`, and sanction actions are documented and retained.
+
+## 10. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Head of People / HR] | Owns this policy; runs screening, agreements, onboarding/offboarding, and disciplinary process. |
+| [Security Officer] | Defines access requirements; co-owns the sanctions process; verifies access removal. |
+| [Privacy Officer] | Co-owns PHI-related sanctions per the sanctions policy. |
+| [IT / Access Admins] | Provision and deprovision access; recover assets. |
+| Managers | Initiate onboarding/offboarding; enforce conduct; escalate violations. |
+| All Workforce | Comply with conduct standards; complete training; sign agreements; report incidents. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 11. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Head of People] and [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 12. Compliance, Monitoring & Enforcement
+Compliance is verified through review of completed screenings, signed agreements, onboarding/offboarding checklist completion (especially timely access revocation), and disciplinary records, reported to management review (`../governance/management-review.md.template`). This policy is the enforcement mechanism referenced by other policies; violations are addressed per §9 and `../healthcare/sanctions-policy.md.template`.
+
+## 13. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 02.a Roles and Responsibilities; 02.b Screening; 02.c Terms and Conditions of Employment; 02.e Awareness/Training; 02.f Disciplinary Process; 02.g Termination Responsibilities; 02.i Removal of Access Rights |
+| HIPAA | 164.308(a)(3) Workforce Security; 164.308(a)(3)(ii)(C) Termination Procedures; 164.308(a)(1)(ii)(C) Sanction Policy |
+| SOC 2 (TSC) | CC1.1, CC1.4, CC1.5 |
+| ISO 27001:2022 | A.6.1 Screening; A.6.2 Terms and conditions of employment; A.6.4 Disciplinary process; A.6.5 Responsibilities after termination |
+
+## 14. Related Documents
+- `security-awareness-training-policy.md.template`
+- `physical-and-environmental-security-policy.md.template`
+- `../healthcare/sanctions-policy.md.template`
+- `../access/access-control-policy.md.template`
+- `../resilience/incident-response-plan.md.template`
+- `../vendor/third-party-risk-management-policy.md.template`
+- `../governance/roles-and-responsibilities.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

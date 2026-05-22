@@ -1,0 +1,102 @@
+<!--
+TEMPLATE: This policy covers physical and environmental security. The key healthcare/cloud
+nuance: data-center physical security is INHERITED from AWS under the shared
+responsibility model — [COMPANY] does not operate the data centers and relies on AWS's
+attestations (SOC 2 / ISO / HITRUST inheritance). [COMPANY] remains responsible for its
+own offices, endpoints, and clean desk / clear screen. State this inheritance explicitly
+(§6); assessors expect it. If [COMPANY] is fully remote, scope offices to "any [COMPANY]-
+controlled workspace" and home-office expectations. Delete <!-- TEMPLATE: ... --> comments
+once each section is written.
+-->
+
+# Physical & Environmental Security Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-HR-03 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / Office Manager] |
+| Approver | [CTO / CEO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and all [COMPANY]-controlled facilities and endpoints |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy protects [COMPANY]'s people, facilities, equipment, and the information (including PHI) they handle from physical and environmental threats — unauthorized access, theft, loss, and environmental hazards. It also documents how [COMPANY] inherits data-center physical security from [AWS] under the cloud shared-responsibility model.
+
+## 2. Scope
+This policy applies to all [COMPANY]-controlled workspaces ([offices, co-working spaces, and — where PHI is accessed — home offices]), all endpoints and removable media, and all workforce members. Physical security of the cloud infrastructure hosting [COMPANY]'s production systems and PHI is **inherited from [AWS]** and addressed in §6. [COMPANY] operates no production data centers of its own.
+
+## 3. Policy
+1. Access to [COMPANY] facilities and any areas where PHI may be viewed **shall** be restricted to authorized personnel and controlled by [badge/keycard/lock] systems.
+2. Visitors **shall** be [signed in, escorted, and logged]; visitor access to areas where PHI is processed is restricted.
+3. Workforce members **shall** observe a **clean desk** policy: PHI and confidential materials are not left unattended and are secured ([locked storage / shredding]) when not in use.
+4. Workforce members **shall** observe a **clear screen** policy: devices auto-lock after [N — e.g. 10] minutes of inactivity and are locked when unattended.
+5. Endpoints **shall** be encrypted at rest, enrolled in [MDM], and physically secured when traveling or working in public.
+6. Disposal of media and printed PHI **shall** use secure destruction (shredding, cryptographic erasure) per `[media-disposal / data-classification]`.
+7. Data-center physical and environmental controls **shall** be inherited from [AWS] and validated through AWS's third-party attestations (§6).
+
+## 4. Facility & Office Security
+- Entry to [COMPANY] offices is controlled by [keycard/badge]; access lists are reviewed [periodically] and revoked at offboarding per `hr-security-policy.md.template`.
+- Server/network closets (if any) are [locked and access-restricted].
+- Physical access events are [logged] where the system supports it.
+
+## 5. Clean Desk, Clear Screen & Endpoint Protection
+- No PHI or confidential information is left visible on desks, screens, whiteboards, or printers.
+- Screens auto-lock and require re-authentication; privacy screens are used where PHI is viewed in shared/public spaces.
+- Laptops and removable media are encrypted, kept under physical control, and never left unattended in public.
+- Printing of PHI is minimized; printed PHI is collected immediately and shredded when no longer needed.
+
+## 6. Cloud Data Centers — AWS Shared Responsibility (Inherited Control)
+[COMPANY]'s production systems and PHI are hosted on **[AWS]**. Under the **AWS Shared Responsibility Model**, AWS is responsible for the **security *of* the cloud** — including the physical and environmental security of the data centers (perimeter security, access control, surveillance, power, cooling, fire suppression, and environmental monitoring). [COMPANY] **inherits** these physical and environmental controls and does **not** have or require physical access to AWS facilities.
+
+[COMPANY] **shall**:
+1. Rely on and retain [AWS]'s independent attestations (e.g., [SOC 2], [ISO 27001], [HITRUST inheritance / AWS Artifact reports]) as evidence of inherited data-center physical/environmental controls, and review them at least [annually] via `../vendor/third-party-risk-management-policy.md.template`.
+2. Remain responsible for the **security *in* the cloud** — its data, configuration, access management, and the logical controls covered by the rest of the ISMS.
+3. Document this inheritance in the Statement of Applicability so assessors can trace which physical controls are inherited vs. [COMPANY]-operated.
+
+## 7. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer] | Owns this policy; validates AWS inherited controls; oversees clean desk/clear screen. |
+| [Office Manager / Facilities] | Manages facility access, visitor logs, and physical safeguards. |
+| [IT] | Enforces endpoint encryption, MDM, and auto-lock; manages secure disposal. |
+| Managers | Reinforce clean desk/clear screen in their teams. |
+| All Workforce | Follow clean desk/clear screen, protect endpoints and badges, and report physical security concerns. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 8. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 9. Compliance, Monitoring & Enforcement
+Compliance is verified through facility access reviews, clean desk/clear screen walkthroughs, endpoint encryption/MDM reporting, and annual review of AWS attestations, reported to management review (`../governance/management-review.md.template`). Violations are handled per `hr-security-policy.md.template`, including the HIPAA workforce sanctions process (`../healthcare/sanctions-policy.md.template`).
+
+## 10. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 08.a Physical Security Perimeter; 08.b Physical Entry Controls; 08.d Protecting Against External and Environmental Threats; 08.l Secure Disposal or Re-Use of Equipment; 09.p Disposal of Media |
+| HIPAA | 164.310(a)(1) Facility Access Controls; 164.310(b) Workstation Use; 164.310(c) Workstation Security; 164.310(d) Device and Media Controls |
+| SOC 2 (TSC) | CC6.4, CC6.5 |
+| ISO 27001:2022 | A.7.1–A.7.4 Physical security; A.7.7 Clear desk and clear screen; A.7.8–A.7.10 Equipment; A.7.14 Secure disposal |
+
+## 11. Related Documents
+- `hr-security-policy.md.template`
+- `security-awareness-training-policy.md.template`
+- `../vendor/third-party-risk-management-policy.md.template` (AWS attestation review)
+- `../healthcare/sanctions-policy.md.template`
+- `../governance/roles-and-responsibilities.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

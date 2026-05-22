@@ -1,0 +1,114 @@
+<!--
+TEMPLATE: This plan addresses BUSINESS continuity — keeping critical business functions
+running during disruption. It is the business-facing counterpart to the technical
+Disaster Recovery Plan (disaster-recovery-plan.md.template), which it references for IT
+recovery. Fill the Business Impact Analysis (BIA) table with your real critical functions
+and RTO/RPO targets. Keep environment-specifics as [PLACEHOLDERS]. Delete
+<!-- TEMPLATE: ... --> comments once each section is written.
+-->
+
+# Business Continuity Plan
+
+| Field | Value |
+|---|---|
+| Document ID | POL-RES-02 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Security Officer / COO] |
+| Approver | [CEO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and critical business functions of [COMPANY] |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This plan ensures that [COMPANY] can continue to deliver its critical business functions — and protect the confidentiality, integrity, and availability of PHI — during and after a disruptive event such as a major outage, natural disaster, pandemic, supplier failure, or cyber attack. It defines the business impact analysis, recovery priorities, and continuity strategies that minimize downtime and harm to patients, customers, and the business.
+
+## 2. Scope
+This plan covers all critical business functions, supporting personnel, facilities, third-party dependencies, and information systems of [COMPANY]. Technical recovery of IT systems (the production SaaS application, [AWS environment], [Snowflake], [GitHub]) is governed by the Disaster Recovery Plan (`disaster-recovery-plan.md.template`), which this plan invokes. Security incidents that cause disruption are handled jointly with `incident-response-plan.md.template`.
+
+## 3. Policy
+1. [COMPANY] **shall** maintain and annually update a Business Impact Analysis (BIA) identifying critical functions, their dependencies, and maximum tolerable downtime.
+2. Each critical function **shall** have a defined Recovery Time Objective (RTO) and Recovery Point Objective (RPO), aligned with the technical capabilities documented in the DR Plan.
+3. Continuity strategies **shall** be defined and resourced for each critical function so that service can be sustained or restored within its RTO.
+4. A current crisis-management and communications structure **shall** be maintained, including a call tree and out-of-band communication channels.
+5. This plan **shall** be tested at least annually (§9) and after any major change to the business or its infrastructure.
+6. Continuity of PHI safeguards **shall** be maintained during disruption; emergency-mode operation **shall not** suspend required security and privacy controls (HIPAA Contingency Plan).
+
+## 4. Business Impact Analysis (BIA)
+The BIA identifies critical functions and quantifies the impact of their loss. Maintain the detailed BIA in [BIA register/location]; summarize critical functions below.
+
+| Critical Function | Impact if Lost | Max Tolerable Downtime | Target RTO | Target RPO | Key Dependencies |
+|---|---|---|---|---|---|
+| [Production SaaS / PHI access] | [Patient/clinical impact, contractual SLA breach] | [e.g. 4h] | [e.g. 2h] | [e.g. 15m] | [AWS], [Snowflake], identity provider |
+| [Customer support] | [Inability to serve customers] | [e.g. 8h] | [e.g. 4h] | [Helpdesk tooling], comms |
+| [Billing / revenue] | [Cash flow impact] | [e.g. 24h] | [e.g. 12h] | [Billing system], finance |
+| [Engineering / deployments] | [Inability to ship fixes] | [e.g. 24h] | [e.g. 8h] | [GitHub] CI/CD, [AWS] |
+| [Add functions as needed] | [...] | [...] | [...] | [...] | [...] |
+
+## 5. Critical Functions & Recovery Priorities
+Functions are recovered in priority order. Tier 1 (highest priority) functions are those whose loss causes immediate patient, regulatory, or severe financial harm — typically PHI availability and the production application. Tier 2 and Tier 3 functions are recovered as resources permit. Record the prioritized sequence in the BIA register and align it with the DR runbooks.
+
+## 6. Continuity Strategies
+For each critical function, define how continuity is achieved:
+- **Technology resilience:** [AWS] multi-AZ deployment, automated failover, and cross-region recovery per `disaster-recovery-plan.md.template`.
+- **Workforce continuity:** Remote-work capability, cross-training, and documented succession for key roles so no single person is a single point of failure.
+- **Facilities:** [Alternate work locations / fully remote posture]; loss of a physical office does not halt operations.
+- **Third-party dependencies:** Identify critical vendors, their SLAs, and fallback options; manage vendor resilience per `../vendor/third-party-risk-management-policy.md.template`.
+- **Data:** Backups and restoration are governed by `[backup-policy]` and validated through DR testing.
+- **Manual workarounds:** [Documented interim procedures] for the highest-priority functions when systems are unavailable.
+
+## 7. Crisis Management & Communications
+1. The [Crisis Management Team] is activated by the [Security Officer / COO] when a disruption exceeds [threshold].
+2. A maintained **call tree / contact list** and **out-of-band communications channel** (independent of primary email/Slack) ensure the team can coordinate even if primary systems are down.
+3. Internal, customer, and regulatory communications are coordinated by the [Communications Lead] with [Legal]. PHI-breach notifications follow `../healthcare/hipaa-breach-notification-procedure.md.template`.
+
+## 8. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [CEO] | Approves the plan; ultimate decision authority during a crisis. |
+| [Security Officer / COO] | Owns this plan; activates the Crisis Management Team; coordinates recovery. |
+| [CTO] | Directs technical recovery per the DR Plan. |
+| [Privacy Officer] | Ensures PHI safeguards persist during emergency operation; manages breach obligations. |
+| Function Owners | Maintain BIA entries and continuity procedures for their functions; lead their own recovery. |
+| [Communications Lead] | Manages crisis communications. |
+| All Workforce | Follow continuity instructions; maintain readiness; complete BCP awareness. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 9. Testing & Maintenance
+This plan is **tested at least annually** through [tabletop exercise / functional test / simulation], including at least one scenario exercising the DR Plan. Test scope, participants, findings, and corrective actions are documented and tracked to closure. The plan and BIA are reviewed at least annually and after any significant organizational, regulatory, or infrastructure change.
+
+## 10. Exceptions
+Exceptions to this plan require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 11. Compliance, Monitoring & Enforcement
+Compliance is verified through BIA currency, test completion, RTO/RPO achievement during tests, and corrective-action closure, reported to management review (`../governance/management-review.md.template`). Violations are handled per `../people/hr-security-policy.md.template`.
+
+## 12. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 12.a Including Information Security in the Business Continuity Management Process; 12.b Business Continuity and Risk Assessment; 12.c Developing and Implementing Continuity Plans; 12.e Testing, Maintaining and Reassessing |
+| HIPAA | 164.308(a)(7) Contingency Plan; 164.308(a)(7)(ii)(C) Emergency Mode Operation Plan; 164.308(a)(7)(ii)(E) Applications and Data Criticality Analysis |
+| SOC 2 (TSC) | A1.2, A1.3, CC9.1 |
+| ISO 27001:2022 | A.5.29 Information security during disruption; A.5.30 ICT readiness for business continuity |
+
+## 13. Related Documents
+- `disaster-recovery-plan.md.template`
+- `incident-response-plan.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+- `../vendor/third-party-risk-management-policy.md.template`
+- `../governance/roles-and-responsibilities.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+- `../people/hr-security-policy.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

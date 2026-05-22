@@ -1,0 +1,104 @@
+<!--
+TEMPLATE: This is the operational bridge between the risk register and getting risks
+actually closed. It defines how a treatment decision becomes tracked work with owners,
+dates, and evidence, and how it links to corrective action. Keep it consistent with the
+scoring and treatment options in risk-management-methodology.md.template (POL-RSK-01).
+Fill the [PLACEHOLDERS] for SLAs by risk level and the system of record for tracking.
+-->
+
+# Risk Treatment Plan
+
+| Field | Value |
+|---|---|
+| Document ID | POL-RSK-02 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO / CEO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All risks under treatment within the ISMS scope |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy defines how [COMPANY] turns risk treatment decisions into tracked, owned, and time-bound work that drives each risk to a defined end state, and how risk treatment connects to corrective and preventive action. It ensures that a treatment decision in the risk register is not merely recorded but executed, evidenced, and verified.
+
+## 2. Scope
+Applies to every risk in the risk register (`risk-register.md.template`) assigned a treatment of **Mitigate**, **Transfer**, or **Avoid**, across all ISMS-scope systems including [AWS], [Snowflake], and the [GitHub] CI/CD pipeline. Risks treated by **Accept** are governed by `risk-acceptance.md.template`.
+
+## 3. Policy
+1. Every risk above [COMPANY]'s risk appetite **shall** have a documented treatment plan with a named owner, defined actions, and a target completion date.
+2. Treatment actions **shall** be tracked in [the GRC tool / treatment tracker / ticketing system] as the system of record, cross-referenced to the risk register Risk ID.
+3. Treatment **shall** be prioritized by residual risk level, and remediation **shall** meet the SLAs in §5.
+4. Each treatment action **shall** require **evidence of completion** before the risk's residual score is updated and the risk is re-evaluated.
+5. Where treatment requires a control change, it **shall** follow `../operations/change-management-policy.md.template`.
+6. Where a risk arises from an audit finding, incident, or control failure, treatment **shall** be managed as **corrective action** per `../governance/corrective-action-poam.md.template` (root-cause analysis required).
+7. Residual risk remaining above appetite after treatment **shall** be either further treated or formally accepted per `risk-acceptance.md.template`.
+8. Treatment progress **shall** be reported to leadership at [each management review].
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns this plan; tracks treatment to closure; reports progress and overdue items. |
+| Risk / Treatment Owners | Execute treatment actions; provide evidence of completion; update target dates with justification. |
+| [CTO / CEO] | Allocates resources; accepts residual risk above thresholds. |
+| Control / System Owners | Implement the technical or process controls. |
+
+See `../governance/roles-and-responsibilities.md.template`.
+
+## 5. Treatment SLAs by Residual Risk Level
+<!-- TEMPLATE: Tailor the timeframes to your risk appetite. -->
+| Risk Level (per POL-RSK-01) | Target plan agreed | Target remediation |
+|---|---|---|
+| Critical (16–25) | [≤ 5 business days] | [≤ 30 days] |
+| High (10–15) | [≤ 10 business days] | [≤ 90 days] |
+| Moderate (5–9) | [≤ 30 days] | [≤ 180 days] |
+| Low (1–4) | As resources allow | Monitor; treat opportunistically |
+
+## 6. Treatment Lifecycle
+1. **Plan** — Owner defines actions, success criteria, and target date for the chosen treatment option (Mitigate / Transfer / Avoid).
+2. **Execute** — Actions are implemented, via change management where applicable.
+3. **Evidence** — Owner provides artifacts demonstrating the control is in place (config, screenshot, test result, signed agreement for Transfer).
+4. **Verify** — [Security Officer] (or independent reviewer) confirms the control operates as intended.
+5. **Re-score** — Residual score updated in the register per POL-RSK-01 §8.
+6. **Close or escalate** — If residual is within appetite, close; if above appetite, escalate to further treatment or formal acceptance.
+
+## 7. Tracking & Status
+Treatment items use the register's status values (`Open` · `Treatment In Progress` · `Mitigated` · `Transferred` · `Accepted` · `Closed`). Overdue items past their target date **shall** be escalated to [Security Officer] and reported at management review. Slipped target dates require documented justification from the owner.
+
+## 8. Link to Corrective Action
+Treatment arising from a realized failure (incident, audit nonconformity, failed control test) is handled as corrective action: root cause is identified, the corrective action prevents recurrence (not just the symptom), and effectiveness is verified after implementation, per `../governance/corrective-action-poam.md.template`.
+
+## 9. Exceptions
+Where a required treatment cannot be completed within SLA, the residual risk **shall** be formally accepted (with expiry) per `risk-acceptance.md.template` and `../governance/exceptions-and-waivers.md.template`, approved by [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 10. Compliance, Monitoring & Enforcement
+The [Security Officer] monitors treatment progress and SLA adherence and reports to leadership at management review (`../governance/management-review.md.template`). Internal audit and external assessors review treatment evidence as proof the risk management process operates. Violations are handled per `../people/hr-security-policy.md.template`.
+
+## 11. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 03.c Risk Mitigation; 03.d Risk Evaluation; 06.g / corrective-action controls |
+| HIPAA | 164.308(a)(1)(ii)(B) Risk Management; 164.308(a)(8) Evaluation |
+| SOC 2 (TSC) | CC3.4; CC4.2; CC5.x (control activities) |
+| ISO 27001:2022 | Clause 6.1.3 Risk treatment; 8.3; 10.1 Continual improvement; 10.2 Nonconformity & corrective action |
+
+## 12. Related Documents
+- `risk-management-methodology.md.template`
+- `risk-register.md.template`
+- `risk-acceptance.md.template`
+- `../governance/corrective-action-poam.md.template`
+- `../operations/change-management-policy.md.template`
+- `../governance/management-review.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

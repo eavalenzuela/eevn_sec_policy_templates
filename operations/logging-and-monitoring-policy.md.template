@@ -1,0 +1,105 @@
+<!--
+TEMPLATE: Logging & Monitoring Policy. For a healthcare SaaS the standout control
+is PHI ACCESS AUDIT LOGGING (who accessed which patient/record, when) — HIPAA
+164.312(b) requires audit controls. Also emphasize log IMMUTABILITY (S3 Object
+Lock / WORM) and LONG RETENTION (HIPAA documentation = 6 years; tune log
+retention as [PLACEHOLDER] but call out the 6-year context). Tie to the real
+stack: CloudTrail, GuardDuty, Security Hub, Snowflake ACCESS_HISTORY.
+-->
+
+# Logging and Monitoring Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-OPS-06 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All production and security-relevant systems in scope of the ISMS, including all systems handling PHI |
+
+> **Status:** [DRAFT until approved. Once [CTO] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy defines what events [COMPANY] logs, how logs are centralized and protected, how long they are retained, and how they are monitored and alerted on — so that security events are detected and investigated, and so that **access to PHI is auditable** as required by HIPAA (45 CFR § 164.312(b)).
+
+## 2. Scope
+Applies to all in-scope systems: the SaaS application, [AWS] accounts/services, [Snowflake], databases/[RDS], CI/CD ([GitHub Actions]), and endpoints, plus the logging and monitoring infrastructure itself. It covers security, audit, and operational logs, with special handling for PHI-access audit logs.
+
+## 3. Policy
+1. Security-relevant events **shall** be logged on all in-scope systems (§5), including **all access to PHI** with sufficient detail to answer who accessed what record, when, from where, and what action was taken.
+2. Logs **shall** be centralized to a dedicated, access-restricted [log-archive] account/store and **shall not** be alterable by the systems or accounts that generate them.
+3. Logs **shall** be protected for **integrity and confidentiality**: stored encrypted (`cryptography-and-key-management.md.template`), made **immutable** (e.g., **S3 Object Lock / WORM**) for the retention period, and access to logs restricted to authorized roles and itself logged.
+4. **Logs shall not contain PHI or secrets in plaintext** beyond the minimum identifiers needed for audit; application logs **shall** avoid logging full PHI payloads.
+5. Logs **shall** be retained for [≥ 12 months readily searchable, with archival to satisfy the HIPAA 6-year documentation requirement where the log constitutes required documentation] — see §6.
+6. Time **shall** be synchronized (NTP) across systems so log timestamps are reliable and correlatable.
+7. Alerts **shall** be defined for high-risk events (§7), routed to [on-call/SOC], triaged, and escalated to incident response (`../resilience/incident-response-plan.md.template`) where warranted.
+8. Logs and access-review reports **shall** be reviewed at defined intervals (`../access/access-control-policy.md.template` for periodic access reviews), and PHI-access logs reviewed/audited per §6.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer] | Owns this policy; defines logging scope, alerts, and retention; oversees log review. |
+| [Platform Engineering Lead] | Implements log pipelines, centralization, immutability, and retention controls. |
+| [On-call / SOC] | Monitors alerts; triages and escalates security events. |
+| Service Owners | Ensure their systems emit required logs and avoid logging PHI/secrets. |
+| [CTO] | Approves this policy. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. What to Log
+| Source | Logs |
+|---|---|
+| [AWS] control plane | **CloudTrail** (management + data events for S3/[sensitive] buckets), org-wide, all regions, to log-archive account. |
+| AWS threat detection | **GuardDuty** findings; **Security Hub** aggregated findings/standards. |
+| Network | VPC Flow Logs, [WAF] logs, load balancer access logs (`network-security-policy.md.template`). |
+| Application | Authn/authz events, admin actions, **PHI access (record-level audit)**, errors; no plaintext PHI/secrets. |
+| Database / [RDS] | Connection, auth, and (where supported) query/audit logs. |
+| **Snowflake** | **ACCESS_HISTORY** and account-usage views (queries, objects/columns accessed) exported for PHI-access auditing. |
+| CI/CD | [GitHub] audit log, workflow run logs, deployment records (`change-management-policy.md.template`). |
+| Endpoints | EDR/MDM events (`endpoint-security-policy.md.template`). |
+
+Each event should capture: timestamp (synced), identity/principal, source, action, target/object, and outcome.
+
+## 6. Retention & Immutability
+1. Logs **shall** be written to immutable storage ([S3 with Object Lock in compliance mode] / WORM) for the retention period; deletion before expiry **shall not** be possible by operational roles.
+2. Operational/security logs are retained [≥ 12 months online + [N] years archived]; logs that constitute **HIPAA required documentation** are retained **at least 6 years** (45 CFR § 164.316(b)(2)).
+3. PHI-access audit logs **shall** be retained to support investigations, accounting-of-disclosures, and breach determinations (`../healthcare/hipaa-breach-notification-procedure.md.template`).
+
+## 7. Monitoring & Alerting
+Alerts **shall** be configured for at least: root/privileged account use, IAM/policy changes, disabling of logging or [AWS Config], GuardDuty/Security Hub high/critical findings, anomalous PHI access or bulk data export (incl. [Snowflake] large/unusual queries), failed-auth spikes, secret detections, and changes to security groups exposing resources. Alerts route to [on-call/SOC] with defined response SLAs and feed incident response.
+
+## 8. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log. Disabling or reducing logging on an in-scope system requires such an exception.
+
+## 9. Compliance, Monitoring & Enforcement
+Compliance is verified by confirming log coverage, immutability/retention configuration, alert effectiveness, and log-review records during internal audit and management review. Tampering with or disabling logs is a serious violation handled per `../people/hr-security-policy.md.template` and investigated per `../resilience/incident-response-plan.md.template`.
+
+## 10. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 09.aa Audit Logging; 09.ab Monitoring System Use; 09.ac Protection of Log Information; 09.af Clock Synchronization |
+| HIPAA | 164.312(b) Audit Controls; 164.308(a)(1)(ii)(D) Information System Activity Review; 164.316(b)(2) Retention |
+| SOC 2 (TSC) | CC7.2 Monitoring; CC7.3 Evaluation of events |
+| ISO 27001:2022 | A.8.15 Logging; A.8.16 Monitoring activities; A.8.17 Clock synchronization |
+
+## 11. Related Documents
+- `cryptography-and-key-management.md.template`
+- `network-security-policy.md.template`
+- `configuration-and-hardening-standard.md.template`
+- `endpoint-security-policy.md.template`
+- `../access/access-control-policy.md.template`
+- `../resilience/incident-response-plan.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

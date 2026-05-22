@@ -1,0 +1,92 @@
+# Identity & Authentication Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-AC-02 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members, contractors, non-human identities, and systems in scope of the ISMS |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy establishes how identities are uniquely established, authenticated, and verified across [COMPANY] systems. Strong, unique authentication is the foundation on which the Access Control Policy (`access-control-policy.md.template`) rests: authorization decisions are only trustworthy if the identity making the request is reliably proven.
+
+## 2. Scope
+Applies to all human and non-human identities accessing [COMPANY] systems, including workforce, contractors, service accounts, and automation. It covers the [IdP — e.g. Okta], [AWS] (IAM / IAM Identity Center), [Snowflake], the [GitHub] organization, federated [SaaS] applications, and the production application. PHI-handling systems are explicitly in scope.
+
+## 3. Policy
+1. Every user **shall** have a **unique** identifier; identities **shall not** be shared. Shared, generic, or anonymous interactive accounts are prohibited.
+2. **Multi-factor authentication (MFA) shall be enforced everywhere** human users authenticate — at the [IdP], for all federated applications, for [AWS] console and CLI/role assumption, for [Snowflake], and for [GitHub]. Phishing-resistant factors (FIDO2/WebAuthn/passkeys) **shall** be used where supported; SMS **shall not** be used as a factor.
+3. Access to systems **shall** be centralized through **Single Sign-On (SSO) / federation** via the [IdP] wherever the system supports it, so that identity lifecycle and MFA are enforced from one control point.
+4. Where local (non-federated) passwords are unavoidable, they **shall** meet the password standard in §5.
+5. **Sessions shall** be time-limited, re-authenticated for sensitive operations, and terminated on inactivity per §6.
+6. **Non-human identities** (service accounts, CI/CD principals) **shall** authenticate with key-pairs, workload identity federation, or short-lived tokens — never with interactive credentials or shared secrets — per §7.
+7. Authentication credentials and secrets **shall** be stored and transmitted only in encrypted form and managed through an approved secrets store (`../operations/cryptography-and-key-management.md.template`).
+8. Authentication events (success and failure) **shall** be logged and monitored; repeated failures trigger lockout and alerting.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns this policy; sets MFA, password, and session standards; oversees the IdP configuration. |
+| [IT / Identity Administrators] | Operate the [IdP]; enforce MFA and federation; manage credential lifecycle. |
+| [Engineering / Platform] | Implement key-pair / workload identity auth for service accounts and CI/CD. |
+| All Workforce | Protect their credentials and MFA devices; never share accounts; report lost factors immediately. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Password & Credential Standards
+For any credential not replaced by SSO/passkey:
+- Minimum length **[12+]** characters; screened against known-breached password lists; no enforced periodic rotation unless compromise is suspected (per NIST SP 800-63B guidance).
+- No password reuse across systems; complexity rules **shall not** substitute for length and breach screening.
+- Initial/temporary credentials **shall** be unique, time-limited, and changed on first use.
+- Account lockout after **[N]** failed attempts; credential recovery **shall** require identity verification and **shall not** weaken MFA.
+- All credentials stored using salted, adaptive one-way hashing; secrets (API keys, tokens) stored in [the approved secrets manager — e.g. AWS Secrets Manager].
+
+## 6. Session Management
+- Idle session timeout of **[N minutes]** for the application and administrative interfaces; absolute session lifetime of **[N hours]**.
+- Re-authentication (step-up) **shall** be required for privileged or PHI-sensitive operations.
+- Sessions **shall** be invalidated on logout, on credential change, and on termination; tokens **shall** be revocable.
+- [AWS] CLI/SDK access uses short-lived assumed-role credentials via IAM Identity Center; long-lived static keys for humans are prohibited.
+
+## 7. Service Accounts & Key-Pair Authentication
+- Each service account **shall** have a named human or team owner, a documented purpose, and least-privilege entitlements.
+- **[Snowflake]** programmatic access **shall** use key-pair authentication (rotated [every N days]); ACCOUNTADMIN/SECURITYADMIN are not used for routine automation.
+- **[GitHub]** automation **shall** use scoped GitHub App installations or fine-grained tokens / OIDC, not personal access tokens tied to individuals; CI **shall** authenticate to [AWS] via OIDC federation rather than stored keys.
+- Service-account secrets **shall** be rotated on a defined schedule and immediately on suspected compromise; rotation is tracked as evidence.
+- Service accounts **shall** be included in access recertification (`access-recertification-procedure.md.template`).
+
+## 8. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 9. Compliance, Monitoring & Enforcement
+MFA coverage, federation coverage, and credential age are monitored through [IdP] reports, AWS IAM credential reports, Snowflake `ACCOUNT_USAGE` login/grant views, and GitHub security settings. Gaps are remediated and tracked. Authentication anomalies are investigated under the incident response process. Violations are handled per `../people/hr-security-policy.md.template`.
+
+## 10. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 01.b User Registration; 01.d User Password Management; 01.q User Identification and Authentication; 01.r Authentication for External Connections |
+| HIPAA | 164.312(a)(2)(i) Unique User ID; 164.312(a)(2)(iii) Automatic Logoff; 164.312(d) Person/Entity Authentication |
+| SOC 2 (TSC) | CC6.1, CC6.6, CC6.7 |
+| ISO 27001:2022 | A.5.16 Identity management; A.5.17 Authentication information; A.8.5 Secure authentication |
+
+## 11. Related Documents
+- `access-control-policy.md.template`
+- `privileged-access-management.md.template`
+- `joiner-mover-leaver-procedure.md.template`
+- `../operations/cryptography-and-key-management.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

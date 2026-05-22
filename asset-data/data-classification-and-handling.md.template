@@ -1,0 +1,111 @@
+<!--
+TEMPLATE: This defines the classification tiers and the handling rules per tier. The tier
+NAMES and the rule that PHI sits in the highest tier are the load-bearing decisions — keep
+four tiers (or tailor, but keep PHI at the top). The per-tier handling matrix is the heart
+of the document and what gets audited against actual practice. Reference the real stack
+(AWS encryption, Snowflake masking, GitHub) where relevant. Fill the [PLACEHOLDERS] for
+encryption standards, approved tools, and labeling conventions.
+-->
+
+# Data Classification & Handling Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-DAT-02 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members, contractors, and all data within the ISMS scope |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy classifies [COMPANY]'s information into sensitivity tiers and defines how data in each tier must be stored, transmitted, encrypted, shared, and disposed of. Classification ensures protective effort is proportional to sensitivity, with the strongest controls applied to Protected Health Information (PHI). It is the basis for handling decisions across every system and the foundation for `data-retention-and-disposal.md.template`.
+
+## 2. Scope
+Applies to all data created, received, stored, processed, or transmitted by [COMPANY] in any form (electronic, paper, verbal), across all in-scope systems including the production SaaS application, [AWS], [Snowflake], the [GitHub] CI/CD pipeline, endpoints, and collaboration tools. It binds all workforce members and contractors.
+
+## 3. Policy
+1. All data **shall** be classified into one of the tiers in §5 according to its sensitivity and regulatory obligations; **PHI is always classified Restricted.**
+2. Data **shall** be handled in accordance with the handling matrix in §6 for its classification tier.
+3. Data **shall** be labeled where practical (document markings, [AWS]/[Snowflake] tags, repository sensitivity labels) so handlers know its tier.
+4. **Restricted and Confidential data shall be encrypted in transit ([TLS 1.2+]) and at rest ([AES-256 / cloud KMS])** per `../operations/cryptography-and-key-management.md.template`.
+5. PHI **shall** only be stored, processed, or transmitted via authorized systems; storing or sending PHI through unauthorized tools (personal email, unsanctioned [Slack] channels/DMs, personal cloud storage, local exports) is **prohibited** (`acceptable-use-policy.md.template`).
+6. Access to Restricted and Confidential data **shall** follow least-privilege and need-to-know (`../access/access-control-policy.md.template`).
+7. Sharing Restricted data with external parties **shall** require authorization and, for PHI, an executed Business Associate Agreement (`../vendor/third-party-risk-management-policy.md.template`).
+8. Where the classification of a dataset is ambiguous, it **shall** default to the **higher** tier until clarified by the data owner.
+9. Disposal of classified data **shall** follow `data-retention-and-disposal.md.template`.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns this policy; defines tiers and handling rules; verifies enforcement. |
+| Data / Asset Owners | Classify the data they own; approve sharing; review classification periodically. |
+| [Privacy Officer] | Confirms PHI handling meets HIPAA minimum-necessary and privacy obligations. |
+| All Workforce | Handle data per its classification; do not place PHI in unauthorized tools; report mishandling. |
+
+See `../governance/roles-and-responsibilities.md.template`.
+
+## 5. Classification Tiers
+| Tier | Definition | Examples |
+|---|---|---|
+| **Public** | Approved for public release; no harm if disclosed. | Marketing site, published docs, open-source code. |
+| **Internal** | Default for non-sensitive internal data; limited harm if disclosed. | Internal wikis, non-sensitive operational data. |
+| **Confidential** | Sensitive business data; meaningful harm if disclosed. | Source code, credentials/secrets, contracts, financials, employee data, security configs. |
+| **Restricted — PHI** | Highest tier. Regulated and/or most sensitive data; severe harm and regulatory consequence if disclosed. | **PHI / ePHI**, full patient records, other regulated sensitive data. |
+
+## 6. Handling Matrix
+<!-- TEMPLATE: This matrix is what assessors compare against real practice. Tailor specifics; keep PHI strictest. -->
+| Control | Public | Internal | Confidential | Restricted — PHI |
+|---|---|---|---|---|
+| **Storage** | Any approved location | Approved internal systems | Approved systems only; access-controlled | Authorized PHI systems only ([AWS]/[Snowflake] in scope); no local/uncontrolled copies |
+| **Encryption at rest** | Not required | Recommended | Required ([AES-256/KMS]) | Required ([AES-256], customer/managed [KMS]); key access restricted |
+| **Encryption in transit** | Not required | [TLS 1.2+] | [TLS 1.2+] | [TLS 1.2+] mandatory; no plaintext channels |
+| **Access** | Open | All workforce | Need-to-know, least privilege | Strict need-to-know; minimum necessary; access logged |
+| **Transmission / sharing** | Unrestricted | Internal channels | Approved channels; encrypt external transfer | Authorized channels only; external sharing requires authorization + BAA |
+| **In Snowflake/analytics** | n/a | Allowed | Role-restricted | Row/column masking, dynamic data masking, restricted roles; de-identify where possible |
+| **In Slack/email/chat** | Allowed | Allowed | Avoid secrets; use approved channels | **Prohibited** in email/Slack/unauthorized tools |
+| **Endpoints / local copies** | Allowed | Allowed | Discouraged; encrypted device | **Prohibited** unless explicitly authorized and encrypted |
+| **Disposal** | No special requirement | Standard deletion | Secure deletion | Secure destruction / cryptographic erase per POL-DAT-03; document |
+| **Labeling** | Optional | Optional | Recommended | Required where practical |
+
+## 7. De-identification
+Where PHI is not required for a purpose (e.g., analytics, testing), it **shall** be de-identified or pseudonymized per `../healthcare/de-identification-and-limited-data-set.md.template`. De-identified data meeting the HIPAA standard is no longer PHI and may be handled at a lower tier; test/dev environments **shall not** contain live PHI unless explicitly authorized.
+
+## 8. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by [Security Officer] (and [Privacy Officer] for PHI), time-bound, and recorded in the exceptions log.
+
+## 9. Compliance, Monitoring & Enforcement
+Handling is monitored through access reviews, DLP/scanning where deployed, [AWS]/[Snowflake] configuration monitoring, and audit. Placing PHI in unauthorized locations is a serious violation that may also trigger the breach assessment process (`../healthcare/hipaa-breach-notification-procedure.md.template`). Violations are handled per `../people/hr-security-policy.md.template` and the sanctions policy.
+
+## 10. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 07.d Classification of Information; 06.d Data Protection & Privacy; 01.x Access Control; 06.c |
+| HIPAA | 164.312(a)(1) Access Control; 164.312(c) Integrity; 164.312(e)(1) Transmission Security; 164.514 De-identification |
+| SOC 2 (TSC) | CC6.1; CC6.6; CC6.7; C1.1; C1.2 (Confidentiality) |
+| ISO 27001:2022 | A.5.12 Classification; A.5.13 Labelling; A.5.14 Information transfer; A.8.10–A.8.12; A.8.24 |
+
+## 11. Related Documents
+- `asset-management-policy.md.template`
+- `data-retention-and-disposal.md.template`
+- `acceptable-use-policy.md.template`
+- `../access/access-control-policy.md.template`
+- `../operations/cryptography-and-key-management.md.template`
+- `../healthcare/de-identification-and-limited-data-set.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+- `../vendor/third-party-risk-management-policy.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

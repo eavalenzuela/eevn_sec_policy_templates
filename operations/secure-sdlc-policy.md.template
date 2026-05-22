@@ -1,0 +1,119 @@
+<!--
+TEMPLATE: Secure SDLC Policy. This policy operationalizes "security by design."
+It is the policy-layer counterpart to the eevn_sec_test_templates repo
+(SECURITY.md / THREAT_MODEL.md / SEC_REQUIREMENTS.md / SEC_INVARIANTS.md /
+SEC_VALIDATION.md / SEC_VALIDATION_FINDINGS.md): this policy MANDATES the
+practices; that repo provides the artifact TEMPLATES that satisfy them. Keep the
+CI security gates concrete (SAST/SCA/secret/IaC scanning) and keep the "no PHI
+in repos/fixtures" rule prominent — that is the single highest-risk SDLC item
+for a healthcare SaaS. Leave tool names as [PLACEHOLDERS] so orgs can pick.
+-->
+
+# Secure Software Development Lifecycle (SDLC) Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-OPS-02 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Engineering Lead / Application Security Lead] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and contractors who design, develop, review, or ship software in scope of the ISMS |
+
+> **Status:** [DRAFT until approved. Once [CTO] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy establishes how security is built into [COMPANY]'s software from design through deployment, so that the SaaS application and supporting infrastructure protect PHI by design and by default. It defines mandatory secure-development practices, automated CI security gates, and the supply-chain controls required to ship trustworthy software.
+
+## 2. Scope
+Applies to all software developed or substantially configured by [COMPANY] — application code, IaC, [GitHub Actions] workflows, and database/[Snowflake] logic — and to all repositories, pipelines, and developers in scope of the ISMS. Third-party and open-source components incorporated into [COMPANY] products are in scope for supply-chain controls (§7).
+
+## 3. Policy
+1. Security requirements **shall** be defined and tracked for each system, and **shall** be validated before release. [COMPANY] maintains these as living artifacts using the security validation templates (see §9 and `eevn_sec_test_templates`): an architectural baseline (`SECURITY.md`), a threat model, requirements (`SEC_REQUIREMENTS.md`), invariants (`SEC_INVARIANTS.md`), a validation plan, and findings.
+2. **Threat modeling shall** be performed for new systems and for significant changes to data flows, trust boundaries, or authentication, using STRIDE-per-component (per the `THREAT_MODEL.md` template), and residual risks **shall** be recorded.
+3. **All code shall be peer-reviewed** before merge by an independent reviewer per `change-management-policy.md.template`; reviewers **shall** consider security, not just functionality.
+4. The CI pipeline **shall** enforce, as required (non-bypassable) status checks on every PR: **SAST**, **software composition analysis (SCA)** of dependencies, **secret scanning**, and **IaC scanning** (§6). A failing security gate **shall** block merge unless an approved, time-bound exception exists.
+5. **No Protected Health Information (PHI), and no other production secrets or live customer data, shall be committed to source control or used in test fixtures, seed data, or CI.** Test data **shall** be synthetic or de-identified per `../asset-data/data-classification-and-handling.md.template`.
+6. **Secrets shall not be hardcoded** in code, IaC, or pipeline definitions; they **shall** be retrieved at runtime from approved secret stores per `cryptography-and-key-management.md.template`.
+7. CI/CD **shall** authenticate to [AWS] using **OIDC-federated, short-lived credentials**; **long-lived AWS access keys shall not** be stored in [GitHub] or used by pipelines.
+8. **Third-party [GitHub Actions] shall be pinned to a full commit SHA** (not floating tags) and sourced from trusted/allowlisted publishers; pipeline permissions **shall** default to least privilege (read-only `GITHUB_TOKEN` except where elevation is justified).
+9. Dependencies **shall** be inventoried, kept reasonably current, and remediated for known vulnerabilities per `vulnerability-and-patch-management.md.template`; an SBOM **shall** be produced [where feasible].
+10. Developers **shall** receive secure-coding training relevant to the stack and the OWASP Top 10 at least annually (`../people/security-awareness-training-policy.md.template`).
+11. Production-like environments and data **shall** be separated from development/test (`network-security-policy.md.template`), and security testing **shall** occur before release (§8).
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Application Security Lead] | Owns this policy; defines secure-coding standards and CI gates; triages security findings. |
+| [Engineering Lead] | Ensures teams follow the SDLC; resources remediation. |
+| Developers | Threat model, write secure code, fix findings, never commit PHI/secrets. |
+| Reviewers | Perform security-aware code review; enforce gates. |
+| [Security Officer] | Confirms the SDLC satisfies ISMS/HITRUST control requirements. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. SDLC Phases & Security Activities
+| Phase | Required security activity |
+|---|---|
+| Design | Threat modeling; security requirements; data-flow & PHI mapping; privacy-by-design review. |
+| Implementation | Secure coding standards; secrets via secret store; no PHI in code/fixtures. |
+| Code review | Independent, security-aware peer review; CODEOWNERS for sensitive paths. |
+| Build / CI | SAST, SCA, secret scanning, IaC scanning as required checks; pinned Actions; OIDC to AWS. |
+| Test | Functional + security tests; validation against requirements/invariants; no production PHI. |
+| Release | Change approval, rollback plan (`change-management-policy.md.template`); deploy via auditable pipeline. |
+| Operate | Logging/monitoring, vulnerability & patch management, periodic re-assessment. |
+
+## 6. CI/CD Security Gates
+The pipeline **shall** include the following automated gates, configured as required status checks (see `change-management-policy.md.template` §6):
+- **SAST** — static analysis of first-party code [tool TBD]; new high/critical findings block merge.
+- **SCA** — dependency vulnerability scanning [tool TBD]; thresholds and SLAs per `vulnerability-and-patch-management.md.template`.
+- **Secret scanning** — push-protection and PR scanning [GitHub secret scanning / tool TBD]; detected secrets block merge and trigger rotation.
+- **IaC scanning** — misconfiguration scanning of Terraform/CloudFormation [tool TBD] against the baselines in `configuration-and-hardening-standard.md.template`.
+- **Pipeline hardening** — Actions pinned to SHA; least-privilege token scopes; no inline long-lived credentials; build provenance/SBOM [where feasible].
+
+## 7. Supply Chain & Dependency Management
+1. A current inventory of third-party dependencies and base images **shall** be maintained.
+2. New dependencies **shall** be vetted for license, maintenance status, and known vulnerabilities before adoption.
+3. Vulnerable dependencies **shall** be remediated within the SLAs in `vulnerability-and-patch-management.md.template`.
+4. Build artifacts and container images **shall** originate from trusted registries; base images **shall** be hardened per `configuration-and-hardening-standard.md.template`.
+
+## 8. Pre-Release Security Testing
+Before a significant release, [COMPANY] **shall** complete security validation appropriate to risk (recording results in `SEC_VALIDATION_FINDINGS.md`), which may include targeted penetration testing or threat-model-driven test cases. Material unresolved findings **shall** be remediated or formally risk-accepted before release.
+
+## 9. Relationship to the Security Validation Templates
+This policy mandates the *practices*; the `eevn_sec_test_templates` set provides the *artifact templates* that evidence them — `SECURITY.md`, `THREAT_MODEL.md`, `SEC_REQUIREMENTS.md`, `SEC_INVARIANTS.md`, `SEC_VALIDATION.md`, and `SEC_VALIDATION_FINDINGS.md`. Each in-scope service **shall** maintain these artifacts as living documents, with every requirement/invariant traceable to evidence (file:line or test name).
+
+## 10. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Application Security Lead] and [Security Officer], time-bound, and recorded in the exceptions log. Disabling a CI security gate is itself an exception requiring approval.
+
+## 11. Compliance, Monitoring & Enforcement
+Compliance is verified through review of CI configuration, required-check results, code-review records, and the security validation artifacts during internal audit and continuous monitoring. Detection of committed secrets or PHI triggers incident response (`../resilience/incident-response-plan.md.template`) and credential rotation. Violations are handled per `../people/hr-security-policy.md.template`.
+
+## 12. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 06.d Data Protection; 10.b Input Data Validation; 10.k Change Control; 10.l Outsourced Software Development; 10.m Vulnerability Management |
+| HIPAA | 164.308(a)(1) Security Management Process; 164.312(c)(1) Integrity; 164.308(a)(8) Evaluation |
+| SOC 2 (TSC) | CC8.1 Change Management; CC7.1 Vulnerability identification |
+| ISO 27001:2022 | A.8.25 Secure development lifecycle; A.8.26 Application security requirements; A.8.28 Secure coding; A.8.29 Security testing; A.8.30 Outsourced development |
+
+## 13. Related Documents
+- `change-management-policy.md.template`
+- `vulnerability-and-patch-management.md.template`
+- `configuration-and-hardening-standard.md.template`
+- `cryptography-and-key-management.md.template`
+- `../asset-data/data-classification-and-handling.md.template`
+- `../people/security-awareness-training-policy.md.template`
+- `eevn_sec_test_templates` (security validation artifact templates)
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

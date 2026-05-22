@@ -1,0 +1,99 @@
+<!--
+TEMPLATE: This is the workforce-facing "rules of the road" — what people may and may not do
+with company systems, data, and devices. It is often the policy every employee signs at
+onboarding, so keep it readable. The PROHIBITIONS section is load-bearing for a PHI
+environment: be explicit that PHI must not go into unauthorized tools (personal email,
+unsanctioned Slack, personal cloud, AI tools, local exports). Reference the real stack
+(AWS, Snowflake, GitHub, Slack). Fill the [PLACEHOLDERS] for approved tools and acknowledgment.
+-->
+
+# Acceptable Use Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-DAT-04 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO / Head of People] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members, contractors, and anyone using [COMPANY] systems or data |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History. Workforce members acknowledge this policy at onboarding and annually.]
+
+---
+
+## 1. Purpose
+This policy defines the acceptable and prohibited uses of [COMPANY]'s information systems, data, networks, and devices. It protects [COMPANY], its workforce, and the individuals whose PHI it handles by setting clear expectations for responsible use, so that productivity does not come at the cost of confidentiality, integrity, or availability.
+
+## 2. Scope
+Applies to all workforce members and contractors and to all use of [COMPANY] systems, accounts, data, and devices — corporate-owned and, where permitted, personal devices used for work (BYOD). It covers the production SaaS application, [AWS], [Snowflake], [GitHub], email, [Slack] and other collaboration tools, endpoints, and networks.
+
+## 3. Policy — Acceptable Use
+1. Systems, accounts, and data **shall** be used only for authorized [COMPANY] business purposes and only with access granted under `../access/access-control-policy.md.template`.
+2. Each user **shall** safeguard their credentials, use [SSO/MFA] where available, and **shall not** share accounts or credentials.
+3. Data **shall** be handled according to its classification (`data-classification-and-handling.md.template`); PHI **shall** be accessed only on a minimum-necessary, need-to-know basis.
+4. Users **shall** use only [approved/sanctioned applications and services] for [COMPANY] data; introducing unapproved software or services (shadow IT) that touches [COMPANY] data **shall** require approval.
+5. Devices used for work **shall** meet endpoint security requirements (encryption, screen lock, current patches, [MDM/EDR]) per `../operations/endpoint-security-policy.md.template`.
+6. Users **shall** report lost/stolen devices, suspected incidents, and suspected PHI exposure immediately per `../resilience/incident-response-plan.md.template`.
+7. Users have **no expectation of privacy** in their use of [COMPANY] systems; usage may be monitored and logged for security and compliance, subject to applicable law.
+
+## 4. Prohibited Use
+The following are **prohibited**:
+1. **Placing PHI or Restricted data in unauthorized tools or locations** — personal or non-approved email, unsanctioned [Slack] channels/DMs, personal cloud storage (e.g., personal Drive/Dropbox), personal devices not authorized for it, USB/portable media, or unapproved third-party/AI services.
+2. Pasting PHI, secrets, or Confidential data into **public or unapproved generative-AI / external tools**.
+3. Exporting, copying, or downloading PHI to local machines or uncontrolled locations except as explicitly authorized.
+4. Hardcoding secrets/credentials in code, [GitHub] repositories, tickets, or chat; secrets belong in [the approved secrets manager].
+5. Disabling, bypassing, or tampering with security controls (encryption, logging, MFA, endpoint agents).
+6. Using [COMPANY] systems for illegal activity, harassment, or to access/transmit unlawful or offensive content.
+7. Unauthorized access attempts, scanning, or testing of systems beyond one's authorization.
+8. Connecting unauthorized devices/services to production environments ([AWS]/[Snowflake]).
+9. Sharing Restricted data externally without authorization and, for PHI, an executed BAA (`../vendor/third-party-risk-management-policy.md.template`).
+
+## 5. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns this policy; defines approved tools; monitors compliance. |
+| [Head of People / HR] | Ensures acknowledgment at onboarding and annually; administers sanctions. |
+| Managers | Reinforce acceptable use; approve tool/access requests appropriately. |
+| All Workforce / Contractors | Read, acknowledge, and comply; report violations and incidents. |
+
+See `../governance/roles-and-responsibilities.md.template`.
+
+## 6. Acknowledgment
+All workforce members and contractors **shall** acknowledge this policy at onboarding and at least [annually]. Acknowledgment records are retained as evidence (`../people/security-awareness-training-policy.md.template`).
+
+## 7. Exceptions
+Exceptions (e.g., authorized use of a non-standard tool) require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 8. Compliance, Monitoring & Enforcement
+Use of [COMPANY] systems may be monitored and logged. Violations are handled per `../people/hr-security-policy.md.template` and, for PHI mishandling, the HIPAA workforce sanctions process (`../healthcare/sanctions-policy.md.template`); placing PHI in unauthorized tools may also trigger the breach assessment process (`../healthcare/hipaa-breach-notification-procedure.md.template`). Sanctions range up to and including termination and legal action.
+
+## 9. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 07.c Acceptable Use of Assets; 01.x Access Control; 02.e Workforce conduct |
+| HIPAA | 164.308(a)(4) Information Access Management; 164.310(b) Workstation Use; 164.310(c) Workstation Security |
+| SOC 2 (TSC) | CC1.1; CC1.4; CC6.1; CC6.7 |
+| ISO 27001:2022 | A.5.10 Acceptable use of information & assets; A.6.2 Terms & conditions; A.8.1 User endpoint devices |
+
+## 10. Related Documents
+- `data-classification-and-handling.md.template`
+- `asset-management-policy.md.template`
+- `../access/access-control-policy.md.template`
+- `../operations/endpoint-security-policy.md.template`
+- `../people/security-awareness-training-policy.md.template`
+- `../people/hr-security-policy.md.template`
+- `../healthcare/sanctions-policy.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+- `../resilience/incident-response-plan.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

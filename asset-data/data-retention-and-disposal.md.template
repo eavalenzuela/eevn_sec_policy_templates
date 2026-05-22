@@ -1,0 +1,114 @@
+<!--
+TEMPLATE: This defines how long data is kept and how it is securely destroyed. Two
+load-bearing facts: HIPAA requires retention of REQUIRED DOCUMENTATION (policies, risk
+analyses, breach assessments, etc.) for SIX YEARS (45 CFR 164.316(b)(2)) — note this is the
+documentation-retention rule, NOT a federal medical-record retention period (those are set
+by state law and contract). And destruction of PHI media must meet NIST SP 800-88
+sanitization standards. The retention SCHEDULE itself is org/legal-specific — keep it as
+[PLACEHOLDERS] and have counsel set the actual periods. Reference AWS, Snowflake, backups.
+-->
+
+# Data Retention & Disposal Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-DAT-03 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO / General Counsel] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and all data and media within the ISMS scope |
+
+> **Status:** [DRAFT — retention periods require legal review before approval.]
+
+---
+
+## 1. Purpose
+This policy defines how long [COMPANY] retains different categories of data and how data and the media that hold it are securely disposed of when no longer needed. It ensures retention satisfies legal, regulatory, and contractual obligations (including HIPAA documentation retention) while minimizing the risk of holding data — especially PHI — longer than necessary. Secure disposal ensures retired data cannot be recovered.
+
+## 2. Scope
+Applies to all [COMPANY] data and storage media in any form across all in-scope systems, explicitly including the production SaaS application, [AWS] storage and databases, [Snowflake], **backups and snapshots**, [GitHub] repositories and logs, endpoints, and any physical media (paper, drives). It binds all workforce members and is coordinated with vendors holding [COMPANY] data (`../vendor/third-party-risk-management-policy.md.template`).
+
+## 3. Policy
+1. Data **shall** be retained only as long as required by legal, regulatory, contractual, or legitimate business need, then securely disposed of.
+2. **HIPAA-required documentation** — policies and procedures, risk analyses, breach assessments, training records, access logs and other required records — **shall** be retained for at least **six (6) years** from the date of creation or the date last in effect, whichever is later (45 CFR § 164.316(b)(2)).
+3. Retention periods for **PHI/health records and customer data** **shall** be set per the schedule in §5, informed by applicable **state law and customer/BAA contractual** requirements (which often exceed six years), confirmed with counsel.
+4. Data under a **legal hold** **shall** be preserved and **shall not** be disposed of until the hold is released, overriding the schedule.
+5. Disposal of media and data **shall** meet recognized **sanitization standards (NIST SP 800-88)** appropriate to the media and classification (§6); PHI requires secure destruction or cryptographic erasure.
+6. Disposal of Restricted/PHI data **shall** be documented (what, when, method, by whom) to evidence destruction.
+7. Cloud data deletion **shall** account for replicas, **backups, and snapshots** so that "deleted" PHI is not silently retained beyond its period.
+8. Disposal performed by vendors **shall** be governed by contract and, for PHI, a BAA, with a certificate/attestation of destruction obtained where practical.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns this policy; oversees secure disposal; verifies sanitization methods. |
+| [General Counsel / Privacy Officer] | Sets/confirms retention periods and legal holds; confirms HIPAA/state obligations. |
+| Data / Asset Owners | Apply retention to data they own; initiate disposal; retain disposal records. |
+| [IT / Platform Team] | Execute deletion across [AWS]/[Snowflake]/backups; sanitize/destroy media. |
+| All Workforce | Do not retain Restricted data beyond need; do not dispose of records under hold. |
+
+See `../governance/roles-and-responsibilities.md.template`.
+
+## 5. Retention Schedule
+<!-- TEMPLATE: Periods are LEGAL/business decisions — confirm with counsel. The six-year row is the
+HIPAA *documentation* requirement and is fixed; the rest are [PLACEHOLDERS]. -->
+| Data Category | Classification | Retention Period | Basis | Disposal Trigger |
+|---|---|---|---|---|
+| HIPAA-required documentation (policies, risk analyses, breach records, training, access logs) | Confidential/Restricted | **≥ 6 years** | 45 CFR § 164.316(b)(2) | End of retention; no legal hold |
+| PHI / patient records | Restricted | [Per state law / BAA — often ≥ 6 yrs] | [State law + contract] | Contract end + retention; no hold |
+| Customer data (non-PHI) | Confidential | [Per contract] | [Contract] | Contract termination + period |
+| Application/audit logs | Confidential | [e.g., 1 yr hot, retained per logging policy] | [Operations / forensics] | End of period |
+| Backups / snapshots ([AWS]/[Snowflake]) | Mirrors source class. | [e.g., 35 days rolling] | [BC/DR + retention] | Rolling expiry |
+| Employee/HR records | Confidential | [Per employment law] | [HR / legal] | Per HR policy |
+| [Other category] | [Tier] | [Period] | [Basis] | [Trigger] |
+
+## 6. Secure Disposal & Media Sanitization
+Disposal method is chosen per media type and data classification, aligned to **NIST SP 800-88**:
+
+| Scenario / Media | Method |
+|---|---|
+| Cloud-stored data ([AWS S3/RDS], [Snowflake] tables) | Logical deletion + ensure removal from **replicas, backups, and snapshots**; rely on provider sanitization for underlying storage |
+| Encrypted data | **Cryptographic erase** (destroy/rotate keys so data is unrecoverable) where supported |
+| SSD / flash | Cryptographic erase or vendor secure-erase; physical destruction for highly sensitive |
+| Magnetic drives | Secure overwrite (NIST 800-88 Clear/Purge) or physical destruction |
+| End-of-life endpoints | Wipe/cryptographic erase via [MDM] before reuse; destroy if it held Restricted data and cannot be verified clean |
+| Paper / physical media | Cross-cut shredding or certified destruction |
+
+**For Restricted/PHI:** prefer Purge or Destroy; record a disposal/destruction log entry (item, date, method, performed by, witness/attestation).
+
+## 7. Cloud & Backup Considerations
+Because [AWS] and [Snowflake] replicate data and retain **backups, snapshots, and time-travel/fail-safe copies**, "deleting" PHI from a primary store does not by itself complete disposal. Disposal **shall** account for: backup/snapshot lifecycles, [Snowflake] Time Travel/Fail-safe windows, log copies, and any exports. The [Platform Team] confirms data has aged out of all copies within its retention window.
+
+## 8. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by [Security Officer] and [General Counsel], time-bound, and recorded in the exceptions log. Legal holds always override exceptions.
+
+## 9. Compliance, Monitoring & Enforcement
+The [Security Officer] verifies that retention and disposal occur per schedule and that disposal records exist for Restricted data. Improper disposal of PHI may constitute an impermissible disclosure and trigger `../healthcare/hipaa-breach-notification-procedure.md.template`. Violations are handled per `../people/hr-security-policy.md.template`.
+
+## 10. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 06.c Records Retention; 09.p Disposal of Media; 07.x Asset Management |
+| HIPAA | 164.310(d)(2)(i) Disposal; 164.310(d)(2)(ii) Media Re-use; 164.316(b)(2) Documentation retention (6 yrs) |
+| SOC 2 (TSC) | CC6.5; C1.2 (disposal of confidential info); P4.x (Privacy retention/disposal) |
+| ISO 27001:2022 | A.5.33 Protection of records; A.7.10 / A.7.14 Media & secure disposal; A.8.10 Information deletion |
+
+## 11. Related Documents
+- `data-classification-and-handling.md.template`
+- `asset-management-policy.md.template`
+- `../operations/cryptography-and-key-management.md.template`
+- `../operations/backup-policy.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+- `../vendor/third-party-risk-management-policy.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft (pending legal review of retention periods) |

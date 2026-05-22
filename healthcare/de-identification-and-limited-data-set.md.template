@@ -1,0 +1,121 @@
+<!--
+TEMPLATE: This policy covers de-identification (Safe Harbor and Expert Determination
+under 45 CFR § 164.514(a)-(b)) and Limited Data Sets with Data Use Agreements
+(§ 164.514(e)). This is HIGH-LEVERAGE for a SaaS company doing analytics in Snowflake
+and any LLM/AI usage — properly de-identified data is NOT PHI and falls outside HIPAA,
+but the bar is exact and re-identification risk is real. A Limited Data Set is STILL PHI
+and requires a DUA. HAVE COUNSEL REVIEW THIS before adoption; Expert Determination
+requires a qualified statistician and documented methodology.
+-->
+
+# De-Identification & Limited Data Set Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-HIP-05 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Privacy Officer] |
+| Approver | [CEO / General Counsel] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and all systems handling PHI, analytics, and AI/ML |
+
+> **Status:** [DRAFT — requires legal review before approval.]
+
+---
+
+## 1. Purpose
+This policy governs how [COMPANY] de-identifies PHI and how it creates and shares **Limited Data Sets (LDS)**, under 45 CFR § 164.514(a)–(e). Properly de-identified data is **not PHI** and is not subject to HIPAA; a Limited Data Set **remains PHI** and may be used/disclosed only for limited purposes under a **Data Use Agreement (DUA)**. This policy ensures [COMPANY] applies the correct method before data is used for analytics, product, or AI/ML.
+
+## 2. Scope
+Applies to all PHI processed by [COMPANY] and to all derived datasets, especially those used in [Snowflake] for analytics/reporting and any data used to develop, fine-tune, prompt, or evaluate **machine learning / LLM systems**. Applies to all workforce members and contractors who create or consume such datasets.
+
+## 3. Policy
+1. PHI **shall not** be used for analytics, product development, model training/evaluation, or external sharing in identifiable form unless that use is independently permitted (e.g., by the BAA and the Privacy Rule); otherwise it **shall** be **de-identified** or reduced to a **Limited Data Set** first.
+2. De-identification **shall** use one of the two regulatory methods only: **Expert Determination** (§ 164.514(b)(1)) or **Safe Harbor** (§ 164.514(b)(2)). No other "best effort" method qualifies.
+3. [COMPANY] **shall not** assign a code or other re-identification mechanism that is derived from or related to information about the individual, and **shall not** disclose the re-identification key (§ 164.514(c)).
+4. A **Limited Data Set shall** only be used or disclosed for **research, public health, or health care operations**, and only under an executed **Data Use Agreement** (§ 164.514(e)).
+5. Re-identification of de-identified data, or attempts to re-identify, **shall** be prohibited except by authorized personnel for an approved purpose, and **shall** be logged.
+
+## 4. Safe Harbor De-Identification (45 CFR § 164.514(b)(2))
+Data is de-identified under Safe Harbor when **all 18 identifier categories** are removed for the individual and for relatives, employers, and household members, **and** [COMPANY] has **no actual knowledge** that the remaining information could identify an individual. The 18 identifiers:
+1. Names
+2. Geographic subdivisions smaller than a state (street, city, county, precinct, ZIP — except the first 3 digits of ZIP under the stated population rule)
+3. All date elements (except year) directly related to an individual; all ages over 89 and dates indicating such age aggregated to "90+"
+4. Telephone numbers
+5. Fax numbers
+6. Email addresses
+7. Social Security numbers
+8. Medical record numbers
+9. Health plan beneficiary numbers
+10. Account numbers
+11. Certificate/license numbers
+12. Vehicle identifiers and serial numbers (incl. license plates)
+13. Device identifiers and serial numbers
+14. Web URLs
+15. IP addresses
+16. Biometric identifiers (incl. finger and voice prints)
+17. Full-face photographs and comparable images
+18. Any other unique identifying number, characteristic, or code (except a permitted re-identification code per § 164.514(c))
+
+1. Automated de-identification transforms in [Snowflake] **shall** be reviewed/tested against this list, and a record of the transformation **shall** be retained.
+2. "**No actual knowledge**" **shall** be evaluated — free-text fields, rare diagnoses, and small cell sizes can re-identify individuals even after the 18 identifiers are stripped.
+
+## 5. Expert Determination (45 CFR § 164.514(b)(1))
+1. A person with **appropriate knowledge of and experience with** generally accepted statistical and scientific principles for de-identification **shall** determine that the risk is **very small** that the information could be used, alone or in combination with other reasonably available information, to identify an individual.
+2. The expert **shall** document the **methods and results** of the analysis justifying the determination, and that documentation **shall** be retained for at least **six (6) years**.
+3. Expert Determination **shall** be re-validated when the data, linkage environment, or release context materially changes.
+
+## 6. Limited Data Set & Data Use Agreement (45 CFR § 164.514(e))
+1. A Limited Data Set excludes the **direct identifiers** listed in § 164.514(e)(2) (e.g., names, addresses other than town/city/state/ZIP, phone/fax, email, SSN, MRN, account/license numbers, vehicle/device IDs, URLs, IPs, biometrics, full-face photos) but **may retain** dates and certain geographic detail — therefore it is **still PHI**.
+2. Before disclosing an LDS, [COMPANY] **shall** obtain a **Data Use Agreement** that: establishes permitted uses/disclosures; limits recipients; prohibits re-identification and contact of individuals; requires appropriate safeguards; and binds the recipient's agents/subcontractors (§ 164.514(e)(4)).
+3. Executed DUAs **shall** be tracked alongside BAAs (see `baa-management-procedure.md.template` and the vendor/agreement register).
+
+## 7. Analytics & AI/ML Considerations
+> **Call-out:** This section is the practical heart of the policy for [COMPANY]'s stack.
+1. Datasets feeding [Snowflake] dashboards, BI, or experimentation **shall** default to de-identified data; identifiable PHI in analytics requires explicit approval and a permitted purpose.
+2. **LLM / AI usage:** PHI **shall not** be sent to any external/third-party model API or used for training/fine-tuning unless (a) it is de-identified per §4 or §5, or (b) the provider is under a **BAA** and the use is permitted by the originating BAA. Prompts, embeddings, logs, and model outputs can all contain or reconstruct PHI — treat them as PHI until proven de-identified.
+3. **Free-text and unstructured data** (clinical notes, support tickets) **shall** be presumed to contain identifiers; Safe Harbor stripping of structured columns alone is insufficient. Use validated redaction plus a "no actual knowledge" review, or Expert Determination, before such data is used for analytics/AI.
+4. **Re-identification risk** from joining de-identified data with other [Snowflake] tables or external datasets **shall** be assessed; access to potential linking datasets **shall** be controlled per `minimum-necessary-standard.md.template`.
+5. The method, transformations, reviewer, and approval for each de-identified/LDS dataset used in analytics or AI **shall** be documented in [the dataset register].
+
+## 8. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Privacy Officer] | Owns this policy; approves de-identification method and LDS/DUA disclosures. |
+| [Security Officer] / Data Platform | Implements de-identification/masking transforms in [Snowflake]; controls linking datasets; logs re-identification access. |
+| [Qualified Expert / Statistician] | Performs and documents Expert Determinations. |
+| Data/Analytics & ML Engineers | Use only approved de-identified/LDS data; do not export PHI to non-BAA tools/models. |
+| [Legal / Counsel] | Reviews DUAs and AI/vendor data flows. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 9. Exceptions
+Exceptions require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Privacy Officer] and [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 10. Compliance, Monitoring & Enforcement
+The [Privacy Officer] and data platform team audit dataset lineage, de-identification transforms, DUA coverage, and AI/model data flows. Re-identification attempts and PHI exfiltration to non-approved tools are investigated. Violations are handled per `../people/hr-security-policy.md.template` and the HIPAA workforce sanctions process (`sanctions-policy.md.template`).
+
+## 11. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 13.x De-identification of PHI; 06.d Data Protection; 08.x |
+| HIPAA | 164.514(a) De-identification standard; 164.514(b) Safe Harbor & Expert Determination; 164.514(c) Re-identification; 164.514(e) Limited Data Set & DUA; 164.502(d) |
+| SOC 2 (TSC) | P4.x (Use, Retention, Disposal); CC6.1 |
+| ISO 27001:2022 | A.8.4 Data masking; A.8.11 Data masking; A.5.34 Privacy and protection of PII |
+
+## 12. Related Documents
+- `minimum-necessary-standard.md.template`
+- `baa-management-procedure.md.template`
+- `notice-of-privacy-practices.md.template`
+- `../vendor/third-party-risk-management-policy.md.template`
+- `../governance/roles-and-responsibilities.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft (pending legal review) |

@@ -1,0 +1,81 @@
+# Information Security Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-GOV-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CEO / Board] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members, contractors, and systems in scope of the ISMS |
+
+> **Status:** [DRAFT until approved. This is the apex policy — it must be approved at the highest level (CEO or Board) and referenced by every subordinate policy.]
+
+---
+
+## 1. Purpose
+This policy establishes [COMPANY]'s commitment to protecting the confidentiality, integrity, and availability of information assets — including Protected Health Information (PHI) — and defines the Information Security Management System (ISMS) that governs how that protection is achieved, measured, and improved. It is the top-level statement from which all other security policies derive their authority.
+
+## 2. Scope
+This policy applies to all information assets owned or processed by [COMPANY], all workforce members (employees, contractors, interns, temporary staff), and all systems within the ISMS scope as defined in `isms-scope-statement.md.template`. It explicitly covers all systems that create, receive, maintain, or transmit PHI, including the production SaaS application, [AWS environment], [Snowflake], and the [GitHub] CI/CD pipeline.
+
+## 3. Policy
+1. [COMPANY] **shall** operate an ISMS aligned to the HITRUST CSF and HIPAA Security and Privacy Rules, and pursue/maintain certification as a business objective.
+2. Information **shall** be classified and protected according to its sensitivity per `../asset-data/data-classification-and-handling.md.template`. PHI receives the highest level of protection.
+3. Security risk **shall** be identified, assessed, treated, and monitored through the documented risk management process (`../risk/risk-management-methodology.md.template`), with residual risk formally accepted by accountable executives.
+4. Access to information **shall** follow least-privilege and need-to-know principles, with strong authentication enforced (`../access/access-control-policy.md.template`).
+5. Security **shall** be built into systems and software by design and by default (`../operations/secure-sdlc-policy.md.template`).
+6. Security events **shall** be logged, monitored, and responded to under a defined incident response capability (`../resilience/incident-response-plan.md.template`); suspected breaches of PHI follow `../healthcare/hipaa-breach-notification-procedure.md.template`.
+7. Third parties handling [COMPANY] data **shall** be risk-assessed and bound by appropriate agreements, including Business Associate Agreements where PHI is involved (`../vendor/third-party-risk-management-policy.md.template`).
+8. All workforce members **shall** complete security and privacy awareness training upon hire and at least annually (`../people/security-awareness-training-policy.md.template`).
+9. The ISMS **shall** be reviewed by management at planned intervals and continually improved (`management-review.md.template`).
+10. Violations of this policy or its subordinate policies **may** result in disciplinary action up to and including termination, and where applicable, legal action.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [CEO / Board] | Owns and approves this policy; provides resources; accountable for the security program. |
+| [Security Officer / CISO] | Owns the ISMS; designated HIPAA Security Officer; maintains the policy set; reports risk to leadership. |
+| [Privacy Officer] | Designated HIPAA Privacy Officer; owns privacy policies and individual rights. |
+| Department Leaders | Implement policy within their teams; allocate time for compliance. |
+| All Workforce | Comply with policies; complete training; report security incidents and suspected breaches. |
+
+See `roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. ISMS Framework
+[COMPANY]'s ISMS comprises this apex policy and the subordinate policies, procedures, standards, and registers maintained in the security policy set. The ISMS operates on a continual-improvement (Plan-Do-Check-Act) cycle: risks are assessed (Plan), controls implemented (Do), effectiveness measured through monitoring and internal audit (Check), and gaps remediated through corrective action (Act). The Statement of Applicability (`statement-of-applicability.md.template`) records which controls apply and their status.
+
+## 6. Policy Management
+All security policies follow the document-control process in `document-control.md.template`: they are version-controlled, approved by a named authority, reviewed at least annually, and communicated to affected workforce members. This apex policy is reviewed at least annually and upon significant change to the business, regulatory environment, or risk profile.
+
+## 7. Exceptions
+Exceptions to this policy or any subordinate policy require documented risk acceptance per `exceptions-and-waivers.md.template`, approved by the [Security Officer] and [CEO], time-bound, and recorded in the exceptions log.
+
+## 8. Compliance, Monitoring & Enforcement
+Compliance is monitored through internal audits, management reviews, and continuous control monitoring. Adherence is mandatory for all workforce members. Violations are handled per `../people/hr-security-policy.md.template`, including the HIPAA workforce sanctions process (`../healthcare/sanctions-policy.md.template`).
+
+## 9. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 00 Information Security Management Program; 04.a Information Security Policy Document |
+| HIPAA | 164.308(a)(1) Security Management Process; 164.316 Policies and Procedures |
+| SOC 2 (TSC) | CC1.x, CC2.x, CC5.x |
+| ISO 27001:2022 | Clause 5.2 Policy; A.5.1 Policies for information security |
+
+## 10. Related Documents
+- `isms-scope-statement.md.template`
+- `statement-of-applicability.md.template`
+- `roles-and-responsibilities.md.template`
+- `document-control.md.template`
+- `../risk/risk-management-methodology.md.template`
+- All subordinate policies in this repository.
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

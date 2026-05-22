@@ -1,0 +1,109 @@
+<!--
+TEMPLATE: ISO 27001 Clause 9.2 / HITRUST internal assessment. The single most-scrutinized
+attribute here is INDEPENDENCE: auditors must not audit their own work. In a small org you
+achieve this by having someone review an area they don't operate, or by using an external
+party. Keep the schedule risk-based (audit high-risk/PHI areas more often), and make sure
+findings flow into the POA&M register — an audit with no follow-up is a finding in itself.
+-->
+
+# Internal Audit Program
+
+| Field | Value |
+|---|---|
+| Document ID | POL-GOV-08 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Compliance / Audit Lead] |
+| Approver | [CEO / Board] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | The ISMS and all in-scope controls and control owners |
+
+> **Status:** [DRAFT until approved.]
+
+---
+
+## 1. Purpose
+This document defines [COMPANY]'s internal audit program for the ISMS: its scope, independence requirements, schedule, methodology, reporting, and follow-up. Internal audit provides independent assurance that controls are designed and operating effectively, that the ISMS conforms to its own requirements and to HITRUST/HIPAA, and it readies the organization for external assessment.
+
+## 2. Scope
+Covers internal auditing of all controls and processes within the ISMS scope (`isms-scope-statement.md.template`), across in-scope [AWS], [Snowflake], and [GitHub] systems, supporting SaaS, and administrative processes. Internal audit is distinct from, and complementary to, external HITRUST/SOC 2 assessments.
+
+## 3. Policy
+1. The ISMS **shall** be internally audited at planned intervals such that every applicable control is audited at least once per [assessment cycle / annually], with a risk-based frequency that audits PHI-handling and high-risk areas more often.
+2. Auditors **shall** be independent of the activities they audit; an auditor **shall not** audit their own work.
+3. Audits **shall** follow a documented methodology and produce evidence-based findings rated by severity.
+4. Findings **shall** be reported to the relevant control owners and to [top management], and entered into the corrective-action / POA&M register (`corrective-action-poam.md.template`).
+5. Corrective actions **shall** be tracked to closure and verified by follow-up.
+6. The audit plan and results **shall** be inputs to management review (`management-review.md.template`).
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Compliance / Audit Lead] | Owns the program; maintains the audit plan; assigns independent auditors. |
+| Auditors (internal or contracted) | Conduct audits objectively; document evidence and findings. |
+| Control / Process Owners | Provide evidence; own and remediate findings. |
+| [Security Officer / CISO] | Receives results; ensures remediation resourcing. |
+| [CEO / Board] | Receives summary assurance; supports independence. |
+
+See `roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Independence & Objectivity
+Auditors **shall** be free from conflicts of interest with the area under review. Where the organization is too small for full separation, independence is achieved by [peer review of an area the auditor does not operate], [rotating reviewers], or [engaging an external assessor]. Auditor independence for each engagement is documented in the audit plan.
+
+## 6. Audit Schedule
+An annual, risk-based audit plan **shall** be maintained and approved, covering which controls/domains are audited, when, and by whom.
+
+| Area / Domain | Risk | Frequency | Auditor (independent of area) |
+|---|---|---|---|
+| Access control & privileged access | High | [Semi-annual] | [Assigned] |
+| PHI handling & data protection | High | [Semi-annual] | [Assigned] |
+| Vulnerability & patch management | High | [Annual] | [Assigned] |
+| Change management & CI/CD ([GitHub]) | Medium | [Annual] | [Assigned] |
+| Logging & monitoring ([AWS]/[Snowflake]) | Medium | [Annual] | [Assigned] |
+| Vendor / BAA management | Medium | [Annual] | [Assigned] |
+| Governance, policies, training | Low | [Annual] | [Assigned] |
+
+## 7. Methodology
+1. **Plan:** define objectives, scope, criteria (policy + HITRUST/HIPAA), and sample.
+2. **Conduct:** examine evidence, interview owners, test control operation against criteria.
+3. **Evaluate & rate:** classify each finding (e.g., Critical / High / Medium / Low / Observation) by risk and impact.
+4. **Document:** record evidence, findings, and conclusions in an audit report.
+5. **Validate:** confirm findings with control owners before finalizing.
+
+## 8. Reporting
+Each audit produces a report stating scope, criteria, findings with severity, evidence, and recommendations. Reports are issued to control owners and [top management] and summarized for the Steering Committee and management review. Audit reports are retained as ISMS records per `document-control.md.template`.
+
+## 9. Follow-up & Closure
+Each finding is logged in the POA&M register with an owner, remediation plan, and due date. The [Compliance / Audit Lead] tracks remediation and performs follow-up verification, confirming the corrective action effectively addressed the root cause before closing the finding.
+
+## 10. Exceptions
+Deviations from the audit plan (e.g., a deferred audit) require documented rationale per `exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded.
+
+## 11. Compliance, Monitoring & Enforcement
+The audit program's execution is itself evidenced and reviewed at management review and during external assessment. Obstruction of an audit or failure to remediate findings is an ISMS deficiency; conduct issues are handled per `../people/hr-security-policy.md.template`.
+
+## 12. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 00 Information Security Management Program; internal assessment |
+| HIPAA | 164.308(a)(8) Evaluation; 164.308(a)(1)(ii)(D) |
+| SOC 2 (TSC) | CC4.1, CC4.2 (Monitoring activities) |
+| ISO 27001:2022 | Clause 9.2 Internal audit |
+
+## 13. Related Documents
+- `information-security-policy.md.template`
+- `statement-of-applicability.md.template`
+- `corrective-action-poam.md.template`
+- `management-review.md.template`
+- `isms-scope-statement.md.template`
+- `document-control.md.template`
+- `../risk/risk-management-methodology.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

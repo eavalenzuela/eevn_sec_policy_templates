@@ -1,0 +1,101 @@
+<!--
+TEMPLATE: Cryptography & Key Management Policy. Two things assessors check hard:
+(1) encryption at rest AND in transit for PHI, with TLS >= 1.2; (2) a real key
+lifecycle (generation, storage, rotation, revocation/destruction) — not just
+"we use KMS." Keep approved algorithms current; leave key ARNs, rotation periods,
+and TLS minimums as [PLACEHOLDERS] but state sane defaults. Note the link to the
+breach-notification safe harbor: properly encrypted PHI generally avoids breach
+notification, so this control has direct regulatory value.
+-->
+
+# Cryptography and Key Management Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-OPS-05 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Security Officer] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All systems that store, process, or transmit PHI or other confidential data in scope of the ISMS |
+
+> **Status:** [DRAFT until approved. Once [CTO] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy defines how [COMPANY] uses cryptography to protect the confidentiality and integrity of PHI and other sensitive data at rest and in transit, and how cryptographic keys and secrets are managed across their lifecycle. Properly applied encryption also supports the HIPAA breach-notification **safe harbor** (`../healthcare/hipaa-breach-notification-procedure.md.template`).
+
+## 2. Scope
+Applies to all in-scope data stores and transport ([AWS] services, [Snowflake], [RDS], S3, application traffic, backups), all cryptographic keys and secrets used by [COMPANY] systems, and all workforce/automation that manages them. PHI is always classified as requiring encryption per `../asset-data/data-classification-and-handling.md.template`.
+
+## 3. Policy
+1. **All PHI and confidential data shall be encrypted at rest** using approved algorithms (§5) and keys managed per §6.
+2. **All data in transit over untrusted networks shall be encrypted with TLS [1.2] or higher** (TLS 1.3 preferred); plaintext protocols (HTTP, FTP, unencrypted DB connections) **shall not** be used for PHI. Weak ciphers/protocols (SSLv3, TLS 1.0/1.1) **shall** be disabled.
+3. Only **approved algorithms and key lengths** (§5) **shall** be used; deprecated/broken algorithms (MD5, SHA-1 for signatures, DES/3DES, RC4) **shall not** be used for protecting confidential data.
+4. Cryptographic keys **shall** be generated, stored, rotated, revoked, and destroyed under a defined lifecycle (§6) using [AWS KMS] (or an approved HSM/KMS); private keys and symmetric keys **shall not** leave the boundary of the key store in plaintext.
+5. **Secrets shall be stored in an approved secrets manager** ([AWS Secrets Manager] / [SSM Parameter Store, SecureString]) and retrieved at runtime; **secrets shall never be hardcoded** in source, IaC, container images, logs, or pipeline definitions (`secure-sdlc-policy.md.template`).
+6. Access to keys and secrets **shall** follow least privilege via IAM/KMS key policies; key usage **shall** be logged (CloudTrail) and monitored (`logging-and-monitoring-policy.md.template`).
+7. Keys **shall** be rotated on a defined schedule (§6) and immediately upon suspected compromise or workforce departure with access.
+8. Cryptographic modules **shall** be FIPS 140-2/140-3 validated where required by contract or regulation [confirm requirement].
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer] | Owns this policy; approves algorithms and key-management design; oversees rotation and access. |
+| [Platform Engineering Lead] | Implements KMS keys, key policies, TLS configuration, and secret stores. |
+| Service Owners | Use approved crypto/secret stores; request least-privilege key access. |
+| [CTO] | Approves this policy and cryptographic exceptions. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Approved Algorithms (minimums)
+| Use | Approved | Notes |
+|---|---|---|
+| Symmetric encryption | AES-256 (GCM preferred) | Default for data at rest. |
+| Asymmetric / key exchange | RSA ≥ 3072, or ECC P-256/P-384 | |
+| Hashing (integrity) | SHA-256 / SHA-384 | SHA-1/MD5 prohibited for security use. |
+| Password storage | bcrypt / scrypt / Argon2id / PBKDF2 (high iterations) | Salted; never reversible encryption. |
+| Transport | TLS [1.2]+ with modern cipher suites; TLS 1.3 preferred | TLS ≤ 1.1 disabled. |
+[Review against current NIST/industry guidance at each annual review.]
+
+## 6. Key & Secret Lifecycle
+- **Generation:** Keys generated within [AWS KMS]/HSM; sufficient entropy; never in application code.
+- **Storage:** KMS-managed CMKs ([customer-managed keys] for PHI-bearing data); secrets in [Secrets Manager]/[SSM SecureString]; no plaintext export.
+- **Distribution/use:** Access via IAM/KMS key policies, least privilege; envelope encryption for data keys.
+- **Rotation:** Automatic annual rotation for KMS CMKs [enable]; secrets rotated every [90 days / on schedule] and on compromise; rotate immediately on suspected exposure or relevant offboarding.
+- **Revocation/destruction:** Disable/schedule deletion of keys when retired; document destruction; ensure data dependent on a destroyed key is also retired (crypto-shredding may be used for secure deletion).
+- **Service-specific:** [Snowflake] uses hierarchical key model with automatic rotation; [Tri-Secret Secure / CMK] where required. [RDS], S3, EBS use KMS-backed encryption with default-on settings (`configuration-and-hardening-standard.md.template`).
+
+## 7. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer] and [CTO], time-bound, and recorded in the exceptions log. Use of any non-approved algorithm requires explicit approval.
+
+## 8. Compliance, Monitoring & Enforcement
+Compliance is verified through [AWS Config]/[Security Hub] checks (encryption enabled, TLS policies), KMS/CloudTrail key-usage review, secret-scanning results, and TLS configuration scans, reviewed during internal audit. Detection of hardcoded secrets triggers rotation and incident response (`../resilience/incident-response-plan.md.template`). Violations are handled per `../people/hr-security-policy.md.template`.
+
+## 9. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 06.d Data Protection; 10.f Policy on the Use of Cryptographic Controls; 10.g Key Management |
+| HIPAA | 164.312(a)(2)(iv) Encryption and Decryption; 164.312(e)(2)(ii) Encryption (transmission); 164.402 (breach safe harbor) |
+| SOC 2 (TSC) | CC6.1, CC6.7 |
+| ISO 27001:2022 | A.8.24 Use of cryptography |
+
+## 10. Related Documents
+- `configuration-and-hardening-standard.md.template`
+- `secure-sdlc-policy.md.template`
+- `logging-and-monitoring-policy.md.template`
+- `network-security-policy.md.template`
+- `../asset-data/data-classification-and-handling.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+- `../access/access-control-policy.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

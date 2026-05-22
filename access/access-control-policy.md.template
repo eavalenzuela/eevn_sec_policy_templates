@@ -1,0 +1,101 @@
+# Access Control Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-AC-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members, contractors, and systems in scope of the ISMS, including all systems that handle PHI |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy defines how [COMPANY] grants, manages, and removes logical access to information systems and data so that access is limited to authorized individuals and processes with a legitimate business need. It implements the least-privilege and need-to-know principles required to protect the confidentiality, integrity, and availability of information assets, including Protected Health Information (PHI).
+
+## 2. Scope
+This policy applies to all workforce members, contractors, and non-human identities (service accounts, automation, CI/CD principals) that access [COMPANY] systems. It covers all in-scope systems, with particular emphasis on those that create, receive, maintain, or transmit PHI: the production SaaS application, the [AWS] environment (IAM / IAM Identity Center), [Snowflake] (RBAC), the [GitHub] organization, and federated [SaaS] applications fronted by the [IdP — e.g. Okta]. Authentication mechanics are governed by `identity-and-authentication-policy.md.template`; this policy governs *authorization*.
+
+## 3. Policy
+1. Access **shall** be granted on the principles of **least privilege** (the minimum permissions required to perform a role) and **need-to-know** (data access limited to what the role legitimately requires).
+2. Access **shall** be **default-deny**: no access exists until explicitly granted through the authorization workflow in §6.
+3. Access **shall** be granted to **roles, not individuals**, using Role-Based Access Control (RBAC). Standing entitlements are attached to defined roles; individuals receive entitlements only by assignment to a role.
+4. Every account **shall** map to a single, identifiable owner. Shared or generic interactive accounts are prohibited (see `identity-and-authentication-policy.md.template`).
+5. **Segregation of Duties (SoD)** **shall** be enforced so that no single individual can both authorize and execute a sensitive action without independent control (e.g., the requester of access may not also be its sole approver; the author of production code may not be its sole deployer where avoidable).
+6. All access grants, changes, and revocations **shall** be authorized through the workflow in §6 and recorded as evidence.
+7. Privileged and administrative access **shall** be additionally governed by `privileged-access-management.md.template`.
+8. Joiner, mover, and leaver events **shall** be processed per `joiner-mover-leaver-procedure.md.template`, including timely revocation on termination.
+9. All access entitlements **shall** be periodically recertified per `access-recertification-procedure.md.template`; access no longer required **shall** be revoked.
+10. Access to PHI **shall** be restricted to the minimum necessary and **shall** be logged and monitored.
+11. Access-control configurations (IAM policies, Snowflake role grants, GitHub permissions) **shall** be managed as code or through audited administrative tooling wherever feasible, and changes **shall** be reviewed.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns this policy; defines the RBAC model and SoD matrix; oversees recertification. |
+| [System / Resource Owners] | Define the roles and entitlements for their systems; approve access requests within their domain. |
+| [Manager] | Initiates access requests for their reports; confirms ongoing business need at recertification. |
+| [IT / Identity Administrators] | Execute provisioning and deprovisioning per approved requests; maintain the IdP and directory. |
+| All Workforce | Use only access granted to them; do not share credentials; report excess or unneeded access. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. RBAC, Account Types & Segregation of Duties
+**Account types.** [COMPANY] recognizes the following account types, each with distinct controls:
+- **Standard user accounts** — day-to-day workforce access, provisioned via the [IdP — e.g. Okta] and federated to downstream systems.
+- **Privileged / administrative accounts** — elevated access governed by `privileged-access-management.md.template`; separate from daily-use accounts.
+- **Service / non-human accounts** — used by applications, automation, and CI/CD; key-pair or workload identity authenticated (see `identity-and-authentication-policy.md.template`); owned by a named individual or team.
+- **Emergency / break-glass accounts** — pre-provisioned, tightly controlled, logged, and used only under documented emergency procedures.
+- **External / guest accounts** — contractors and vendors; time-bound and subject to third-party requirements (`../vendor/third-party-risk-management-policy.md.template`).
+
+**RBAC model.** Each in-scope system defines named roles with documented entitlements:
+- **[AWS]** — permissions assigned through IAM Identity Center permission sets / IAM roles mapped to job functions; no long-lived user access keys for human users; cross-account access via assumed roles.
+- **[Snowflake]** — functional roles (e.g., analyst, engineer, read-only) built on a role hierarchy; access to PHI-bearing schemas restricted by role grants; warehouse and database privileges granted to roles, never directly to users.
+- **[GitHub]** — team-based repository permissions; least-privilege repo roles (read / triage / write / maintain) assigned via teams; org-owner access minimized per the PAM policy.
+- **[Application]** — in-app roles enforce least privilege over PHI and customer data.
+
+**Segregation of duties.** A documented SoD matrix **shall** identify conflicting duty pairs (e.g., access approver vs. access administrator; developer vs. production deployer; security configuration vs. log/audit administration). Where complete separation is impractical (small teams), compensating controls (peer review, enhanced logging, after-the-fact review) **shall** be documented as an exception per §7.
+
+## 6. Access Authorization Workflow
+1. **Request** — A [Manager] or the individual submits an access request via [the access request system / ticketing tool], specifying the role or entitlement and business justification.
+2. **Authorize** — The relevant [System / Resource Owner] (and, for PHI or privileged access, the [Security Officer]) approves or denies. The requester may not be the sole approver.
+3. **Provision** — [IT / Identity Administrators] grant access by assigning the appropriate role/permission set; access is provisioned through the [IdP] and federation wherever supported.
+4. **Record** — The approval, justification, and grant are retained as evidence to support recertification (`access-recertification-procedure.md.template`) and audit.
+5. **Review & revoke** — Access is reviewed on schedule and revoked on role change or departure (`joiner-mover-leaver-procedure.md.template`).
+
+## 7. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log. SoD compensating controls are documented here.
+
+## 8. Compliance, Monitoring & Enforcement
+Compliance is verified through periodic access recertification, automated entitlement reporting (AWS IAM Access Analyzer / Identity Center reports, Snowflake `ACCOUNT_USAGE` grants views, GitHub access exports), and internal audit. Anomalous or unauthorized access is investigated under the incident response process. Violations are handled per `../people/hr-security-policy.md.template`, including the HIPAA workforce sanctions process (`../healthcare/sanctions-policy.md.template`).
+
+## 9. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 01.a Access Control Policy; 01.b User Registration; 01.c Privilege Management; 01.v Information Access Restriction |
+| HIPAA | 164.308(a)(4) Information Access Management; 164.312(a)(1) Access Control; 164.312(a)(2)(i) Unique User ID |
+| SOC 2 (TSC) | CC6.1, CC6.2, CC6.3 |
+| ISO 27001:2022 | A.5.15 Access control; A.5.18 Access rights; A.8.2 Privileged access rights; A.8.3 Information access restriction |
+
+## 10. Related Documents
+- `identity-and-authentication-policy.md.template`
+- `joiner-mover-leaver-procedure.md.template`
+- `privileged-access-management.md.template`
+- `access-recertification-procedure.md.template`
+- `remote-access-policy.md.template`
+- `../governance/roles-and-responsibilities.md.template`
+- `../asset-data/data-classification-and-handling.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

@@ -1,0 +1,123 @@
+<!--
+TEMPLATE: This procedure operationalizes the individual rights under the HIPAA Privacy
+Rule: access (§ 164.524), amendment (§ 164.526), accounting of disclosures (§ 164.528),
+restriction requests (§ 164.522(a)), and confidential communications (§ 164.522(b)).
+The TIMELINES below are set by regulation — do not change them. As a Business Associate,
+[COMPANY] usually supports the Covered Entity's fulfillment per the BAA rather than
+responding to individuals directly; reflect your actual role. HAVE COUNSEL REVIEW THIS
+before adoption (state laws and the right of access enforcement initiative impose strict
+fee and timing limits).
+-->
+
+# Individual Rights Procedure
+
+| Field | Value |
+|---|---|
+| Document ID | POL-HIP-04 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Privacy Officer] |
+| Approver | [CEO / General Counsel] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and all systems handling PHI |
+
+> **Status:** [DRAFT — requires legal review before approval.]
+
+---
+
+## 1. Purpose
+This procedure defines how [COMPANY] receives, verifies, fulfills, and documents requests by individuals to exercise their rights over their PHI under the HIPAA Privacy Rule — access, amendment, accounting of disclosures, restriction requests, and confidential communications — within the timelines required by regulation.
+
+## 2. Scope
+Applies to all PHI maintained by [COMPANY] in any form and to all workforce members who receive or process individual rights requests. Where [COMPANY] acts as a **Business Associate**, this procedure governs how it **supports the Covered Entity** in fulfilling these rights per the BAA; where [COMPANY] acts as a **Covered Entity**, it governs direct fulfillment.
+
+## 3. Receiving & Verifying Requests
+1. Requests **may** be received via [intake channel(s) — e.g. privacy@…, portal, mail] and **shall** be logged in the [individual rights request register] with a date stamp on receipt (the clock starts on receipt).
+2. The [Privacy Officer] **shall** verify the **identity** of the requestor (and authority, for personal representatives) using [verification method] before disclosing or acting on PHI, in a manner that does not create an unreasonable barrier to the right of access.
+3. Where [COMPANY] is a BA, the request **shall** be routed to the relevant Covered Entity within [BAA-defined timeframe], and [COMPANY] **shall** provide supporting data/responses as the BAA requires.
+4. [COMPANY] **shall not** require individuals to provide a reason for an access request, and **shall not** condition access on unrelated steps.
+
+## 4. Right of Access (45 CFR § 164.524)
+1. Individuals have a right to inspect and obtain a **copy** of PHI in a **designated record set**.
+2. [COMPANY] **shall** act on a request **within 30 days** of receipt, with a single **30-day extension** permitted if the individual is notified in writing of the reason and expected date.
+3. Copies **shall** be provided in the **form and format requested** if readily producible (including a readily producible **electronic copy** of ePHI), otherwise in a readable hard copy or other agreed format.
+4. Upon request, [COMPANY] **shall** transmit the copy **directly to a third party** designated by the individual in a clear, signed writing.
+5. Any **fee** charged **shall** be limited to a reasonable, cost-based fee per § 164.524(c)(4) (labor for copying, supplies, postage, preparing a summary if agreed) — no search/retrieval fees.
+6. **Denials** are limited to the narrow grounds in § 164.524(a)(2)–(3); reviewable denials **shall** afford the individual a review by a licensed professional who did not participate in the original decision. Denials **shall** be in writing and state the basis and complaint rights.
+
+## 5. Right to Amend (45 CFR § 164.526)
+1. Individuals may request **amendment** of PHI in a designated record set.
+2. [COMPANY] **shall** act **within 60 days**, with one **30-day extension** on written notice.
+3. If **accepted**, [COMPANY] **shall** amend the record, inform the individual, and make reasonable efforts to notify and provide the amendment to persons identified by the individual and those known to have the PHI who may rely on it.
+4. If **denied** (permitted grounds include PHI not created by [COMPANY], not part of the designated record set, not available for access, or accurate and complete), [COMPANY] **shall** provide a written denial stating the basis and the individual's right to submit a **statement of disagreement**, which is then included in future disclosures.
+
+## 6. Accounting of Disclosures (45 CFR § 164.528)
+1. Individuals have a right to an **accounting** of certain disclosures of PHI in the **6 years** prior to the request.
+2. The accounting **excludes** disclosures for TPO, to the individual, pursuant to an authorization, and certain others enumerated in § 164.528(a)(1).
+3. [COMPANY] **shall** maintain a **disclosure log** capturing date, recipient, description of PHI, and purpose for accountable disclosures, so an accounting can be produced.
+4. [COMPANY] **shall** provide the accounting **within 60 days**, with one **30-day extension** on written notice. The first accounting in any 12-month period is **free**; a reasonable cost-based fee may apply thereafter with prior notice.
+
+## 7. Request for Restrictions (45 CFR § 164.522(a))
+1. Individuals may request **restrictions** on uses/disclosures of PHI for TPO and to family/others involved in care.
+2. [COMPANY] is generally **not required to agree**, but **shall** honor any restriction it agrees to (except in emergencies), and **shall** document agreed restrictions and enforce them in [system controls].
+3. [COMPANY] **shall** comply with a request to **restrict disclosure to a health plan** for payment/operations where the individual has paid for the item/service **in full out of pocket** (the one mandatory restriction), to the extent applicable.
+
+## 8. Confidential Communications (45 CFR § 164.522(b))
+1. Individuals may request to receive communications of PHI by **alternative means or at alternative locations** (e.g., a specific email, address, or phone).
+2. [COMPANY] (as a CE) **shall** accommodate **reasonable** requests and **shall not** require an explanation; it may condition accommodation on information about how payment will be handled and specification of an alternative contact.
+3. Where [COMPANY] is a BA, confidential-communication preferences received from the CE **shall** be configured in [system controls].
+
+## 9. Timelines Summary
+| Right | Standard Deadline | Extension |
+|---|---|---|
+| Access (§ 164.524) | 30 days from receipt | one 30-day extension, with written notice |
+| Amendment (§ 164.526) | 60 days from receipt | one 30-day extension, with written notice |
+| Accounting of Disclosures (§ 164.528) | 60 days from receipt | one 30-day extension, with written notice |
+| Restrictions (§ 164.522(a)) | Reasonable time / per [SLA] | n/a |
+| Confidential Communications (§ 164.522(b)) | Reasonable time / per [SLA] | n/a |
+
+> **Note:** Where [COMPANY] is a BA, the **BAA may require it to respond to the Covered Entity well before** these regulatory outer limits so the CE can meet its own deadline. Apply the stricter of the BAA timeline and any internal [SLA].
+
+## 10. Documentation & Retention
+All requests, verifications, responses, denials, statements of disagreement, and fees **shall** be documented and retained for at least **six (6) years** per 45 CFR § 164.316(b)(2). [COMPANY] bears the burden of demonstrating timely, compliant handling.
+
+## 11. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Privacy Officer] | Owns this procedure; verifies requests; tracks timelines; approves denials with counsel. |
+| [Security Officer] | Produces ePHI copies; configures restrictions/confidential-communication controls; maintains disclosure logs. |
+| [Legal / Counsel] | Reviews denials, fee schedules, and personal-representative authority questions. |
+| All Workforce | Forward any individual rights request to the [Privacy Officer] immediately. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 12. Exceptions
+Exceptions to internal handling steps require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Privacy Officer], time-bound, and recorded in the exceptions log. Regulatory rights and timelines **may not** be waived by internal exception.
+
+## 13. Compliance, Monitoring & Enforcement
+The [Privacy Officer] monitors request volumes, on-time fulfillment, and denial rates, reporting metrics in management review. Missed timelines are treated as compliance findings. Violations are handled per `../people/hr-security-policy.md.template` and the HIPAA workforce sanctions process (`sanctions-policy.md.template`).
+
+## 14. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 19.x Individual Participation & Access; 13.x Privacy Practices |
+| HIPAA | 164.524 Access; 164.526 Amendment; 164.528 Accounting of Disclosures; 164.522 Restrictions & Confidential Communications |
+| SOC 2 (TSC) | P5.1, P5.2 (Access); P4.x |
+| ISO 27001:2022 | A.5.34 Privacy and protection of PII; A.8.3 Information access restriction |
+
+## 15. Related Documents
+- `notice-of-privacy-practices.md.template`
+- `minimum-necessary-standard.md.template`
+- `baa-management-procedure.md.template`
+- `hipaa-breach-notification-procedure.md.template`
+- `../access/access-control-policy.md.template`
+- `../governance/roles-and-responsibilities.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft (pending legal review) |

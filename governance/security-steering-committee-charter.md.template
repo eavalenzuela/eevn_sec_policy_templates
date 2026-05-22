@@ -1,0 +1,122 @@
+<!--
+TEMPLATE: A charter, not a policy — but it follows the same house structure so it sits
+cleanly in the set. The committee is the "management" in "management commitment" that
+assessors look for. Keep cadence realistic for your org size; a quarterly committee with
+documented minutes is usually sufficient evidence. Minutes ARE the records — keep them.
+-->
+
+# Security Steering Committee Charter
+
+| Field | Value |
+|---|---|
+| Document ID | POL-GOV-05 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CEO / Board] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | Committee members and the ISMS |
+
+> **Status:** [DRAFT until approved. Approval establishes the committee's authority.]
+
+---
+
+## 1. Purpose
+This charter establishes the [COMPANY] Security Steering Committee, defining its mandate, membership, cadence, decision authority, and inputs and outputs. The committee provides executive direction and oversight for the ISMS, demonstrates management commitment to information security, and is the forum where security risk, priorities, and resources are deliberated and decided.
+
+## 2. Scope
+The committee's remit covers the entire ISMS as scoped in `isms-scope-statement.md.template`: security and privacy strategy, risk posture, control implementation, compliance status (including HITRUST and HIPAA), incidents of significance, and resource allocation. It does not replace day-to-day operational decision-making by the [Security Officer], but provides governance over it.
+
+## 3. Policy (Charter Provisions)
+1. The Security Steering Committee **shall** be established with a named, approved membership and **shall** meet at the defined cadence.
+2. The committee **shall** review the standing inputs at each meeting and produce documented decisions and actions.
+3. Decisions within the committee's authority **shall** be recorded; decisions exceeding its authority **shall** be escalated to [CEO / Board].
+4. Minutes **shall** be recorded, distributed to members, and retained as ISMS records per `document-control.md.template`.
+5. The committee **shall** review and re-approve this charter at least annually.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Executive Sponsor / CEO] | Chairs or sponsors the committee; provides authority and resources; accepts risk. |
+| [Security Officer / CISO] | Convenes meetings; sets agenda; presents risk and program status; owns minutes. |
+| [Privacy Officer] | Presents privacy and PHI matters; advises on HIPAA obligations. |
+| Member Representatives | Bring departmental input; commit their teams to agreed actions. |
+| [Secretary / designate] | Records and distributes minutes; tracks action items. |
+
+See `roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Membership
+| Seat | Role / Representative | Voting? |
+|---|---|---|
+| Chair | [Executive Sponsor / CEO / CTO] | Yes |
+| Security | [Security Officer / CISO] | Yes |
+| Privacy | [Privacy Officer] | Yes |
+| Engineering / Platform | [Eng / Platform Lead] | Yes |
+| Product | [Product Lead] | [Yes/Advisory] |
+| People / HR | [HR Lead] | [Yes/Advisory] |
+| Legal | [Counsel] | Advisory |
+| [Other] | [...] | [...] |
+
+A quorum is [a majority of voting members, including the Chair or designate].
+
+## 6. Cadence & Meetings
+- The committee **shall** meet at least [quarterly]; ad hoc sessions may be called for significant incidents or risk events.
+- The [Security Officer] circulates the agenda and pre-read materials at least [3 business days] in advance.
+- Meetings are documented in minutes capturing attendance, topics, decisions, risk acceptances, and action items with owners and due dates.
+
+## 7. Decision Authority
+| Decision Type | Authority |
+|---|---|
+| Approve security priorities & roadmap | Committee |
+| Accept or escalate identified risks | Committee within [risk threshold]; above threshold escalate to [CEO / Board] |
+| Approve policy exceptions above operational threshold | Committee per `exceptions-and-waivers.md.template` |
+| Approve resource/budget requests | [Within delegated authority]; otherwise escalate |
+| Approve material scope or SoA changes | Committee recommends; [CEO / Board] approves |
+
+## 8. Standing Inputs
+- ISMS risk register status and top risks (`../risk/risk-management-methodology.md.template`)
+- Security metrics and objectives (`security-metrics-and-objectives.md.template`)
+- Internal/external audit findings and POA&M status (`internal-audit-program.md.template`, `corrective-action-poam.md.template`)
+- Significant incidents and breach determinations
+- HITRUST/HIPAA compliance status and SoA changes
+- Open exceptions and waivers
+- Vendor/third-party risk highlights
+
+## 9. Outputs
+- Documented decisions and risk acceptances
+- Action items with owners and due dates
+- Inputs to management review (`management-review.md.template`)
+- Re-prioritized security roadmap and resource decisions
+- Retained minutes (ISMS records)
+
+## 10. Exceptions
+Deviations from this charter (e.g., a missed quorum or cadence) require documented rationale per `exceptions-and-waivers.md.template`, approved by the [CEO].
+
+## 11. Compliance, Monitoring & Enforcement
+Committee operation is evidenced by retained minutes and verified during internal audit and management review. Persistent failure to convene or to act on decisions is treated as an ISMS deficiency tracked in the POA&M register.
+
+## 12. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 00 Information Security Management Program; management commitment & oversight |
+| HIPAA | 164.308(a)(1) Security Management Process |
+| SOC 2 (TSC) | CC1.2 (Board/oversight), CC1.3, CC2.x |
+| ISO 27001:2022 | Clause 5.1 Leadership and commitment; Clause 9.3 (feeds management review) |
+
+## 13. Related Documents
+- `information-security-policy.md.template`
+- `roles-and-responsibilities.md.template`
+- `management-review.md.template`
+- `security-metrics-and-objectives.md.template`
+- `internal-audit-program.md.template`
+- `corrective-action-poam.md.template`
+- `../risk/risk-management-methodology.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

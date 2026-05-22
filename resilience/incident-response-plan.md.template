@@ -1,0 +1,136 @@
+<!--
+TEMPLATE: This plan defines the full incident response lifecycle. Fill the [PLACEHOLDERS]
+with your tooling, channels, and on-call rotation. KEEP the cross-reference to the HIPAA
+Breach Notification Procedure — any incident touching PHI MUST run that procedure in
+parallel, and its notification clock starts on discovery, not confirmation. The severity
+matrix and SLAs are starting points; tune them to your business but keep them testable.
+Delete <!-- TEMPLATE: ... --> comments once each section is written.
+-->
+
+# Incident Response Plan
+
+| Field | Value |
+|---|---|
+| Document ID | POL-RES-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO / CEO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members, contractors, and systems in scope of the ISMS |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This plan establishes how [COMPANY] prepares for, detects, analyzes, contains, eradicates, recovers from, and learns from information security incidents — including those affecting Protected Health Information (PHI). Its goal is to limit damage, restore service, preserve evidence, and meet legal and contractual obligations through a consistent, repeatable, and tested response capability.
+
+## 2. Scope
+This plan applies to all security incidents affecting [COMPANY] information assets, the production SaaS application, [AWS environment], [Snowflake] data warehouse, and the [GitHub] CI/CD pipeline, regardless of whether the incident originates internally, from a third party, or from an external attacker. It covers all workforce members and any contractor or vendor acting on [COMPANY]'s behalf. Suspected privacy breaches involving PHI additionally invoke `../healthcare/hipaa-breach-notification-procedure.md.template`.
+
+## 3. Definitions
+- **Event:** An observable occurrence in a system or network (e.g., a CloudTrail alert, a failed login spike).
+- **Incident:** An event, or series of events, that actually or imminently jeopardizes the confidentiality, integrity, or availability of information or systems, or violates security policy.
+- **Breach:** A subset of incidents involving the impermissible acquisition, access, use, or disclosure of unsecured PHI — a regulatory determination made under `../healthcare/hipaa-breach-notification-procedure.md.template`.
+
+## 4. Policy
+1. [COMPANY] **shall** maintain a 24/7 capability to receive, triage, and respond to security incidents.
+2. All workforce members **shall** report suspected incidents immediately through the designated reporting channels (§6); failure to report a known incident is itself a policy violation.
+3. Every reported incident **shall** be logged in the [incident tracking system / ticketing tool] with a unique identifier, timestamps, severity, and an assigned Incident Commander.
+4. Incidents **shall** be classified by severity (§7) within [TARGET — e.g. 30 minutes] of triage, and response SLAs **shall** be met per the severity matrix.
+5. Any incident that involves or may involve PHI **shall** immediately notify the [Privacy Officer] and invoke `../healthcare/hipaa-breach-notification-procedure.md.template` in parallel with technical response; the breach-notification clock starts on the date of discovery.
+6. Evidence **shall** be collected and preserved in a forensically sound manner (chain of custody, immutable storage) to support investigation, legal action, and regulatory inquiry.
+7. Every Severity 1 and Severity 2 incident **shall** result in a documented post-incident review with assigned corrective actions tracked to closure.
+8. This plan **shall** be tested at least annually through a tabletop exercise (§12); test results and lessons learned feed continual improvement.
+
+## 5. Incident Response Lifecycle
+[COMPANY] follows a seven-phase lifecycle aligned with NIST SP 800-61.
+
+### 5.1 Prepare
+Maintain detection tooling, runbooks, on-call rotations, contact lists, and training. Provision and rehearse access to forensic tooling, [AWS] break-glass accounts, and out-of-band communications. Keep the runbook library current (§9).
+
+### 5.2 Detect
+Identify potential incidents from [AWS CloudTrail / GuardDuty / Security Hub], [Snowflake access logs / alerts], [GitHub audit log / secret scanning / Dependabot alerts], SIEM correlation, [endpoint detection], and human reports. Every alert is triaged to confirm whether it is an incident.
+
+### 5.3 Analyze
+Validate, scope, and characterize the incident: affected systems, data, and accounts; whether PHI is implicated; attack vector; and blast radius. Assign severity (§7). **If PHI may be involved, escalate to the [Privacy Officer] immediately** and start the breach assessment in parallel.
+
+### 5.4 Contain
+Limit spread and damage using short-term (e.g., isolate the [EC2/ECS] workload, revoke [IAM] credentials, suspend a [Snowflake] user, disable a [GitHub] token) and long-term containment measures. Preserve evidence before destructive actions where feasible.
+
+### 5.5 Eradicate
+Remove the root cause: patch the vulnerability, remove malware, rotate all exposed secrets and keys, rebuild compromised hosts from known-good images, and close the entry path.
+
+### 5.6 Recover
+Restore affected systems and data to normal operation per `disaster-recovery-plan.md.template` and `[backup-policy]`, validate integrity, and monitor closely for recurrence before declaring the incident resolved.
+
+### 5.7 Post-Incident Activity
+Within [TARGET — e.g. 10 business days] of resolution, conduct a blameless post-incident review covering timeline, root cause, what worked, what failed, and corrective actions. Update runbooks, controls, and this plan accordingly.
+
+## 6. Reporting & Communications
+1. **Internal reporting channel:** [e.g. #security-incidents Slack channel / security@COMPANY / PagerDuty trigger] — available 24/7.
+2. **Escalation:** The Incident Commander escalates to the [Security Officer], then [CTO], then [CEO] per the severity matrix.
+3. **Communications:** A designated communications lead manages internal updates, customer notifications, and (with Legal) any regulatory or public statements. Customer and regulatory notifications for PHI incidents follow `../healthcare/hipaa-breach-notification-procedure.md.template` and contractual (BAA) timelines.
+4. **External parties:** Notify [cyber insurer], [law enforcement / FBI], and affected [Covered Entities / customers] as required by severity, contract, and law.
+
+## 7. Severity Matrix
+| Severity | Definition | Examples | Triage SLA | Escalation |
+|---|---|---|---|---|
+| **SEV-1 — Critical** | Confirmed compromise of PHI/production data, widespread outage, or active attacker with access. | PHI exfiltration; ransomware in production; [Snowflake] data theft. | [≤15 min] | Immediate: [CEO], [Privacy Officer], Legal, on-call exec |
+| **SEV-2 — High** | Significant breach risk or partial outage of a critical service; contained but serious. | Compromised [IAM] credential; exposed secret in [GitHub]; targeted phishing success. | [≤30 min] | [Security Officer], [CTO] |
+| **SEV-3 — Medium** | Limited-scope incident, no confirmed data exposure. | Single endpoint malware; minor misconfiguration; isolated unauthorized access attempt. | [≤4 hours] | Incident Commander |
+| **SEV-4 — Low** | Minor policy violation or near-miss with no material impact. | Spam, blocked phishing, benign policy deviation. | [≤1 business day] | Assigned analyst |
+
+> **PHI override:** Any incident with potential PHI involvement is treated as **at least SEV-2** until the breach assessment concludes otherwise.
+
+## 8. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| **Incident Commander** | Owns the response for a given incident; coordinates phases; declares severity and resolution. |
+| [Security Officer / CISO] | Owns this plan; staffs the response team; reports to leadership; final escalation point for security decisions. |
+| [Privacy Officer] | Leads the PHI breach determination and notifications per the breach procedure. |
+| [CTO / Engineering On-Call] | Executes technical containment, eradication, and recovery in [AWS], [Snowflake], and [GitHub]. |
+| [Legal / Counsel] | Advises on regulatory, contractual, and law-enforcement obligations; reviews external communications. |
+| [Communications Lead] | Manages internal and external messaging. |
+| All Workforce | Report suspected incidents immediately; preserve evidence; cooperate with the response team. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 9. Runbooks
+Detailed step-by-step response procedures are maintained in the [runbook repository / location] and referenced by incident type. At minimum, maintain runbooks for: compromised [AWS IAM] credentials, exposed secret in [GitHub], ransomware/malware, [Snowflake] unauthorized access, phishing/account takeover, DDoS, lost/stolen device, and suspected PHI breach. Runbooks are reviewed [annually] and after each SEV-1/SEV-2 incident.
+
+## 10. Evidence Handling & Forensics
+Preserve logs, snapshots, and memory captures in immutable, access-controlled storage with documented chain of custody. Where feasible, capture [EBS snapshots / CloudTrail exports / Snowflake query history] before remediation. Engage [forensics partner / IR retainer] for SEV-1 incidents.
+
+## 11. Exceptions
+Exceptions to this plan require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log. Regulatory notification obligations for PHI breaches **may not** be waived by internal exception.
+
+## 12. Compliance, Monitoring & Enforcement
+Adherence is verified through review of the incident log, SLA metrics, post-incident review completion, and corrective-action closure rates, reported to management review (`../governance/management-review.md.template`). This plan is **tested at least annually via a tabletop exercise** that includes a PHI-breach scenario; participation by named role-holders is mandatory and results are documented. Violations, including failure to report a known incident, are handled per `../people/hr-security-policy.md.template` and, where applicable, the HIPAA workforce sanctions process (`../healthcare/sanctions-policy.md.template`).
+
+## 13. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 11.a Reporting Information Security Events; 11.b Reporting Security Weaknesses; 11.c Responsibilities and Procedures; 11.d Learning from Incidents |
+| HIPAA | 164.308(a)(6) Security Incident Procedures; 164.308(a)(1)(ii)(D) Information System Activity Review |
+| SOC 2 (TSC) | CC7.2, CC7.3, CC7.4, CC7.5 |
+| ISO 27001:2022 | A.5.24–A.5.28 Information security incident management |
+
+## 14. Related Documents
+- `../healthcare/hipaa-breach-notification-procedure.md.template` (PHI-involving incidents)
+- `business-continuity-plan.md.template`
+- `disaster-recovery-plan.md.template`
+- `../governance/roles-and-responsibilities.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+- `../people/hr-security-policy.md.template`
+- `../healthcare/sanctions-policy.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

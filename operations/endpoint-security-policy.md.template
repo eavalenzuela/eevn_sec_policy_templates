@@ -1,0 +1,99 @@
+<!--
+TEMPLATE: Endpoint Security Policy. For a remote-friendly healthcare SaaS the
+endpoint is a major PHI-exposure path. Cover the standard endpoint controls (MDM,
+full-disk encryption, EDR, screen lock, patching) AND the healthcare-specific
+rule: minimize/avoid PHI on endpoints; access PHI through controlled systems, not
+local copies. Leave OS list, MDM tool, lock timeout, and patch SLA as
+[PLACEHOLDERS]. BYOD stance is a [DECISION] each org must make.
+-->
+
+# Endpoint Security Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-OPS-08 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer]/[IT Lead] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and contractors, and all endpoints used to access [COMPANY] systems or data |
+
+> **Status:** [DRAFT until approved. Once [CTO] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy defines the security controls required on endpoints (laptops, desktops, and mobile devices) that access [COMPANY] systems or data, to prevent endpoints from becoming a path to compromise or PHI exposure — especially important for a distributed/remote workforce.
+
+## 2. Scope
+Applies to all endpoints used to access in-scope systems or data, whether [COMPANY]-owned or [approved BYOD — see §6], and to all workforce members and contractors using them. Server/cloud workloads are governed by `configuration-and-hardening-standard.md.template`.
+
+## 3. Policy
+1. Endpoints used to access [COMPANY] systems **shall** be enrolled in [COMPANY]'s **MDM/endpoint management** and meet this baseline before and during access.
+2. **Full-disk encryption shall be enabled** on all endpoints ([FileVault]/[BitLocker]/[LUKS]) and verified by MDM.
+3. **EDR/anti-malware shall be installed, running, and reporting** on all endpoints; tampering with it is prohibited.
+4. **Automatic screen lock shall engage after at most [10] minutes** of inactivity and require strong authentication (passcode/biometric); device login **shall** use strong credentials and, where supported, MFA.
+5. Endpoints **shall** receive **OS and application security patches** within [the SLAs in `vulnerability-and-patch-management.md.template`]; automatic updates enabled where feasible.
+6. **PHI shall not be stored on endpoints except transiently and when strictly necessary;** workforce **shall** access PHI through controlled applications/systems rather than downloading local copies. Where local PHI is unavoidable, it resides only on encrypted, managed devices and is removed when no longer needed (`../asset-data/data-classification-and-handling.md.template`).
+7. Host firewall **shall** be enabled; unnecessary services and unauthorized software **shall** be disabled/removed; administrative rights restricted to least privilege.
+8. Removable media and external sharing of PHI **shall** be restricted/controlled [per DLP/MDM policy].
+9. Lost or stolen devices **shall** be reported immediately and **remotely locked/wiped**; this may trigger `../healthcare/hipaa-breach-notification-procedure.md.template`.
+10. On workforce departure or device retirement, endpoints **shall** be wiped/sanitized and access removed (`../access/joiner-mover-leaver-procedure.md.template`).
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [IT Lead] | Manages MDM, baselines, patch deployment, and device provisioning/retirement. |
+| [Security Officer] | Owns this policy; monitors compliance and endpoint security events. |
+| Workforce/Contractors | Keep devices compliant; protect credentials; report lost/stolen devices; avoid storing PHI locally. |
+| [CTO] | Approves this policy. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Endpoint Baseline (summary)
+| Control | Requirement |
+|---|---|
+| Management | MDM-enrolled and compliant |
+| Encryption | Full-disk encryption enabled |
+| Malware | EDR running and reporting |
+| Lock | Auto-lock ≤ [10] min, strong unlock |
+| Patching | Within vulnerability-management SLAs; auto-update on |
+| Firewall | Host firewall on |
+| Software | Approved software only; least-privilege admin |
+| PHI | No persistent local PHI; access via controlled systems |
+
+## 6. BYOD / Contractor Devices
+[DECISION: state the org stance.] If BYOD or contractor-owned devices are permitted to access in-scope data, they **shall** meet this baseline (managed profile, encryption, EDR, lock, remote-wipe of [COMPANY] data) and access **shall** be limited; otherwise only [COMPANY]-managed devices may access PHI. Document the chosen approach here.
+
+## 7. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 8. Compliance, Monitoring & Enforcement
+Compliance is verified through MDM/EDR compliance reporting and periodic audits; non-compliant devices may be blocked from accessing in-scope systems (conditional access). Lost-device and endpoint-compromise events are investigated per `../resilience/incident-response-plan.md.template`. Violations are handled per `../people/hr-security-policy.md.template`.
+
+## 9. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 01.x Access Control; 08.j Mobile Computing; 09.j Controls Against Malicious Code; 01.y Teleworking |
+| HIPAA | 164.310(d)(1) Device and Media Controls; 164.312(a)(1) Access Control; 164.308(a)(5)(ii)(B) Malicious Software |
+| SOC 2 (TSC) | CC6.1, CC6.7, CC6.8 |
+| ISO 27001:2022 | A.8.1 User endpoint devices; A.6.7 Remote working; A.8.7 Protection against malware |
+
+## 10. Related Documents
+- `vulnerability-and-patch-management.md.template`
+- `configuration-and-hardening-standard.md.template`
+- `logging-and-monitoring-policy.md.template`
+- `../access/access-control-policy.md.template`
+- `../asset-data/data-classification-and-handling.md.template`
+- `../access/joiner-mover-leaver-procedure.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

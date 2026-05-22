@@ -1,0 +1,100 @@
+<!--
+TEMPLATE: This establishes that [COMPANY] knows what it has — you cannot protect or risk-assess
+assets you haven't inventoried. It is the parent of data classification (POL-DAT-02) and
+retention/disposal (POL-DAT-03). The inventory table is a SCHEMA template; the actual inventory
+is operational data, often maintained in [a CMDB / AWS Config / spreadsheet]. Reference the real
+stack (AWS, Snowflake, GitHub) for asset types. Fill the [PLACEHOLDERS] for owners and the
+system of record.
+-->
+
+# Asset Management Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-DAT-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and all information assets in scope of the ISMS |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy ensures [COMPANY] maintains an accurate, complete inventory of its information assets, assigns ownership and classification, and manages each asset securely across its lifecycle. An accurate inventory is the foundation for risk assessment, access control, data protection, and incident response — you cannot protect what you do not know you have.
+
+## 2. Scope
+Applies to all information assets within the ISMS scope (`../governance/isms-scope-statement.md.template`), including but not limited to: cloud infrastructure and services ([AWS] accounts, compute, storage, databases), the [Snowflake] data warehouse, the [GitHub] organization and CI/CD pipeline, SaaS applications, endpoints (laptops/mobile), data stores containing PHI, software/code, and supporting documentation. Assets owned by vendors are governed jointly with `../vendor/third-party-risk-management-policy.md.template`.
+
+## 3. Policy
+1. [COMPANY] **shall** maintain an inventory of all in-scope information assets, recorded in [the asset inventory / CMDB / AWS Config + tagging] as the system of record.
+2. Every asset **shall** have a named **owner** accountable for its protection, classification, and lifecycle.
+3. Every asset **shall** be assigned a **classification** consistent with `data-classification-and-handling.md.template`, reflecting the most sensitive data it stores or processes (PHI-bearing assets are Restricted).
+4. The inventory **shall** be reviewed and reconciled at least [quarterly] and updated upon asset acquisition, change, or decommission.
+5. Cloud assets **shall** be discoverable and tagged (e.g., [AWS] resource tags for owner, environment, data classification) to enable automated inventory and policy enforcement.
+6. Assets **shall** be managed across the lifecycle per §6, including secure provisioning, maintenance, and decommissioning/disposal per `data-retention-and-disposal.md.template`.
+7. Removal of an asset from service **shall** ensure data is sanitized or destroyed before disposal or reassignment.
+8. The inventory **shall** support incident response and risk assessment by identifying which assets hold PHI and their dependencies.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns this policy; oversees the inventory; verifies classification accuracy. |
+| [IT / Platform Team] | Maintains the inventory and tagging; performs reconciliation. |
+| Asset Owners | Accountable for assigned assets: classification, access, lifecycle, decommission. |
+| All Workforce | Use only authorized, inventoried assets; report unmanaged or lost assets. |
+
+See `../governance/roles-and-responsibilities.md.template`.
+
+## 5. Asset Inventory (Schema)
+<!-- TEMPLATE: This is the inventory SCHEMA. The system of record may be a CMDB/spreadsheet/AWS Config.
+The rows are EXAMPLES — replace with real assets. -->
+| Asset ID | Asset Name | Type | Owner | Environment | Hosts/Processes Data? | Highest Classification | Location / System | Status | Last Reviewed |
+|---|---|---|---|---|---|---|---|---|---|
+| AST-001 | Production application database | Cloud database | [Data Platform Owner] | Production | Yes — PHI | Restricted | [AWS] [RDS/Aurora], [region] | Active | [YYYY-MM-DD] |
+| AST-002 | Analytics warehouse | Data warehouse | [Data Platform Owner] | Production | Yes — PHI | Restricted | [Snowflake] | Active | [YYYY-MM-DD] |
+| AST-003 | Application source + CI/CD | Code / pipeline | [Eng Lead] | Production | No (code) | Confidential | [GitHub] org | Active | [YYYY-MM-DD] |
+| [AST-004] | [Workforce laptop fleet] | Endpoint | [IT] | Corporate | [Possible PHI] | [Confidential] | [MDM] | Active | [YYYY-MM-DD] |
+
+## 6. Asset Lifecycle
+| Phase | Requirements |
+|---|---|
+| **Acquire / Provision** | Inventory the asset, assign owner and classification, apply baseline hardening and tagging. |
+| **Operate / Maintain** | Patch, monitor, control access (`../access/access-control-policy.md.template`), keep inventory current. |
+| **Change** | Significant changes follow `../operations/change-management-policy.md.template` and may trigger reassessment. |
+| **Decommission / Dispose** | Sanitize or destroy data per `data-retention-and-disposal.md.template`; revoke access; remove from inventory with record. |
+
+## 7. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 8. Compliance, Monitoring & Enforcement
+The [Security Officer] verifies inventory completeness and classification accuracy through periodic reconciliation and audit. Untagged or unmanaged assets are remediated. Adherence is mandatory; violations are handled per `../people/hr-security-policy.md.template`.
+
+## 9. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 07.a Inventory of Assets; 07.b Ownership of Assets; 07.c Acceptable Use; 07.d Classification |
+| HIPAA | 164.310(d)(1) Device and Media Controls; 164.310(d)(2)(iii) Accountability |
+| SOC 2 (TSC) | CC6.1; CC6.7 |
+| ISO 27001:2022 | A.5.9 Inventory of assets; A.5.10 Acceptable use; A.5.11 Return of assets |
+
+## 10. Related Documents
+- `data-classification-and-handling.md.template`
+- `data-retention-and-disposal.md.template`
+- `acceptable-use-policy.md.template`
+- `../access/access-control-policy.md.template`
+- `../operations/change-management-policy.md.template`
+- `../risk/risk-management-methodology.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

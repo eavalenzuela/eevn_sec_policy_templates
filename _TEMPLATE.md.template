@@ -1,0 +1,78 @@
+<!--
+TEMPLATE: This is the canonical skeleton every policy/procedure in this repo follows.
+Copy it, rename to <name>.md (strip the .template suffix), and fill the [PLACEHOLDERS].
+Delete <!-- TEMPLATE: ... --> comments once the section is written.
+Keep the metadata table, the section ordering, and the Version History — assessors
+look for these. Not every section applies to every document; delete N/A sections
+rather than leaving them empty, but never delete Purpose, Scope, Policy, Roles,
+Review, or Version History.
+-->
+
+# [POLICY OR PROCEDURE TITLE]
+
+| Field | Value |
+|---|---|
+| Document ID | [DOC-ID — e.g. POL-GOV-01] |
+| Version | [0.1 — DRAFT] |
+| Classification | [Internal / Confidential] |
+| Owner | [ROLE responsible for content — e.g. Security Officer] |
+| Approver | [ROLE that signs off — e.g. CTO / CEO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | [Workforce / Contractors / Systems in scope] |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+<!-- TEMPLATE: 2-4 sentences. Why this document exists and what risk it addresses. -->
+[Why this policy exists, in plain language.]
+
+## 2. Scope
+<!-- TEMPLATE: Who and what this binds. Call out PHI/production systems explicitly where relevant. Note exclusions. -->
+[Systems, data, people, and locations covered. Note any exclusions.]
+
+## 3. Policy
+<!-- TEMPLATE: The actual requirements, as numbered "shall" statements. This is the heart of the document and what gets audited. Keep each statement testable. -->
+1. [Requirement statement.]
+2. [Requirement statement.]
+
+## 4. Roles & Responsibilities
+<!-- TEMPLATE: Who does what. Reference roles-and-responsibilities.md rather than re-defining roles. -->
+| Role | Responsibility |
+|---|---|
+| [Role] | [What they must do under this policy] |
+
+## 5. [DOMAIN-SPECIFIC SECTIONS]
+<!-- TEMPLATE: Procedures, standards, or details specific to this topic. Split into as many sections as needed (5, 6, 7...). -->
+[...]
+
+## N. Exceptions
+<!-- TEMPLATE: Point to the exceptions process; do not invent a separate one. -->
+Exceptions to this policy require documented risk acceptance per `governance/exceptions-and-waivers.md.template`, approved by [ROLE], time-bound, and recorded in the exceptions log.
+
+## N+1. Compliance, Monitoring & Enforcement
+<!-- TEMPLATE: How adherence is measured/monitored, and consequences of violation. -->
+[How compliance is verified, who monitors, and that violations may result in disciplinary action per the HR Security Policy.]
+
+## N+2. Framework Mapping
+<!-- TEMPLATE: This is the value-add for HITRUST/HIPAA. Fill in once you map to the CSF in MyCSF. Keep approximate mappings honest. -->
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | [Control refs — e.g. 01.b, 06.d] |
+| HIPAA | [§ refs — e.g. 164.312(a)(1)] |
+| SOC 2 (TSC) | [e.g. CC6.1] |
+| ISO 27001:2022 | [Annex A refs — e.g. A.5.15] |
+
+## N+3. Related Documents
+<!-- TEMPLATE: Link sibling templates by relative path. -->
+- [`path/to/related.md.template`]
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

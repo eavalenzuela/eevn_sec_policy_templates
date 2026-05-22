@@ -1,0 +1,104 @@
+<!--
+TEMPLATE: HIPAA (164.308(a)(5)) REQUIRES a security awareness and training program for
+all workforce members. Training at hire and at least annually is the floor — do not
+weaken it. Completion records are evidence: assessors will ask for them. Keep platform
+and cadence specifics as [PLACEHOLDERS]. Delete <!-- TEMPLATE: ... --> comments once each
+section is written.
+-->
+
+# Security Awareness & Training Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-HR-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO / CEO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and contractors with access to [COMPANY] systems or PHI |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy establishes [COMPANY]'s security and privacy awareness and training program, ensuring every workforce member understands their responsibilities for protecting information — especially PHI — and can recognize and respond to threats such as phishing. A trained workforce is [COMPANY]'s most important control against social engineering and human error.
+
+## 2. Scope
+This policy applies to all workforce members (employees, contractors, interns, temporary staff) and any third-party personnel with access to [COMPANY] systems, [AWS]/[Snowflake]/[GitHub] environments, or PHI. Role-based training additionally applies to engineering, support, and any role with elevated access or direct PHI handling.
+
+## 3. Policy
+1. All workforce members **shall** complete security and privacy awareness training **at hire** (before or within [N — e.g. 30] days of being granted access) and **at least annually** thereafter (HIPAA requirement).
+2. Training **shall** cover HIPAA Privacy and Security basics, PHI handling, acceptable use, password/MFA hygiene, phishing and social engineering, incident reporting, and clean desk/clear screen.
+3. [COMPANY] **shall** conduct **phishing simulations** at least [quarterly]; repeat clickers receive additional training per §6.
+4. Personnel in high-risk or specialized roles **shall** complete **role-based training** appropriate to their duties (§5).
+5. Workforce members **shall** receive **ad hoc security reminders/updates** when significant new threats or policy changes arise (HIPAA security reminders).
+6. **Completion of all training shall be tracked and recorded**, and records retained per §8.
+7. Access to PHI or production systems **may** be suspended for workforce members who do not complete required training by the deadline.
+
+## 4. Training Content
+The general awareness curriculum **shall** include at minimum:
+- HIPAA Privacy and Security Rule fundamentals and the minimum-necessary principle.
+- Identifying and handling PHI; permitted uses and disclosures.
+- Password and MFA practices; protection against malicious software (HIPAA).
+- Recognizing phishing, social engineering, and suspicious activity.
+- How and when to report a security incident or suspected breach (links to `../resilience/incident-response-plan.md.template`).
+- Acceptable use, clean desk / clear screen, and physical security (links to `hr-security-policy.md.template` and `physical-and-environmental-security-policy.md.template`).
+
+## 5. Role-Based Training
+| Role | Additional Training |
+|---|---|
+| Engineering / DevOps | Secure coding, secrets management, [AWS]/[Snowflake]/[GitHub] security, secure SDLC. |
+| Customer Support | PHI handling in support workflows, identity verification, minimum necessary. |
+| Privileged/Admin users | Least privilege, break-glass procedures, change management. |
+| Incident responders | IR plan, runbooks, tabletop participation. |
+| New people-managers | Sanctions process, reporting obligations. |
+
+## 6. Phishing Simulations
+[COMPANY] runs simulated phishing campaigns at least [quarterly] using [phishing platform]. Results are tracked; workforce members who fail a simulation receive remedial training, and repeat failures are escalated to their manager and may trigger additional measures per `hr-security-policy.md.template`. Simulation metrics (click rate, report rate) are reported to management review.
+
+## 7. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns the program; defines curriculum; reviews metrics. |
+| [Privacy Officer] | Ensures HIPAA privacy content is current and complete. |
+| [HR / People Ops] | Enrolls new hires; enforces completion; integrates with onboarding. |
+| Managers | Ensure their teams complete training on time; reinforce expectations. |
+| All Workforce | Complete assigned training by the deadline; apply it; report incidents. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 8. Records & Completion Tracking
+Training assignments, completion dates, scores, and phishing-simulation results **shall** be recorded in [LMS / training platform] and retained for at least **six (6) years** to satisfy HIPAA documentation requirements (45 CFR § 164.316(b)(2)). Records are produced as evidence during audits and HITRUST assessment.
+
+## 9. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log. The annual-training requirement is regulatory and should not be excepted.
+
+## 10. Compliance, Monitoring & Enforcement
+Compliance is measured through training completion rates, on-time completion, and phishing-simulation performance, reported to management review (`../governance/management-review.md.template`). Failure to complete required training is a policy violation handled per `hr-security-policy.md.template`, including the HIPAA workforce sanctions process (`../healthcare/sanctions-policy.md.template`).
+
+## 11. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 02.e Information Security Awareness, Education, and Training |
+| HIPAA | 164.308(a)(5) Security Awareness and Training; 164.530(b) Privacy Training |
+| SOC 2 (TSC) | CC1.4, CC2.2 |
+| ISO 27001:2022 | A.6.3 Information security awareness, education and training |
+
+## 12. Related Documents
+- `hr-security-policy.md.template`
+- `physical-and-environmental-security-policy.md.template`
+- `../resilience/incident-response-plan.md.template`
+- `../healthcare/sanctions-policy.md.template`
+- `../governance/roles-and-responsibilities.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

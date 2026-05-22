@@ -1,0 +1,96 @@
+# Privileged Access Management Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-AC-04 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and non-human identities holding privileged access to in-scope systems |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy defines additional controls for **privileged access** — access that can alter security configuration, bypass controls, access PHI in bulk, or manage other identities. Privileged accounts carry the highest risk; their compromise or misuse can undermine every other control. This policy minimizes, isolates, and closely monitors such access.
+
+## 2. Scope
+Applies to all privileged and administrative access across in-scope systems, including but not limited to: [AWS] root and administrative access (Organizations management account, IAM admin, billing); [Snowflake] ACCOUNTADMIN, SECURITYADMIN, and SYSADMIN; [GitHub] organization owners and repository admins; [IdP — e.g. Okta] super administrators; database and infrastructure administrators; and any role with bulk or unrestricted access to PHI. It supplements `access-control-policy.md.template` and `identity-and-authentication-policy.md.template`.
+
+## 3. Policy
+1. Privileged access **shall** be **minimized** — granted to the fewest individuals necessary, for the narrowest scope, and only with documented business need.
+2. Privileged access **shall** be **separated from daily-use access**: administrators use a dedicated privileged identity/role for elevated tasks and a standard account for routine work.
+3. All privileged access **shall** require **phishing-resistant MFA** (`identity-and-authentication-policy.md.template`).
+4. **Just-in-time (JIT)** elevation **shall** be used wherever supported, so that privileges are granted for a bounded time on approval rather than held standing.
+5. **Break-glass / emergency** privileged credentials **shall** be pre-provisioned, sealed, MFA-protected, monitored, and used only under documented emergency procedure with after-the-fact review.
+6. All privileged actions **shall** be **logged to a tamper-resistant store** and monitored with alerting; logs are retained per `../operations/logging-and-monitoring-policy.md.template`.
+7. Privileged accounts **shall** be reviewed at heightened frequency under `access-recertification-procedure.md.template`.
+8. Shared privileged credentials are prohibited; where a platform forces a single root identity, it **shall** be locked down per §5 and not used for routine operations.
+9. Privileged access **shall** be revoked immediately on role change or departure (`joiner-mover-leaver-procedure.md.template`).
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns this policy; approves privileged grants; reviews privileged activity and recertifications. |
+| [Platform / Infrastructure Leads] | Maintain JIT tooling and break-glass procedures; administer within policy. |
+| Privileged Users | Use separate privileged identities; protect credentials; perform only authorized actions; justify break-glass use. |
+| [IT / Identity Administrators] | Provision/deprovision privileged access; ensure logging is enabled. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Platform-Specific Controls
+**[AWS]**
+- The Organizations **root user** is locked: MFA (hardware) enabled, no access keys, credentials sealed as break-glass, used only for tasks that require root.
+- Day-to-day administration uses IAM Identity Center permission sets assuming least-privilege roles; no long-lived admin access keys.
+- Privileged actions logged via CloudTrail (org-wide, to a protected log archive account); alerting on root usage, policy changes, and IAM changes.
+
+**[Snowflake]**
+- **ACCOUNTADMIN** and **SECURITYADMIN** assigned to the minimum set of named individuals; not the default role for any user; not used for routine queries or automation.
+- Object ownership and routine privilege management performed through SYSADMIN/custom admin roles.
+- Privileged role usage monitored via `ACCOUNT_USAGE` (query, login, and grant history); MFA enforced.
+
+**[GitHub]**
+- **Organization owners** minimized to [N] individuals; admin actions and owner changes monitored via the org audit log.
+- Branch protection / required reviews and required status checks enforced on protected branches so privileged merge access cannot bypass review.
+
+**[IdP — e.g. Okta]**
+- Super-admin role minimized; admin actions logged; MFA and admin-console access restrictions applied.
+
+## 6. Just-in-Time & Break-Glass
+- JIT elevation requests are approved by [Security Officer / designated approver], time-boxed to **[N hours]**, and automatically revoked on expiry.
+- Break-glass use **shall** be alerted in real time, justified within **[N hours]**, and reviewed by the [Security Officer]; credentials are rotated after each use.
+
+## 7. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer] and [CTO], time-bound, and recorded in the exceptions log.
+
+## 8. Compliance, Monitoring & Enforcement
+Privileged access inventories are maintained and reconciled at recertification. Privileged activity is continuously monitored and alerted; break-glass and root usage are reviewed individually. Unauthorized privileged use is treated as a security incident (`../resilience/incident-response-plan.md.template`). Violations are handled per `../people/hr-security-policy.md.template`, including the HIPAA sanctions process (`../healthcare/sanctions-policy.md.template`).
+
+## 9. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 01.c Privilege Management; 01.p Secure Log-on Procedures; 09.aa Audit Logging; 01.v Information Access Restriction |
+| HIPAA | 164.308(a)(4) Access Management; 164.308(a)(3)(ii)(A) Authorization/Supervision; 164.312(b) Audit Controls |
+| SOC 2 (TSC) | CC6.1, CC6.2, CC6.3, CC7.2 |
+| ISO 27001:2022 | A.8.2 Privileged access rights; A.8.4 Access to source code; A.8.15 Logging |
+
+## 10. Related Documents
+- `access-control-policy.md.template`
+- `identity-and-authentication-policy.md.template`
+- `access-recertification-procedure.md.template`
+- `joiner-mover-leaver-procedure.md.template`
+- `../operations/logging-and-monitoring-policy.md.template`
+- `../resilience/incident-response-plan.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

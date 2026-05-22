@@ -1,0 +1,105 @@
+<!--
+TEMPLATE: This procedure operationalizes the Access Control Policy (POL-AC-01) across
+the joiner/mover/leaver lifecycle. The deprovisioning SLA is a control assessors will
+test directly — fill the [N hours/days] placeholders with values you can actually meet
+and evidence. Keep the system checklist current as your SaaS estate changes.
+-->
+
+# Joiner / Mover / Leaver Procedure
+
+| Field | Value |
+|---|---|
+| Document ID | POL-AC-03 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members, contractors, and the systems they access |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This procedure defines how [COMPANY] provisions access when a person joins, adjusts access when their role changes, and revokes access when they leave or their engagement ends. Timely, accurate access changes — especially prompt deprovisioning — are critical to preventing unauthorized access to systems and PHI.
+
+## 2. Scope
+Applies to all joiner, mover, and leaver events for employees, contractors, interns, and temporary staff across all in-scope systems: the [IdP — e.g. Okta], [AWS] (IAM Identity Center), [Snowflake], the [GitHub] organization, and all federated [SaaS] applications, including any system that handles PHI. This procedure implements `access-control-policy.md.template` and uses its authorization workflow.
+
+## 3. Joiner — Onboarding & Provisioning
+1. Onboarding **shall** be initiated by [HR / hiring manager] before the start date, identifying the person's role and any PHI access need.
+2. Access **shall** be granted by **role**, not assembled ad hoc, using the predefined role/permission templates (AWS Identity Center permission sets, Snowflake functional roles, GitHub team membership, application roles).
+3. The [IdP] account is created first and is the source of identity; downstream access is provisioned via federation/SSO wherever supported.
+4. **MFA enrollment shall** be completed before access to any in-scope system is active (`identity-and-authentication-policy.md.template`).
+5. Required security and HIPAA privacy training **shall** be assigned; PHI access **shall not** be granted until completion where required (`../people/security-awareness-training-policy.md.template`).
+6. Each grant **shall** be authorized and recorded as evidence per the access authorization workflow.
+
+## 4. Mover — Role / Access Changes
+1. On any role change, transfer, or promotion, the [Manager] **shall** submit an access change request.
+2. Access changes **shall** be processed as **add the new, then remove the old** so that residual entitlements from the prior role do not accumulate ("privilege creep").
+3. The [System / Resource Owner] **shall** re-approve access to sensitive systems and PHI under the new role.
+4. Privileged access **shall** be re-evaluated and revoked if no longer required (`privileged-access-management.md.template`).
+5. The change **shall** be recorded; movers are a primary focus of recertification (`access-recertification-procedure.md.template`).
+
+## 5. Leaver — Offboarding & Deprovisioning
+1. [HR] **shall** notify [IT / Security] of any termination or end-of-engagement as early as the process allows; for involuntary terminations, notice **shall** precede or coincide with the event.
+2. **Deprovisioning SLA:** all access **shall** be revoked within **[N hours]** of the effective termination time for standard departures, and **immediately / within [N hours]** for involuntary or for-cause terminations. Privileged access **shall** be revoked first.
+3. The primary control is to **disable the [IdP] account**, which cascades to federated applications; system-specific revocation in §6 **shall** still be verified, as not all access is federated.
+4. MFA devices, hardware tokens, and any company devices **shall** be reclaimed; long-lived credentials and tokens owned by the leaver **shall** be revoked/rotated.
+5. Service accounts or shared resources the leaver owned **shall** be reassigned to a current owner.
+6. Completion of revocation **shall** be confirmed and recorded as evidence within the SLA window.
+
+## 6. System Deprovisioning Checklist
+| System | Action |
+|---|---|
+| [IdP — e.g. Okta] | Disable account (suspends federated SSO); deactivate, then delete per retention. |
+| [AWS] | Remove from IAM Identity Center group/permission sets; deactivate any IAM user and delete access keys; revoke active sessions. |
+| [Snowflake] | Disable the user (`ALTER USER ... SET DISABLED=TRUE`); revoke roles; rotate any RSA key-pairs the user held; drop after retention. |
+| [GitHub] | Remove from the org and all teams; revoke PATs/SSH keys; transfer owned repos/secrets; remove org-owner role if held. |
+| [SaaS applications] | Deactivate via [IdP] SCIM/federation; verify any non-federated apps manually. |
+| [Application] | Disable the application user account and revoke API keys/sessions. |
+| Secrets | Rotate any shared secrets the individual could have accessed. |
+
+## 7. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [HR] | Triggers joiner/mover/leaver events promptly and authoritatively. |
+| [Hiring Manager / Manager] | Specifies role-based access; initiates change/leaver requests. |
+| [System / Resource Owners] | Approve access to their systems and PHI. |
+| [IT / Identity Administrators] | Execute provisioning/deprovisioning within SLA; record evidence. |
+| [Security Officer] | Owns this procedure; audits SLA adherence and completeness. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 8. Exceptions
+Exceptions to this procedure require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 9. Compliance, Monitoring & Enforcement
+Deprovisioning timeliness is measured against the SLA in §5 and reconciled against HR termination records during access recertification (`access-recertification-procedure.md.template`). Orphaned or stale accounts identified through automated reporting (IdP, AWS credential reports, Snowflake login history, GitHub member lists) are remediated and tracked. Violations are handled per `../people/hr-security-policy.md.template`.
+
+## 10. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 01.b User Registration / De-registration; 01.c Privilege Management; 02.i Removal of Access Rights |
+| HIPAA | 164.308(a)(3)(ii)(C) Termination Procedures; 164.308(a)(4) Access Management; 164.308(a)(3)(ii)(B) Workforce Clearance |
+| SOC 2 (TSC) | CC6.1, CC6.2, CC6.3 |
+| ISO 27001:2022 | A.5.18 Access rights; A.6.1 Screening; A.6.5 Responsibilities after termination |
+
+## 11. Related Documents
+- `access-control-policy.md.template`
+- `identity-and-authentication-policy.md.template`
+- `privileged-access-management.md.template`
+- `access-recertification-procedure.md.template`
+- `../people/hr-security-policy.md.template`
+- `../people/security-awareness-training-policy.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

@@ -1,0 +1,108 @@
+<!--
+TEMPLATE: This is the HIPAA workforce sanctions policy, an EXPRESSLY REQUIRED
+implementation specification under the Security Rule (45 CFR § 164.308(a)(1)(ii)(C))
+and paralleled in the Privacy Rule (§ 164.530(e)). You MUST apply and DOCUMENT sanctions
+against workforce members who violate HIPAA policies — consistency and documentation are
+what assessors and OCR look for. This must align with employment law and existing HR
+discipline; cross-references ../people/hr-security-policy.md.template. HAVE COUNSEL / HR
+REVIEW THIS before adoption to avoid employment-law conflicts.
+-->
+
+# HIPAA Workforce Sanctions Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-HIP-07 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Privacy Officer / Security Officer] |
+| Approver | [CEO / General Counsel] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and contractors with access to PHI |
+
+> **Status:** [DRAFT — requires legal review before approval.]
+
+---
+
+## 1. Purpose
+This policy establishes the disciplinary sanctions [COMPANY] applies against workforce members who fail to comply with its HIPAA privacy and security policies and procedures, as required by 45 CFR § 164.308(a)(1)(ii)(C) and § 164.530(e). It ensures sanctions are **graduated**, **applied consistently**, and **documented**, supporting both deterrence and demonstrable compliance.
+
+## 2. Scope
+Applies to all workforce members (employees, contractors, interns, temporary staff, and volunteers) who have access to PHI or to systems handling PHI. It covers violations of any HIPAA-related [COMPANY] policy, the Privacy Rule, the Security Rule, and the Breach Notification Rule. It does **not** apply to good-faith reports of violations or to whistleblowing protected by § 164.502(j).
+
+## 3. Policy
+1. [COMPANY] **shall** apply and **document** appropriate sanctions against any workforce member who violates HIPAA policies or procedures.
+2. Sanctions **shall** be **graduated** based on the severity, intent, recurrence, and harm of the violation (see §4–§5).
+3. Sanctions **shall** be applied **consistently** across similarly situated workforce members regardless of role or seniority; the [Privacy Officer]/[HR] reviews for consistency.
+4. Sanction actions and supporting facts **shall** be documented and **retained for at least six (6) years** per 45 CFR § 164.316(b)(2).
+5. Sanctions **shall not** be imposed against a workforce member for: filing a good-faith complaint; testifying/assisting in an investigation; exercising whistleblower rights under § 164.502(j); or acting as a workforce-member crime victim under § 164.502(j)(2). **No retaliation** is permitted.
+6. This policy **shall** operate **in addition to**, and consistent with, the general disciplinary process in `../people/hr-security-policy.md.template` and applicable employment law.
+
+## 4. Violation Severity Tiers
+<!-- TEMPLATE: Adjust examples to your environment; keep severity → action proportionate. -->
+| Tier | Description | Example |
+|---|---|---|
+| **Tier 1 — Minor / Inadvertent** | Unintentional, low-harm, no PHI compromise | Leaving a screen unlocked; misdirected internal email with PHI quickly recalled; first-time minor process lapse |
+| **Tier 2 — Moderate / Negligent** | Careless handling, policy disregard, limited PHI exposure | Sharing credentials; emailing PHI externally without safeguards; bypassing minimum-necessary controls |
+| **Tier 3 — Serious / Reckless** | Significant exposure or repeat moderate violations | Unauthorized access to records out of curiosity ("snooping"); disabling security controls; uploading PHI to an unapproved tool/LLM |
+| **Tier 4 — Severe / Willful** | Intentional, malicious, or for personal gain | Selling or stealing PHI; intentional unauthorized disclosure; falsifying records; retaliation against a reporter |
+
+## 5. Graduated Disciplinary Actions
+Actions are guidelines; the [Privacy Officer]/[HR] may escalate or moderate based on documented circumstances (intent, harm, cooperation, prior history).
+| Tier | Typical Action |
+|---|---|
+| Tier 1 | Verbal counseling / coaching; documented reminder; retraining |
+| Tier 2 | Written warning; mandatory retraining; possible access reduction |
+| Tier 3 | Final written warning; suspension; access revocation; possible termination |
+| Tier 4 | Termination of employment/contract; referral for civil/criminal action; report to authorities/licensing boards as required |
+
+1. Any tier may, depending on facts, result in **immediate termination**; egregious violations need not progress through lower tiers.
+2. Where a sanctionable violation also constitutes a reportable **breach**, the breach process (`hipaa-breach-notification-procedure.md.template`) runs in parallel and is **not** a substitute for sanctions.
+3. Contractor violations are handled under the relevant contract and may include removal and notification to the employing firm.
+
+## 6. Process & Documentation
+1. Suspected violations **shall** be reported to the [Privacy Officer]/[Security Officer] and investigated promptly, coordinating with [HR] and [Legal / Counsel].
+2. The investigation **shall** document: who, what, when, the PHI involved, the policy breached, severity tier, mitigating/aggravating factors, the sanction applied, and the rationale.
+3. The [Privacy Officer]/[HR] **shall** check the sanction against prior comparable cases to ensure **consistency**.
+4. Records **shall** be stored in [the sanctions / disciplinary register] with restricted access and retained **six (6) years**.
+
+## 7. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Privacy Officer] / [Security Officer] | Owns this policy; assesses severity; recommends sanctions; ensures documentation. |
+| [HR] | Administers disciplinary action; ensures consistency and employment-law compliance. |
+| [Legal / Counsel] | Advises on severe cases, referrals, and legal exposure. |
+| Managers | Report violations; support investigations; do not impose ad hoc sanctions outside this process. |
+| All Workforce | Comply with HIPAA policies; report violations; cooperate with investigations. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 8. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Privacy Officer] and [HR], time-bound, and recorded in the exceptions log. The regulatory requirement to apply and document sanctions **may not** be waived.
+
+## 9. Compliance, Monitoring & Enforcement
+The [Privacy Officer]/[HR] track sanction actions, themes, and consistency, and report metrics in management review. Failure to apply required sanctions is itself a compliance finding. This policy is enforced in conjunction with `../people/hr-security-policy.md.template`.
+
+## 10. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 02.f Disciplinary Process; 01.x Access; 00 Security Management Program |
+| HIPAA | 164.308(a)(1)(ii)(C) Sanction Policy; 164.530(e) Privacy Rule sanctions; 164.530(g) No retaliation; 164.502(j) Whistleblower/crime-victim protections; 164.316(b)(2) Retention |
+| SOC 2 (TSC) | CC1.1, CC1.4, CC1.5 (Control environment & accountability) |
+| ISO 27001:2022 | A.6.4 Disciplinary process; A.6.2 Terms of employment |
+
+## 11. Related Documents
+- `../people/hr-security-policy.md.template`
+- `hipaa-breach-notification-procedure.md.template`
+- `minimum-necessary-standard.md.template`
+- `../people/security-awareness-training-policy.md.template`
+- `../governance/roles-and-responsibilities.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft (pending legal review) |

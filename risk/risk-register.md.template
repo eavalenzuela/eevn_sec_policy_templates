@@ -1,0 +1,89 @@
+<!--
+TEMPLATE: This is a REGISTER, not a policy — it is a living record whose STRUCTURE is the
+template; the rows are operational data you maintain over time. Keep the column set and the
+scoring scales consistent with risk-management-methodology.md.template (POL-RSK-01).
+The two EXAMPLE rows below are illustrative — delete or replace them with real entries.
+In practice this register is often maintained in a [GRC tool / spreadsheet]; if so, this
+file documents the canonical schema and points to the system of record.
+-->
+
+# Risk Register
+
+| Field | Value |
+|---|---|
+| Document ID | REG-RSK-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO / CEO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All risks within the ISMS scope |
+
+> **Status:** [DRAFT / LIVING RECORD — the register is a continuously maintained artifact. "Last Reviewed" reflects the most recent register-wide review per the cadence in POL-RSK-01.]
+
+---
+
+## 1. Purpose
+This register is the single, authoritative record of identified information security risks for [COMPANY], including risks to PHI. It records each risk's analysis, scoring, treatment, ownership, and status so that risk posture can be tracked over time and evidenced to assessors. It is populated and scored according to `risk-management-methodology.md.template`.
+
+## 2. Scope
+All risks within the ISMS scope (`../governance/isms-scope-statement.md.template`), including risks affecting the production SaaS application, [AWS], [Snowflake], the [GitHub] CI/CD pipeline, vendors, people, and processes.
+
+## 3. How to Use This Register
+1. Score **Likelihood (L)** and **Impact (I)** on the 1–5 scales in POL-RSK-01 §6–§7.
+2. **Inherent Score = L × I** (before/without the relevant control).
+3. Record the **treatment** (Mitigate / Transfer / Avoid / Accept) and the **control(s)**.
+4. Re-score after treatment to record the **Residual Score**.
+5. Assign a **Risk Owner** and **Status**; set a **Review Date**.
+6. Residual risk above appetite must be linked to a record in `risk-acceptance.md.template`; treatment is tracked in `risk-treatment-plan.md.template`.
+
+**Status values:** `Open` · `Treatment In Progress` · `Mitigated` · `Accepted` · `Transferred` · `Closed`.
+
+## 4. Risk Register
+<!-- TEMPLATE: Keep all columns. Scores are L×I per POL-RSK-01. The two rows are EXAMPLES — replace with real entries. -->
+
+| Risk ID | Description | Asset / System | Threat | Vulnerability | L (1–5) | I (1–5) | Inherent Score | Treatment | Control(s) | Residual Score | Owner | Status | Review Date |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| RSK-001 | Unauthorized access to PHI stored in the analytics warehouse | [Snowflake] PHI tables | External attacker / credential theft | Over-broad role grants; no MFA on warehouse access | 3 | 5 | 15 (High) | Mitigate | Enforce SSO+MFA; least-privilege Snowflake roles; row/column masking on PHI; access logging | 5 (Moderate) | [Data Platform Owner] | Treatment In Progress | [YYYY-MM-DD] |
+| RSK-002 | Secrets leaked through CI/CD pipeline | [GitHub] Actions / repos | Malicious or accidental disclosure | Hardcoded secrets; broad workflow permissions; no secret scanning | 3 | 4 | 12 (High) | Mitigate | GitHub secret scanning + push protection; OIDC to [AWS] (no long-lived keys); least-privilege workflow tokens | 4 (Low) | [Security Officer] | Mitigated | [YYYY-MM-DD] |
+| [RSK-003] | [Description] | [Asset/System] | [Threat] | [Vulnerability] | [L] | [I] | [L×I] | [Mitigate/Transfer/Avoid/Accept] | [Control] | [L×I] | [Owner] | [Status] | [YYYY-MM-DD] |
+
+## 5. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns and maintains the register; ensures scoring consistency; reports posture to leadership. |
+| Risk Owners | Keep their entries current; drive treatment; confirm residual scores. |
+| System / Asset Owners | Provide threat/vulnerability input for systems they own. |
+
+See `../governance/roles-and-responsibilities.md.template`.
+
+## 6. Exceptions
+This register records exceptions and accepted risks; the acceptance process itself follows `../governance/exceptions-and-waivers.md.template` and `risk-acceptance.md.template`.
+
+## 7. Compliance, Monitoring & Enforcement
+The register is reviewed on the cadence defined in POL-RSK-01 (§11) and at management review (`../governance/management-review.md.template`). Assessors review it as primary evidence of the risk management process. Stale entries (past their Review Date) are flagged by the [Security Officer].
+
+## 8. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 03.b Performing Risk Assessments; 03.c Risk Mitigation; 03.d Risk Evaluation |
+| HIPAA | 164.308(a)(1)(ii)(A) Risk Analysis; 164.308(a)(1)(ii)(B) Risk Management |
+| SOC 2 (TSC) | CC3.1, CC3.2, CC3.4 |
+| ISO 27001:2022 | Clause 6.1.2; 8.2; A.5.x |
+
+## 9. Related Documents
+- `risk-management-methodology.md.template`
+- `risk-treatment-plan.md.template`
+- `risk-acceptance.md.template`
+- `../asset-data/asset-management-policy.md.template`
+- `../governance/management-review.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft (register schema + example rows) |

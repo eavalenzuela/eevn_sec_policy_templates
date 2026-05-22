@@ -1,0 +1,109 @@
+<!--
+TEMPLATE: This defines the formal "we are knowingly living with this risk" process. The key
+control is AUTHORITY — who is allowed to accept what level of risk — and EXPIRY: accepted
+risk must never be permanent. Keep the acceptance-authority table consistent with the risk
+levels and appetite in risk-management-methodology.md.template (POL-RSK-01). The
+acceptance log at the end is a living record. Fill the [PLACEHOLDERS] for authorities and
+maximum acceptance durations.
+-->
+
+# Risk Acceptance Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-RSK-03 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO / CEO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members who own or accept risk within the ISMS scope |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy defines how [COMPANY] formally accepts (retains) information security risk that it has chosen not to fully mitigate, transfer, or avoid. It ensures that risk is only accepted **knowingly**, by an authority **empowered** to accept it, with documented justification, a defined **expiry**, and a record that can be evidenced to assessors. Risk acceptance is the controlled exception to treatment — never a way to silently ignore risk.
+
+## 2. Scope
+Applies to any decision to retain residual risk within the ISMS scope, including risks affecting PHI, the production SaaS application, [AWS], [Snowflake], and the [GitHub] CI/CD pipeline. It also serves as the underlying mechanism for policy exceptions raised under `../governance/exceptions-and-waivers.md.template`.
+
+## 3. Policy
+1. Risk **shall** be accepted only through a documented risk acceptance record approved by an authority empowered for that risk level per §5.
+2. No risk acceptance **shall** be open-ended. Every acceptance **shall** carry an **expiry date** and be re-reviewed at or before expiry (§7).
+3. The accepting authority **shall** be informed of the risk's likelihood, impact, residual score, the reason mitigation is not being performed, and any compensating controls before accepting.
+4. **PHI-related risk** rated High or Critical **shall not** be accepted below the [CEO]/[Privacy Officer] level, and acceptance **shall** consider HIPAA obligations; risk acceptance does **not** waive any regulatory notification or safeguard requirement.
+5. Each acceptance **shall** be recorded in the risk acceptance log (§8) and cross-referenced to the corresponding Risk ID in `risk-register.md.template`.
+6. Compensating controls relied upon at acceptance **shall** be documented and monitored for the duration of the acceptance.
+7. Expired acceptances **shall** automatically lapse; the underlying risk reverts to **Open** and must be re-treated or re-accepted.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| Requestor / Risk Owner | Documents the risk, justification, compensating controls, and proposed expiry; submits for acceptance. |
+| [Security Officer / CISO] | Reviews acceptance requests for completeness; maintains the acceptance log; accepts risk within delegated authority. |
+| [CTO / CEO] | Accepts High/Critical residual risk per §5. |
+| [Privacy Officer] | Co-approves acceptance of PHI-related risk. |
+
+See `../governance/roles-and-responsibilities.md.template`.
+
+## 5. Acceptance Authority by Risk Level
+<!-- TEMPLATE: Tailor authorities to your org. Higher residual risk requires higher authority. -->
+| Residual Risk Level (per POL-RSK-01) | Who may accept | Max acceptance duration before re-review |
+|---|---|---|
+| Low (1–4) | [Risk Owner] (notify Security Officer) | [12 months] |
+| Moderate (5–9) | [Security Officer] | [12 months] |
+| High (10–15) | [Security Officer + CTO] | [6 months] |
+| Critical (16–25) | [CTO + CEO] | [3 months] |
+| Any PHI-related High/Critical risk | [CEO + Privacy Officer] | [3 months] |
+
+## 6. Required Documentation
+Each risk acceptance record **shall** include:
+- Risk ID (link to register), description, and residual score (L × I).
+- Reason for acceptance (why not mitigate/transfer/avoid).
+- Compensating controls in place.
+- Accepting authority and date.
+- Expiry / mandatory review date.
+- Conditions that would force early re-review (e.g., new incident, scope change).
+
+## 7. Expiry & Review
+Every acceptance is time-bound per §5. The [Security Officer] tracks expiry dates and re-reviews each acceptance at or before expiry. At review the risk is re-scored and either (a) re-accepted by the appropriate authority, (b) treated, or (c) closed. A triggering event (incident, significant change, regulatory change) forces early re-review regardless of expiry.
+
+## 8. Risk Acceptance Log
+<!-- TEMPLATE: Living record. The row below is an EXAMPLE — replace with real entries. -->
+| Acceptance ID | Risk ID | Residual Score | Justification | Compensating Controls | Accepted By | Date Accepted | Expiry / Review | Status |
+|---|---|---|---|---|---|---|---|---|
+| ACC-001 | RSK-002 | 4 (Low) | Full secret-rotation automation deferred to next quarter; residual is Low | GitHub push protection + secret scanning; OIDC to [AWS] | [Security Officer] | [YYYY-MM-DD] | [YYYY-MM-DD] | Active |
+| [ACC-002] | [RSK-ID] | [L×I] | [Reason] | [Controls] | [Authority] | [YYYY-MM-DD] | [YYYY-MM-DD] | [Active/Expired/Closed] |
+
+## 9. Exceptions
+This policy *is* the mechanism for accepting risk; policy exceptions are raised here and under `../governance/exceptions-and-waivers.md.template`. Regulatory obligations (e.g., HIPAA safeguards and breach notification) may **not** be waived by risk acceptance.
+
+## 10. Compliance, Monitoring & Enforcement
+The [Security Officer] monitors the acceptance log for expired or unauthorized acceptances and reports to management review (`../governance/management-review.md.template`). Accepting risk without proper authority, or allowing an acceptance to lapse without re-review, is a compliance violation handled per `../people/hr-security-policy.md.template`. Assessors review the log as evidence of governed risk retention.
+
+## 11. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 03.c Risk Mitigation; 03.d Risk Evaluation; 05.h Authorization Process |
+| HIPAA | 164.308(a)(1)(ii)(B) Risk Management; 164.316 Documentation |
+| SOC 2 (TSC) | CC3.4; CC5.1; CC5.2 |
+| ISO 27001:2022 | Clause 6.1.3 (risk treatment & risk owner acceptance); 8.3 |
+
+## 12. Related Documents
+- `risk-management-methodology.md.template`
+- `risk-register.md.template`
+- `risk-treatment-plan.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+- `../governance/management-review.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

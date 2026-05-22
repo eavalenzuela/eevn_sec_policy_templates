@@ -1,0 +1,154 @@
+<!--
+TEMPLATE: This is the methodology that governs HOW [COMPANY] assesses risk. It is the
+parent of the risk register (REG-RSK-01), risk treatment plan (POL-RSK-02), and risk
+acceptance (POL-RSK-03). It is aligned to NIST SP 800-30 and the HITRUST risk-management
+control family, and satisfies the HIPAA-required risk analysis (45 CFR 164.308(a)(1)(ii)(A)).
+The SCORING SCALES below are the one decision you must NOT leave fully abstract — pick a
+scale (this template uses 1-5 x 1-5) and use it consistently across every register entry,
+or scores won't be comparable. Fill the [PLACEHOLDERS] for cadence, thresholds, and owners.
+-->
+
+# Risk Management Methodology
+
+| Field | Value |
+|---|---|
+| Document ID | POL-RSK-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO / CEO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members, systems, and information assets in scope of the ISMS |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This methodology defines how [COMPANY] systematically identifies, analyzes, evaluates, treats, and monitors information security risk — including risk to Protected Health Information (PHI) — so that decisions about which controls to implement are driven by a repeatable, evidence-based process rather than ad hoc judgment. It establishes a common scoring scale so that risks across the organization are comparable and can be prioritized. It is the parent process for the risk register, risk treatment plan, and risk acceptance documents.
+
+## 2. Scope
+This methodology applies to all information assets, systems, processes, and third-party services within the ISMS scope (`../governance/isms-scope-statement.md.template`), explicitly including the production SaaS application, [AWS environment], [Snowflake data warehouse], and the [GitHub] CI/CD pipeline, and any system that creates, receives, maintains, or transmits PHI. It covers risks arising from technology, people, processes, vendors, and the physical and regulatory environment.
+
+## 3. Policy
+1. [COMPANY] **shall** maintain a documented, repeatable risk management process aligned to **NIST SP 800-30** and the **HITRUST CSF** risk-management control family.
+2. A formal, organization-wide risk assessment **shall** be conducted at least [annually] and upon any [significant change] to the environment, business, threat landscape, or regulatory obligations (NIST 800-30 calls this a triggering event).
+3. The risk assessment **shall** satisfy the **HIPAA-required risk analysis** of all reasonably anticipated threats to the confidentiality, integrity, and availability of electronic PHI (45 CFR § 164.308(a)(1)(ii)(A)).
+4. Every identified risk **shall** be recorded in the risk register (`risk-register.md.template`) using the scoring scales defined in this document, with a named **risk owner** accountable for it.
+5. Each risk **shall** be assigned a **treatment decision** — mitigate, transfer, avoid, or accept — and tracked to closure per `risk-treatment-plan.md.template`.
+6. Residual risk that exceeds [COMPANY]'s defined risk appetite **shall** be formally accepted only through `risk-acceptance.md.template` by an authority empowered to accept it.
+7. Risk assessment results **shall** be reported to leadership and feed the management review (`../governance/management-review.md.template`).
+8. Risk assessment documentation **shall** be retained for at least **six (6) years** in line with HIPAA documentation retention (45 CFR § 164.316(b)(2)).
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns this methodology; facilitates assessments; maintains the risk register; reports risk posture to leadership. |
+| [CTO / CEO] | Defines risk appetite; accountable for accepting risk above defined thresholds. |
+| Risk Owners | Accountable for assigned risks; provide likelihood/impact input; drive treatment to closure. |
+| System / Asset Owners | Identify assets, threats, and vulnerabilities for systems they own. |
+| All Workforce | Report risks, threats, and weaknesses they observe. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Risk Management Process
+The process follows the NIST 800-30 / ISO 27005 cycle:
+
+1. **Context & asset identification** — Establish scope and identify the assets to be protected, drawing on the asset inventory (`../asset-data/asset-management-policy.md.template`) and data classification (`../asset-data/data-classification-and-handling.md.template`). PHI-bearing assets receive priority.
+2. **Threat identification** — Identify threat sources and events relevant to each asset (e.g., external attacker, malicious insider, accidental disclosure, ransomware, cloud misconfiguration, vendor compromise, loss of availability).
+3. **Vulnerability identification** — Identify weaknesses a threat could exploit, drawing on vulnerability scans, penetration tests, audit findings, and prior incidents.
+4. **Likelihood & impact analysis** — Score each risk per §6 and §7.
+5. **Risk evaluation** — Compute the inherent risk score (§8) and compare against the risk appetite to prioritize.
+6. **Risk treatment** — Select a treatment option (§9) and record it in the register and treatment plan.
+7. **Residual risk & acceptance** — Re-score after planned controls; accept residual risk per §10 where it remains within appetite or via formal acceptance where it does not.
+8. **Monitoring & review** — Reassess on the defined cadence (§11).
+
+## 6. Likelihood Scale
+Likelihood is the probability that a given threat successfully exploits a vulnerability within a [12-month] horizon.
+
+| Score | Rating | Definition (tailor to [COMPANY]) |
+|---|---|---|
+| 1 | Rare | Not expected to occur; no known precedent. |
+| 2 | Unlikely | Could occur but not anticipated; strong controls in place. |
+| 3 | Possible | May occur occasionally; partial controls. |
+| 4 | Likely | Expected to occur at some point; weak or missing controls. |
+| 5 | Almost Certain | Expected to occur frequently or already occurring. |
+
+## 7. Impact Scale
+Impact is the magnitude of harm if the risk materializes, considering confidentiality, integrity, availability, regulatory, financial, and reputational dimensions. **Any risk involving unauthorized exposure of PHI shall be scored no lower than [4].**
+
+| Score | Rating | Definition (tailor to [COMPANY]) |
+|---|---|---|
+| 1 | Negligible | Minimal effect; absorbed in normal operations. |
+| 2 | Minor | Limited, short-term effect; no PHI involved. |
+| 3 | Moderate | Noticeable operational, financial, or limited data impact. |
+| 4 | Major | Significant impact; possible PHI exposure, reportable breach, or material financial/regulatory consequence. |
+| 5 | Severe | Catastrophic impact; large-scale PHI breach, regulatory enforcement, or threat to business continuity. |
+
+## 8. Risk Scoring & Risk Matrix
+**Risk Score = Likelihood × Impact** (range 1–25). The same formula is used for both **inherent** risk (before/without the relevant controls) and **residual** risk (after planned/implemented controls).
+
+| Score Range | Risk Level | Default expectation |
+|---|---|---|
+| 1–4 | **Low** | Acceptable; monitor. |
+| 5–9 | **Moderate** | Treatment recommended; accept with documented rationale. |
+| 10–15 | **High** | Treatment required; requires [Security Officer] acceptance if not mitigated. |
+| 16–25 | **Critical** | Treatment required promptly; residual acceptance only by [CTO/CEO]. |
+
+> **Risk appetite:** [COMPANY]'s default risk appetite is [risks of Moderate or below]. Any residual risk rated High or Critical requires formal acceptance per `risk-acceptance.md.template`.
+
+## 9. Risk Treatment Options
+For each risk, exactly one primary treatment option is selected:
+
+| Option | Description | Example |
+|---|---|---|
+| **Mitigate (Reduce)** | Implement or strengthen controls to lower likelihood and/or impact. | Enforce MFA; encrypt PHI at rest in [Snowflake]; tighten [AWS] IAM. |
+| **Transfer (Share)** | Shift risk to a third party. | Cyber insurance; contractual indemnity; a vendor BAA. |
+| **Avoid (Eliminate)** | Stop or change the activity that creates the risk. | Decommission a system; do not store a given data element. |
+| **Accept (Retain)** | Knowingly retain the risk within appetite, formally documented. | Accept a Low/Moderate residual risk per `risk-acceptance.md.template`. |
+
+Treatment selection, owner, and target dates are recorded in the register and tracked in `risk-treatment-plan.md.template`.
+
+## 10. Residual Risk
+After treatment is planned or implemented, the risk is re-scored to produce a **residual score**. Residual risk within appetite may be retained with documented rationale; residual risk above appetite **shall** be formally accepted per `risk-acceptance.md.template` or subjected to further treatment.
+
+## 11. Cadence & Triggers
+| Activity | Frequency |
+|---|---|
+| Full organization-wide risk assessment / HIPAA risk analysis | At least [annually] |
+| Risk register review | [Quarterly] |
+| Reassessment on triggering event | Upon [significant change]: new system, major architecture change, new PHI flow, new vendor handling PHI, significant incident, or regulatory change |
+| Report to leadership / management review | [Quarterly / per management-review cadence] |
+
+## 12. Exceptions
+Exceptions to this methodology require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 13. Compliance, Monitoring & Enforcement
+Adherence is verified through internal audit, management review, and assessor review of the risk register and assessment artifacts. The [Security Officer] monitors that assessments occur on cadence and that risks are tracked to closure. Failure to perform required risk assessments is a compliance gap; violations of this policy are handled per `../people/hr-security-policy.md.template`.
+
+## 14. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 03.a Risk Management Program; 03.b Performing Risk Assessments; 03.c Risk Mitigation; 03.d Risk Evaluation |
+| HIPAA | 164.308(a)(1)(ii)(A) Risk Analysis; 164.308(a)(1)(ii)(B) Risk Management |
+| SOC 2 (TSC) | CC3.1, CC3.2, CC3.3, CC3.4 (risk assessment) |
+| ISO 27001:2022 | Clause 6.1.2 Risk assessment; 6.1.3 Risk treatment; 8.2; 8.3; A.5.x |
+
+## 15. Related Documents
+- `risk-register.md.template`
+- `risk-treatment-plan.md.template`
+- `risk-acceptance.md.template`
+- `../asset-data/asset-management-policy.md.template`
+- `../asset-data/data-classification-and-handling.md.template`
+- `../governance/management-review.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+- `../governance/information-security-policy.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

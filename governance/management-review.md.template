@@ -1,0 +1,108 @@
+<!--
+TEMPLATE: This is the ISO 27001 Clause 9.3 management review, adapted for HITRUST/HIPAA.
+The defined INPUTS and OUTPUTS below mirror the clause almost verbatim — keep them; assessors
+check that each required input was actually considered and that decisions/outputs were
+recorded. The review is a top-management activity: minutes signed off by leadership ARE the
+evidence. Don't conflate this with the Steering Committee (that's operational governance);
+management review is the periodic, structured evaluation of ISMS suitability and effectiveness.
+-->
+
+# Management Review
+
+| Field | Value |
+|---|---|
+| Document ID | POL-GOV-07 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CEO / Board] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | Top management and the ISMS |
+
+> **Status:** [DRAFT until approved.]
+
+---
+
+## 1. Purpose
+This procedure defines how [COMPANY]'s top management reviews the ISMS at planned intervals to ensure its continuing suitability, adequacy, and effectiveness. It establishes the required inputs, frequency, attendees, outputs, and records of the management review, consistent with ISO 27001 Clause 9.3 and the HITRUST evaluation requirement.
+
+## 2. Scope
+Applies to the entire ISMS within the scope defined in `isms-scope-statement.md.template`, including security and privacy controls, risk posture, compliance status, and continual improvement.
+
+## 3. Policy
+1. Management review **shall** be conducted at planned intervals, at least [annually], and additionally upon significant change to the business, regulatory environment, or risk profile.
+2. The review **shall** consider all defined inputs (§6); omission of an input **shall** be documented with rationale.
+3. The review **shall** produce documented decisions and actions (§7) with assigned owners and due dates.
+4. Outputs that require change **shall** be tracked to closure via `corrective-action-poam.md.template`.
+5. Minutes and supporting materials **shall** be retained as ISMS records per `document-control.md.template`.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [CEO / Board / Top Management] | Owns the review; makes decisions; commits resources. |
+| [Security Officer / CISO] | Prepares inputs; presents ISMS status; records and tracks outputs. |
+| [Privacy Officer] | Presents privacy/PHI status and breach activity. |
+| Steering Committee members | Contribute input from their domains. |
+
+See `roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Frequency & Attendees
+- **Frequency:** at least [annually]; many organizations run a lighter review [quarterly] alongside the Steering Committee with a formal full review annually.
+- **Required attendees:** [CEO / top management], [Security Officer], [Privacy Officer]; **optional/as-needed:** [engineering, product, HR, legal] representatives.
+- **Quorum:** the review is only valid with top-management participation.
+
+## 6. Inputs to the Review
+The review **shall** consider, at minimum:
+1. Status of actions from previous management reviews.
+2. Changes in external and internal issues relevant to the ISMS (regulatory, business, technology).
+3. Changes in the needs and expectations of interested parties (customers, regulators, [AWS]/[Snowflake]/[GitHub] dependencies).
+4. Feedback on security performance and trends: nonconformities and corrective actions; monitoring and measurement results (`security-metrics-and-objectives.md.template`); audit results (`internal-audit-program.md.template`); fulfilment of security objectives.
+5. Risk assessment results and risk treatment status (`../risk/risk-management-methodology.md.template`).
+6. Security incidents and PHI breach activity since the last review.
+7. Compliance status: HITRUST/HIPAA/SOC 2, SoA changes, open exceptions and waivers.
+8. Status of the ISMS scope.
+9. Opportunities for continual improvement.
+
+## 7. Outputs of the Review
+The review **shall** produce documented decisions and actions related to:
+1. Opportunities for continual improvement.
+2. Any need for changes to the ISMS, including scope, policies, and objectives.
+3. Resource needs.
+4. Risk acceptance decisions and changes to risk treatment.
+5. Adjustments to security objectives and metrics targets.
+
+## 8. Records
+Minutes documenting attendance, inputs reviewed, decisions, risk acceptances, and action items (with owners and due dates) **shall** be recorded, approved by [top management], and retained per the document-control retention schedule (including the 6-year HIPAA retention where applicable).
+
+## 9. Exceptions
+A delayed or abbreviated review requires documented rationale per `exceptions-and-waivers.md.template`, approved by the [CEO].
+
+## 10. Compliance, Monitoring & Enforcement
+The conduct and outputs of management reviews are verified during internal and external audits. Failure to conduct a review or to act on its outputs is an ISMS nonconformity tracked in the POA&M register.
+
+## 11. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 00 Information Security Management Program; management review/evaluation |
+| HIPAA | 164.308(a)(8) Evaluation; 164.306(e) Maintenance |
+| SOC 2 (TSC) | CC4.1, CC4.2, CC5.x |
+| ISO 27001:2022 | Clause 9.3 Management review; Clause 10 Improvement |
+
+## 12. Related Documents
+- `information-security-policy.md.template`
+- `security-steering-committee-charter.md.template`
+- `security-metrics-and-objectives.md.template`
+- `internal-audit-program.md.template`
+- `corrective-action-poam.md.template`
+- `isms-scope-statement.md.template`
+- `document-control.md.template`
+- `../risk/risk-management-methodology.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

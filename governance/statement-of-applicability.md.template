@@ -1,0 +1,113 @@
+<!--
+TEMPLATE: The Statement of Applicability (SoA) is the central traceability artifact for
+HITRUST and ISO 27001. It records, for every control domain/requirement in scope, WHETHER
+it applies, WHY, its IMPLEMENTATION STATUS, and the POLICY/evidence that satisfies it.
+Build the authoritative version inside MyCSF — this template is the human-readable mirror
+and the structure your team fills in. Applicability is driven by the ISMS scope
+(isms-scope-statement.md.template). An "applicable but not implemented" control must have a
+corresponding entry in the corrective-action / POA&M register. The example rows below are
+ILLUSTRATIVE — replace with your real MyCSF object.
+-->
+
+# Statement of Applicability (SoA)
+
+| Field | Value |
+|---|---|
+| Document ID | POL-GOV-03 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Security Officer / CISO] |
+| Approver | [CEO / Board] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All controls within the ISMS scope |
+
+> **Status:** [DRAFT until approved. The SoA must be approved by leadership and kept in sync with MyCSF and the ISMS scope at all times.]
+
+---
+
+## 1. Purpose
+This Statement of Applicability records which security control domains and requirements are applicable to [COMPANY]'s ISMS, the justification for inclusion or exclusion, the current implementation status, and the policy or evidence that satisfies each control. It is the single point of traceability between [COMPANY]'s risk decisions, the HITRUST CSF, and the operating policy set, and it demonstrates to assessors that control selection is deliberate and complete.
+
+## 2. Scope
+The SoA covers every applicable control across the systems, data, locations, and people defined in `isms-scope-statement.md.template`. Control applicability is determined by the HITRUST CSF scoping factors (organizational, system, regulatory) selected in MyCSF, the risk assessment (`../risk/risk-management-methodology.md.template`), and applicable legal/regulatory obligations (`../compliance/legal-and-regulatory-compliance.md.template`).
+
+## 3. Policy
+1. A SoA **shall** be maintained covering all in-scope control domains, with no applicable control omitted.
+2. Each control **shall** record an applicability decision (Yes/No), and every exclusion **shall** carry a documented justification.
+3. Each applicable control **shall** record an implementation status and reference the policy/procedure and evidence that satisfies it.
+4. Applicable controls that are not yet fully implemented **shall** have a corresponding entry in the POA&M register (`corrective-action-poam.md.template`).
+5. The SoA **shall** be the authoritative mirror of the MyCSF object and **shall** be reconciled to it before each assessment and at each management review.
+6. The SoA **shall** be reviewed and re-approved at least annually and upon material scope or risk change.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [CEO / Board] | Approves the SoA and the residual risk it represents. |
+| [Security Officer / CISO] | Owns the SoA; maintains MyCSF; assigns control owners. |
+| Control Owners | Maintain implementation status and evidence for assigned controls. |
+| [Internal Audit] | Tests that recorded statuses match reality. |
+
+See `roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Applicability Status Legend
+| Status | Meaning |
+|---|---|
+| Implemented | Control is operating and evidenced |
+| Partially Implemented | Control is in place but with gaps; POA&M required |
+| Planned | Approved and scheduled; POA&M required |
+| Not Implemented | Applicable but not yet started; POA&M required |
+| Not Applicable | Excluded; justification required |
+
+## 6. Statement of Applicability Table
+<!-- TEMPLATE: This is the heart of the document. In practice this is exported from MyCSF and
+will run to many rows across all CSF domains. The rows below are EXAMPLES showing the expected
+columns and the level of justification detail. Replace with the full control set. -->
+
+| CSF Domain | Control Objective (summary) | Applicable? | Status | Justification | Related Policy / Evidence |
+|---|---|---|---|---|---|
+| 01 Information Protection Program | Establish and govern an information protection program | Yes | Implemented | Core to operating an ISMS; required for HITRUST | `information-security-policy.md.template` |
+| 01 Access Control | Logical access governed by least privilege and authentication | Yes | Partially Implemented | All in-scope [AWS]/[Snowflake]/[GitHub] access; MFA rollout completing | `../access/access-control-policy.md.template`; POA&M [ID] |
+| 02 Endpoint Protection | Protect workstations accessing in-scope data | Yes | Implemented | Workforce uses managed endpoints to reach PHI systems | `../operations/endpoint-security-policy.md.template` |
+| 06 Configuration Management | Secure baselines and change control | Yes | Planned | Baselines defined; drift detection in [AWS] pending | `../operations/change-management-policy.md.template`; POA&M [ID] |
+| 07 Vulnerability Management | Identify and remediate vulnerabilities on a schedule | Yes | Implemented | Scanning across [AWS] and container images in [GitHub] CI | `../operations/vulnerability-and-patch-management.md.template` |
+| 09 Transmission Protection | Encrypt PHI in transit | Yes | Implemented | TLS enforced on all in-scope endpoints | `../operations/cryptography-and-key-management.md.template` |
+| 10 Physical & Environmental | Physical safeguards for facilities holding ePHI | [No / Partial] | Not Applicable | No company-owned data center; [AWS]/[Snowflake] provide physical controls as subservice orgs (see SOC 2) | `../vendor/third-party-risk-management-policy.md.template` |
+| 11 Incident Management | Detect, respond to, and report security incidents | Yes | Implemented | Required; PHI breach overlay in place | `../resilience/incident-response-plan.md.template`; `../healthcare/hipaa-breach-notification-procedure.md.template` |
+| 13 Privacy Practices | HIPAA privacy obligations | Yes | Implemented | Company handles PHI | `../healthcare/notice-of-privacy-practices.md.template` |
+| [NN ...] | [Control objective] | [Yes/No] | [Status] | [Justification] | [Policy / POA&M ref] |
+
+## 7. Exclusions Summary
+[COMPANY] **shall** maintain a clear summary of all controls marked Not Applicable with their justifications, so that exclusions can be reviewed in aggregate during assessment. Exclusions premised on subservice organizations (e.g., [AWS], [Snowflake]) **shall** reference the supporting assurance (SOC 2 report, attestations) tracked under vendor risk management.
+
+## 8. Exceptions
+Where an applicable control cannot currently be met, the gap is documented as a POA&M item and, where it represents accepted risk, as an exception per `exceptions-and-waivers.md.template` — time-bound and approved by the [Security Officer] and [CEO].
+
+## 9. Compliance, Monitoring & Enforcement
+The SoA is validated through internal audit (`internal-audit-program.md.template`), continuous control monitoring, and management review. Discrepancies between recorded and actual control status are findings tracked to closure in the POA&M register. Control owners are accountable for keeping their entries accurate.
+
+## 10. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | All applicable domains; MyCSF assessment object; scoping factors |
+| HIPAA | 164.306 Security Standards; 164.316 Policies and Procedures |
+| SOC 2 (TSC) | CC3.x Risk Assessment; mapping of controls to criteria |
+| ISO 27001:2022 | Clause 6.1.3(d) Statement of Applicability; Annex A |
+
+## 11. Related Documents
+- `isms-scope-statement.md.template`
+- `information-security-policy.md.template`
+- `corrective-action-poam.md.template`
+- `internal-audit-program.md.template`
+- `management-review.md.template`
+- `../risk/risk-management-methodology.md.template`
+- `../compliance/legal-and-regulatory-compliance.md.template`
+- `../vendor/third-party-risk-management-policy.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

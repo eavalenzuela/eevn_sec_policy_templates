@@ -1,0 +1,97 @@
+<!--
+TEMPLATE: This policy implements the HIPAA "minimum necessary" standard
+(45 CFR §§ 164.502(b) and 164.514(d)). The standard requires reasonable efforts to
+limit PHI to the minimum needed to accomplish the intended purpose. Note the regulatory
+EXCEPTIONS where minimum necessary does NOT apply (treatment, the individual, HHS, etc.)
+— do not narrow them. Tie this directly to your role-based access model. HAVE COUNSEL
+REVIEW THIS before adoption, especially the standard-protocol determinations for routine
+disclosures.
+-->
+
+# Minimum Necessary Standard
+
+| Field | Value |
+|---|---|
+| Document ID | POL-HIP-03 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Privacy Officer] |
+| Approver | [CEO / General Counsel] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and all systems handling PHI |
+
+> **Status:** [DRAFT — requires legal review before approval.]
+
+---
+
+## 1. Purpose
+This policy establishes [COMPANY]'s implementation of the HIPAA **minimum necessary** standard: when using, disclosing, or requesting PHI, [COMPANY] makes reasonable efforts to limit PHI to the minimum reasonably necessary to accomplish the intended purpose (45 CFR §§ 164.502(b), 164.514(d)). It ties the standard to [COMPANY]'s role-based access controls so the principle is enforced technically, not just on paper.
+
+## 2. Scope
+Applies to all uses, disclosures, and requests of PHI by all workforce members, contractors, and in-scope systems (production SaaS application, [AWS environment], [Snowflake], [GitHub] CI/CD), in any form. It applies to internal access to PHI as well as disclosures to and requests from third parties.
+
+## 3. Policy
+1. Workforce members **shall** access, use, disclose, and request only the PHI **minimally necessary** to perform their job function or the purpose at hand.
+2. [COMPANY] **shall** identify the workforce roles that need access to PHI, the categories of PHI each role needs, and the conditions of access, and **shall** restrict access accordingly per `../access/access-control-policy.md.template` (role-based access control / least privilege).
+3. For **routine, recurring** uses and disclosures, [COMPANY] **shall** implement **standard protocols** that limit PHI to the minimum necessary, so each instance is not separately evaluated (§ 164.514(d)(3)).
+4. For **non-routine** disclosures and requests, [COMPANY] **shall** evaluate each on its own criteria and limit PHI to the minimum necessary; the [Privacy Officer] reviews where the determination is unclear.
+5. When **requesting** PHI from another covered entity or business associate, [COMPANY] **shall** request no more than the minimum necessary for the purpose.
+6. [COMPANY] **may reasonably rely** on a requested disclosure as the minimum necessary when the requestor is a public official, another covered entity, a professional within [COMPANY], or a researcher with appropriate documentation, where such reliance is reasonable (§ 164.514(d)(3)(iii)).
+7. A request or disclosure of an **entire medical record** **shall not** be made unless the entire record is specifically justified as the minimum necessary for the purpose.
+8. Where [COMPANY] is a **Business Associate**, minimum necessary **shall** be applied consistent with the BAA and the Covered Entity's instructions.
+
+## 4. Exceptions — Where Minimum Necessary Does NOT Apply
+The minimum necessary standard does **not** apply to the following (45 CFR § 164.502(b)(2)). Workforce **shall** still apply all other access and authorization controls, but **shall not** withhold or truncate PHI in these cases:
+1. Disclosures to or requests by a **health care provider for treatment**.
+2. Uses or disclosures made **to the individual** who is the subject of the PHI.
+3. Uses or disclosures made pursuant to a **valid authorization** by the individual.
+4. Disclosures made to **HHS** for Privacy Rule compliance, enforcement, or investigation.
+5. Uses or disclosures **required by law**.
+6. Uses or disclosures required for **compliance with the HIPAA Administrative Simplification Rules**.
+
+## 5. Role-Based Access Tie-In
+1. PHI access in [AWS environment] and [Snowflake] **shall** be granted via defined roles/groups mapped to job functions, not to named individuals ad hoc.
+2. [Snowflake] access **shall** use role hierarchy, secure views, row/column-level security, and dynamic data masking so analysts see only the PHI fields and rows their role requires; de-identified or limited data sets **shall** be used where full PHI is not needed (see `de-identification-and-limited-data-set.md.template`).
+3. Access **shall** be reviewed at least [quarterly] and on role change/termination per `../access/access-control-policy.md.template` and `../access/access-recertification-procedure.md.template`.
+4. Standing access to production PHI **shall** be minimized; just-in-time / break-glass access **shall** be logged and reviewed.
+
+## 6. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Privacy Officer] | Owns this policy; defines standard protocols; rules on non-routine and unclear determinations. |
+| [Security Officer] | Implements and enforces role-based access controls realizing minimum necessary; monitors access. |
+| Data/Role Owners | Define which PHI categories each role needs; approve access requests. |
+| All Workforce | Access and disclose only the minimum necessary PHI for their task. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 7. Exceptions
+Process exceptions (distinct from the regulatory exceptions in §4) require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Privacy Officer], time-bound, and recorded in the exceptions log.
+
+## 8. Compliance, Monitoring & Enforcement
+Compliance is monitored through access reviews, query/disclosure log analysis (e.g., [Snowflake] access history), and audits of standard protocols. Excessive or unnecessary access is investigated and remediated. Violations are handled per `../people/hr-security-policy.md.template` and the HIPAA workforce sanctions process (`sanctions-policy.md.template`).
+
+## 9. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 01.b User Access Management; 01.c Privilege Management; 13.x Minimum Necessary / Use & Disclosure |
+| HIPAA | 164.502(b) Minimum Necessary; 164.514(d) Minimum Necessary Requirements; 164.308(a)(4) Access Authorization; 164.312(a)(1) Access Control |
+| SOC 2 (TSC) | CC6.1, CC6.3; P4.x (Use, Retention) |
+| ISO 27001:2022 | A.5.15 Access control; A.8.3 Information access restriction; A.8.4 Data masking |
+
+## 10. Related Documents
+- `../access/access-control-policy.md.template`
+- `../access/access-recertification-procedure.md.template`
+- `de-identification-and-limited-data-set.md.template`
+- `notice-of-privacy-practices.md.template`
+- `baa-management-procedure.md.template`
+- `../governance/roles-and-responsibilities.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft (pending legal review) |

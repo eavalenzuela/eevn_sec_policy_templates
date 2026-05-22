@@ -1,0 +1,130 @@
+<!--
+TEMPLATE: This document draws the boundary of the ISMS. Everything inside the boundary
+is governed by the policy set and assessed for HITRUST. Be precise — vague scope is the
+most common cause of audit findings and scope creep. This statement is the BASIS for the
+Statement of Applicability (statement-of-applicability.md.template): you cannot decide
+which controls apply until you have fixed what is in scope. Re-confirm scope at every
+management review and whenever the architecture, data flows, or org structure change.
+-->
+
+# ISMS Scope Statement
+
+| Field | Value |
+|---|---|
+| Document ID | POL-GOV-02 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CEO / Board] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members, contractors, and systems within the defined boundary |
+
+> **Status:** [DRAFT until approved. Scope changes require re-approval and an update to the Statement of Applicability.]
+
+---
+
+## 1. Purpose
+This document defines the boundaries and applicability of [COMPANY]'s Information Security Management System (ISMS): the systems, data, locations, people, and processes that the ISMS governs, and those explicitly excluded. It exists to give assessors, leadership, and workforce an unambiguous statement of what is protected, and to serve as the authoritative basis for the Statement of Applicability (`statement-of-applicability.md.template`) and the HITRUST scoping exercise.
+
+## 2. Scope
+This statement applies to the entire ISMS as approved by [CEO / Board]. It governs the determination of in-scope and out-of-scope assets and is binding on all workforce members and contractors who interact with in-scope systems or data. The scope is set with reference to the requirements of interested parties (`../risk/risk-management-methodology.md.template`), the regulatory obligations tracked in `../compliance/legal-and-regulatory-compliance.md.template`, and the business objective of achieving and maintaining HITRUST certification.
+
+## 3. Policy
+1. The ISMS scope **shall** be formally defined, documented in this statement, and approved by [CEO / Board] before any HITRUST assessment or SoA finalization.
+2. The scope **shall** explicitly enumerate the in-scope systems, data types, physical and logical locations, organizational units, and people, and **shall** state material exclusions with justification.
+3. All systems that create, receive, maintain, or transmit PHI **shall** be in scope; PHI may not be excluded from the ISMS.
+4. Interfaces and dependencies between in-scope and out-of-scope elements **shall** be identified so that boundary controls can be applied.
+5. The scope **shall** be reviewed at least annually at management review (`management-review.md.template`) and re-confirmed upon any significant change to architecture, data flows, hosting, acquisitions, or the regulatory environment.
+6. Any change to scope **shall** be managed as a change to the ISMS, re-approved by the [Approver], and reflected in the SoA and affected policies.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [CEO / Board] | Approves the ISMS scope and any subsequent changes. |
+| [Security Officer / CISO] | Owns this statement; proposes scope; maintains the system/data inventory mapping. |
+| [Privacy Officer] | Confirms all PHI flows are captured in scope. |
+| Engineering / Platform Leads | Confirm system inventory, data flows, and dependencies are accurate. |
+| All Workforce | Operate only in-scope systems for in-scope activities per policy. |
+
+See `roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. In-Scope Systems & Services
+<!-- TEMPLATE: List the actual production systems. Keep specifics as placeholders. -->
+| Category | In-Scope Element |
+|---|---|
+| Cloud platform | [AWS account(s) / Organization — e.g. prod, shared-services]; in-scope regions [us-east-1, ...] |
+| Compute & application | The [COMPANY] production SaaS application and supporting [AWS] services ([EKS/ECS, Lambda, EC2, RDS, S3, ...]) |
+| Data warehouse / analytics | [Snowflake] account [identifier], in-scope databases/warehouses handling PHI |
+| CI/CD & source control | [GitHub] organization, in-scope repositories, [GitHub Actions] pipelines, and artifact stores |
+| Identity & secrets | [Identity provider / SSO], [AWS IAM], [secrets manager] |
+| Endpoints & corporate IT | [Managed workstations / MDM fleet] used to access in-scope systems |
+| Supporting SaaS | [Ticketing, monitoring, logging, communications tools that process in-scope data] |
+
+## 6. In-Scope Data
+| Data Type | Classification | Notes |
+|---|---|---|
+| Protected Health Information (PHI / ePHI) | [Confidential — highest] | Always in scope; governed per `../asset-data/data-classification-and-handling.md.template` |
+| [Customer / business confidential] | [Confidential] | [...] |
+| [Authentication & secrets] | [Confidential] | Credentials, keys, tokens |
+| [Operational logs & telemetry] | [Internal] | May contain identifiers; review for PHI |
+
+## 7. In-Scope Locations
+| Location | Type | Notes |
+|---|---|---|
+| [AWS region(s)] | Cloud / logical | Primary processing and storage |
+| [Snowflake region/deployment] | Cloud / logical | Analytics data plane |
+| [Corporate office(s) — city] | Physical | If applicable; otherwise note "no on-prem PHI" |
+| Remote / home offices | Physical | Workforce accessing in-scope systems; governed by remote-work and acceptable-use policies |
+
+## 8. In-Scope People & Organizational Units
+| Group | In Scope? | Notes |
+|---|---|---|
+| [Engineering / Platform] | Yes | Build and operate in-scope systems |
+| [Security / Compliance] | Yes | Operate the ISMS |
+| [Customer Support / Ops touching PHI] | Yes | [...] |
+| [Sales / Marketing] | [Partial] | In scope only where they access in-scope systems/data |
+| Contractors & temporary staff with system access | Yes | Bound by the same policies and agreements |
+
+## 9. Out-of-Scope (with Justification)
+<!-- TEMPLATE: Exclusions must be justified and must NOT contain PHI or feed in-scope systems uncontrolled. -->
+| Excluded Element | Justification | Boundary Control |
+|---|---|---|
+| [Corporate marketing website / public CMS] | No PHI; logically isolated from production | [Network/account separation] |
+| [Separate non-prod sandbox with synthetic data only] | No production PHI; synthetic data only | [Data-generation controls; no prod data copy] |
+| [Subsidiary / business line not yet integrated] | Operated independently; no shared in-scope data | [Documented separation] |
+
+## 10. Interfaces & Dependencies
+[COMPANY] **shall** document the interfaces between in-scope and out-of-scope elements and the third-party dependencies relied upon (e.g., [AWS] and [Snowflake] as subservice organizations, [GitHub] as a build dependency). Subservice and vendor reliance is managed under `../vendor/third-party-risk-management-policy.md.template`, including Business Associate Agreements where PHI is processed.
+
+## 11. Exceptions
+Exceptions to this statement (e.g., a temporary inclusion or exclusion) require documented risk acceptance per `exceptions-and-waivers.md.template`, approved by the [Security Officer] and [CEO], time-bound, and recorded in the exceptions log.
+
+## 12. Compliance, Monitoring & Enforcement
+Scope accuracy is verified through the asset inventory process, internal audit (`internal-audit-program.md.template`), and management review. Material drift between documented scope and actual environment is treated as a finding and tracked to closure per `corrective-action-poam.md.template`. Operating PHI-handling activities outside the defined scope is a policy violation handled per `../people/hr-security-policy.md.template`.
+
+## 13. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 00 Information Security Management Program; scoping & factor selection in MyCSF |
+| HIPAA | 164.308(a)(1) Security Management Process; 164.308(a)(7) (scope of contingency) |
+| SOC 2 (TSC) | CC1.x, CC3.x; system description / boundary |
+| ISO 27001:2022 | Clause 4.3 Determining the scope of the ISMS |
+
+## 14. Related Documents
+- `information-security-policy.md.template`
+- `statement-of-applicability.md.template`
+- `management-review.md.template`
+- `corrective-action-poam.md.template`
+- `../asset-data/data-classification-and-handling.md.template`
+- `../risk/risk-management-methodology.md.template`
+- `../vendor/third-party-risk-management-policy.md.template`
+- `../compliance/legal-and-regulatory-compliance.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

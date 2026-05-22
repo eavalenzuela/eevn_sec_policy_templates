@@ -1,0 +1,111 @@
+<!--
+TEMPLATE: This procedure reflects the structure of the HIPAA Breach Notification
+Rule (45 CFR §§ 164.400-414). Timelines and the risk-assessment factors are set by
+regulation — do not change them — but the internal workflow, roles, and state-law
+overlays are yours to fill in. HAVE COUNSEL REVIEW THIS before adoption: state breach
+laws and contractual (BAA) notification clauses frequently impose SHORTER deadlines
+than HIPAA's outer limits.
+-->
+
+# HIPAA Breach Notification Procedure
+
+| Field | Value |
+|---|---|
+| Document ID | POL-HIP-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Privacy Officer] |
+| Approver | [CEO / General Counsel] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and all systems handling PHI |
+
+> **Status:** [DRAFT — requires legal review before approval.]
+
+---
+
+## 1. Purpose
+This procedure defines how [COMPANY] determines whether an impermissible use or disclosure of unsecured Protected Health Information (PHI) constitutes a reportable **breach**, and how it notifies affected individuals, the U.S. Department of Health and Human Services (HHS/OCR), the media, and — as a Business Associate — affected Covered Entities, in accordance with the HIPAA Breach Notification Rule (45 CFR §§ 164.400–414).
+
+## 2. Scope
+Applies to any suspected or confirmed acquisition, access, use, or disclosure of unsecured PHI not permitted by the HIPAA Privacy Rule, in any form (electronic, paper, verbal), across all [COMPANY] systems and workforce. "Unsecured PHI" means PHI not rendered unusable, unreadable, or indecipherable through encryption or destruction per HHS guidance — properly encrypted PHI generally falls under the **safe harbor** and does not trigger notification.
+
+## 3. Relationship to Incident Response
+This procedure is invoked **from** the Incident Response Plan (`../resilience/incident-response-plan.md.template`) whenever an incident involves, or may involve, PHI. The IR process handles containment, eradication, and recovery; this procedure handles the **regulatory determination and notification** obligations that run in parallel. [COMPANY]'s role — Business Associate vs. Covered Entity — determines who notifies whom (see §7).
+
+## 4. Step 1 — Discovery & Escalation
+1. Any workforce member who suspects a PHI breach **shall** report it immediately to the [Privacy Officer] / [Security Officer] (see incident reporting channels).
+2. A breach is treated as **"discovered"** on the first day it is known, or by exercising reasonable diligence would have been known, to [COMPANY]. **The notification clock starts on the date of discovery, not the date of confirmation.**
+3. The [Privacy Officer] convenes the breach response team: [Privacy Officer, Security Officer, Legal/Counsel, Comms, executive sponsor].
+
+## 5. Step 2 — Breach Risk Assessment (the four-factor test)
+An impermissible use/disclosure of PHI is **presumed to be a breach** requiring notification **unless** [COMPANY] demonstrates a **low probability that the PHI has been compromised**, based on a documented risk assessment of at least these four factors (45 CFR § 164.402):
+
+1. **The nature and extent of the PHI** involved (identifiers, likelihood of re-identification, clinical sensitivity).
+2. **The unauthorized person** who used the PHI or to whom it was disclosed.
+3. Whether the PHI was **actually acquired or viewed**, or merely had the opportunity.
+4. The extent to which the **risk to the PHI has been mitigated** (e.g., recipient attestation of destruction).
+
+Also evaluate whether one of the three **regulatory exceptions** applies (unintentional good-faith access by workforce; inadvertent disclosure between authorized persons at the same entity; good-faith belief the unauthorized recipient could not retain the information). Document the assessment and conclusion regardless of outcome, and retain it (see §9).
+
+## 6. Step 3 — Determination
+| Outcome | Action |
+|---|---|
+| Encrypted/safe-harbor PHI | Not a breach; document rationale; no notification. |
+| Low probability of compromise (documented) | Not a reportable breach; document and retain assessment. |
+| Reportable breach | Proceed to notification (§7) under the applicable timelines. |
+
+## 7. Step 4 — Notification
+
+> **CRITICAL — know your role.** If [COMPANY] is a **Business Associate**, its primary obligation is to notify the affected **Covered Entity** without unreasonable delay and **no later than 60 calendar days** from discovery; the Covered Entity generally then notifies individuals/HHS/media. **The BAA may require notification far sooner (e.g., 24–72 hours)** — the BAA terms control. If [COMPANY] is acting as a **Covered Entity**, the obligations below apply directly.
+
+| Recipient | When | How |
+|---|---|---|
+| **Affected Covered Entity** (if BA) | Per BAA, else ≤60 days from discovery | [Method per BAA] |
+| **Affected individuals** (if CE) | Without unreasonable delay, ≤60 days from discovery | Written notice by first-class mail (or email if agreed); substitute notice if contact info is insufficient/out of date for ≥10 individuals |
+| **HHS/OCR** — ≥500 individuals | Contemporaneously with individual notice, ≤60 days | HHS breach portal |
+| **HHS/OCR** — <500 individuals | Within **60 days of the end of the calendar year** | HHS breach portal (annual log submission) |
+| **Prominent media** — ≥500 in a state/jurisdiction | Without unreasonable delay, ≤60 days | Press release to major media outlets serving the area |
+
+**Content of individual notice (45 CFR § 164.404(c)) must include:** a brief description of what happened and the date of breach/discovery; the types of PHI involved; steps individuals should take to protect themselves; what [COMPANY]/the CE is doing to investigate, mitigate, and prevent recurrence; and contact procedures (toll-free number, email, or postal address).
+
+## 8. Step 5 — State Law & Contractual Overlays
+[COMPANY] **shall** also evaluate, with counsel, obligations under applicable **state breach-notification laws** (which may cover broader data, impose shorter deadlines, or require notice to state AGs/credit bureaus) and any **contractual** notification clauses. Apply the **strictest** applicable requirement. [List the states most relevant to your customer/patient base here.]
+
+## 9. Step 6 — Documentation & Retention
+All breach assessments, determinations (including "not a breach" decisions), notifications, and supporting evidence **shall** be documented and retained for at least **six (6) years** per HIPAA documentation requirements (45 CFR § 164.316(b)(2)). [COMPANY] bears the **burden of proof** that required notifications were made or that an impermissible use/disclosure did not constitute a reportable breach.
+
+## 10. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Privacy Officer] | Owns this procedure; leads the breach determination; coordinates notifications. |
+| [Security Officer] | Provides technical investigation; bridges to the IR Plan. |
+| [Legal / Counsel] | Confirms regulatory and state-law obligations; reviews notices. |
+| [Comms] | Drafts individual/media notices and press releases. |
+| All Workforce | Report suspected breaches immediately. |
+
+## 11. Exceptions
+None. Notification obligations are regulatory and may not be waived by internal exception.
+
+## 12. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 11.a Reporting Information Security Events; 12.x; privacy controls |
+| HIPAA | 164.400–414 Breach Notification Rule; 164.404; 164.406; 164.408; 164.410 |
+| SOC 2 (TSC) | CC7.3, CC7.4, CC7.5; P6.x (Privacy) |
+| ISO 27001:2022 | A.5.24–A.5.28 Incident management |
+
+## 13. Related Documents
+- `../resilience/incident-response-plan.md.template`
+- `notice-of-privacy-practices.md.template`
+- `individual-rights-procedure.md.template`
+- `../vendor/third-party-risk-management-policy.md.template` (BAA terms)
+- `../governance/document-control.md.template` (retention)
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft (pending legal review) |

@@ -1,0 +1,88 @@
+# Remote Access Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-AC-06 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and contractors accessing in-scope systems from outside the corporate network |
+
+> **Status:** [DRAFT until approved. Once [APPROVER] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy defines the requirements for accessing [COMPANY] systems and data remotely — including from home, while traveling, and from any network outside [COMPANY]'s controlled environment. Because [COMPANY] operates a cloud-native, distributed workforce, nearly all access is effectively remote; this policy ensures that remote access to PHI and production systems is authenticated, encrypted, restricted, and monitored.
+
+## 2. Scope
+Applies to all remote access to in-scope systems — the [AWS] environment, [Snowflake], the [GitHub] organization, federated [SaaS] applications, and the production application — by workforce, contractors, and managed service providers, from any device or network not under [COMPANY]'s direct physical control. Third-party remote access is additionally governed by `../vendor/third-party-risk-management-policy.md.template`.
+
+## 3. Policy
+1. All remote access **shall** be authenticated through the [IdP — e.g. Okta] with **MFA** and conducted over encrypted channels (TLS / [VPN]); plaintext protocols are prohibited (`identity-and-authentication-policy.md.template`).
+2. Remote access **shall** originate only from **approved, compliant devices** meeting the requirements in §4.
+3. Access to sensitive systems and PHI **shall** be restricted by **network controls** — IP allow-listing, VPN/zero-trust enforcement, and platform network policies — per §5.
+4. **Split tunneling shall** be [disabled / restricted] for sessions accessing PHI or production systems where a [VPN] is used.
+5. Remote sessions **shall** apply the session controls (timeout, re-authentication) defined in `identity-and-authentication-policy.md.template`.
+6. PHI **shall not** be stored on remote endpoints; access is via the application/cloud console only, and local download/printing of PHI is prohibited unless explicitly authorized (`../asset-data/data-classification-and-handling.md.template`).
+7. Remote administrative/privileged access **shall** additionally comply with `privileged-access-management.md.template`.
+8. Remote access **shall** be logged and monitored; anomalous source geographies/IPs trigger alerting and possible block.
+
+## 4. Device & Endpoint Requirements
+Devices used for remote access **shall**:
+- Be enrolled in [MDM / endpoint management] and meet the [Endpoint Security Policy](../operations/endpoint-security-policy.md.template) — full-disk encryption, screen lock, current OS patches, and running EDR/anti-malware.
+- Use up-to-date supported software and a host firewall.
+- Use of personal/BYOD devices is [permitted only if enrolled and compliant / prohibited for PHI access]; access from unmanaged devices may be limited to [browser-only, no-download] sessions enforced via the [IdP] device-posture / conditional access.
+- Device posture **shall** be evaluated at authentication via [IdP device trust / conditional access] before granting access to PHI or production systems.
+
+## 5. Network Restrictions
+- **[VPN / Zero-Trust]:** Access to [restricted network segments / administrative interfaces] **shall** traverse the [VPN or ZTNA broker], which enforces identity, MFA, and device posture.
+- **[AWS]:** Administrative and data-plane access **shall** be restricted by IAM/SCP conditions, security groups, and where applicable IP-based or VPC/PrivateLink controls; public exposure of management endpoints is prohibited.
+- **[Snowflake]:** **Network policies shall** restrict logins to approved IP ranges (corporate egress / VPN / ZTNA exit IPs); private connectivity ([PrivateLink]) is used where required, and ACCOUNTADMIN access is constrained to the tightest ranges.
+- **[GitHub]:** [IP allow-listing] is enabled on the organization where supported; access is gated through SSO with the [IdP].
+- Approved source IP ranges **shall** be documented and reviewed during access recertification.
+
+## 6. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns this policy; defines device, MFA, and network-restriction standards. |
+| [IT / Platform] | Operate VPN/ZTNA, IdP conditional access, and platform network policies; maintain approved IP ranges. |
+| [Managers] | Confirm remote-access need for their reports and contractors. |
+| All Remote Users | Use only approved, compliant devices and networks; protect sessions; report lost devices immediately. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 7. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 8. Compliance, Monitoring & Enforcement
+Remote access is logged and monitored through the [IdP], VPN/ZTNA logs, AWS CloudTrail, Snowflake login history (with network-policy enforcement), and GitHub audit logs. Non-compliant devices are blocked by conditional access. Anomalies are investigated under `../resilience/incident-response-plan.md.template`. Violations are handled per `../people/hr-security-policy.md.template`, including the HIPAA sanctions process (`../healthcare/sanctions-policy.md.template`).
+
+## 9. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 01.j User Authentication for External Connections; 01.y Teleworking; 01.x Mobile Computing; 09.m Network Controls |
+| HIPAA | 164.312(e)(1) Transmission Security; 164.312(a)(1) Access Control; 164.308(a)(4) Access Management |
+| SOC 2 (TSC) | CC6.1, CC6.6, CC6.7 |
+| ISO 27001:2022 | A.6.7 Remote working; A.8.1 User endpoint devices; A.8.20 Network security; A.8.21 Security of network services |
+
+## 10. Related Documents
+- `identity-and-authentication-policy.md.template`
+- `access-control-policy.md.template`
+- `privileged-access-management.md.template`
+- `../operations/endpoint-security-policy.md.template`
+- `../asset-data/data-classification-and-handling.md.template`
+- `../vendor/third-party-risk-management-policy.md.template`
+- `../resilience/incident-response-plan.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

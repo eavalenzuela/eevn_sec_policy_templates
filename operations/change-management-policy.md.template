@@ -1,0 +1,110 @@
+<!--
+TEMPLATE: Change Management Policy. The control assessors care about most here is
+SEPARATION OF DUTIES — the author of a change must not be the sole approver and
+deployer of it. Tie the abstract controls to the concrete GitHub mechanisms
+(branch protection, required reviewers, required status checks, environment
+protection rules). Keep the [PLACEHOLDERS] for branch names, reviewer counts,
+and freeze windows so each adopting org can tune them.
+-->
+
+# Change Management Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-OPS-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Engineering Lead / Head of Engineering] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members and contractors who author, review, approve, or deploy changes to production systems in scope of the ISMS |
+
+> **Status:** [DRAFT until approved. Once [CTO] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy ensures that changes to [COMPANY]'s production systems — including the SaaS application, [AWS] infrastructure, [Snowflake], and CI/CD configuration — are authorized, tested, peer-reviewed, and traceable, so that changes do not degrade the confidentiality, integrity, or availability of systems handling Protected Health Information (PHI). It exists to prevent unauthorized, untested, or unilateral changes from reaching production.
+
+## 2. Scope
+Applies to all changes to in-scope production systems and the data they process, including application code, infrastructure-as-code (IaC), database schemas and [Snowflake] objects, CI/CD pipeline definitions, IAM and security configurations, and third-party integrations. It covers all workforce members and contractors with the ability to author, review, approve, or deploy such changes. Local development and ephemeral non-production environments are out of scope except where a change is promoted from them toward production.
+
+## 3. Policy
+1. Every change to a production system **shall** be tracked in [GitHub] as a pull request (PR) linked to a ticket or issue describing the rationale, scope, and risk.
+2. Changes **shall** be classified as **Standard** (pre-approved, low-risk, repeatable), **Normal** (requires review and approval through the standard workflow), or **Emergency** (required to restore service or remediate an active security/availability incident) — see §5.
+3. **Separation of duties shall be enforced: the author of a change shall not be its sole approver, and shall not approve their own change.** At least [1] independent qualified reviewer **shall** approve every Normal change before merge. Where feasible, the person who deploys a change **shall not** be the sole author of it.
+4. All changes **shall** pass required automated checks (build, automated tests, and the security gates defined in `secure-sdlc-policy.md.template`) before merge; checks **shall not** be bypassable by the author.
+5. Changes **shall** be tested in a non-production environment representative of production before promotion, proportionate to risk. Production data containing PHI **shall not** be copied into test environments (see `secure-sdlc-policy.md.template`).
+6. Every change **shall** have a documented rollback or recovery plan (revert, redeploy of prior version, or restore) before deployment to production.
+7. Production deployments **shall** be performed through automated, auditable pipelines using short-lived credentials (OIDC to AWS), not manual changes with long-lived keys, except under the Emergency path with subsequent reconciliation.
+8. Direct pushes to protected branches **shall** be prohibited; production-impacting branches **shall** be protected with required reviews and required status checks (see §6).
+9. Emergency changes **shall** follow the expedited path in §7 and **shall** be retroactively reviewed and documented within [2 business days].
+10. A complete, tamper-evident record of who authored, approved, and deployed each change **shall** be retained per `logging-and-monitoring-policy.md.template`.
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Engineering Lead] | Owns this policy; defines change classifications; ensures branch protection and pipeline controls are configured. |
+| Change Author | Raises the PR/ticket, documents rationale and rollback, ensures tests pass. |
+| Change Reviewer / Approver | Independently reviews for correctness, security, and operational risk; cannot be the author. |
+| Deployer / Release Manager | Executes the deployment via the approved pipeline; verifies post-deploy health. |
+| [Security Officer] | Reviews that change controls satisfy ISMS and HITRUST requirements; reviews emergency changes. |
+| [CTO] | Approves this policy; authorizes high-risk or freeze-window changes. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Change Types
+| Type | Definition | Approval |
+|---|---|---|
+| Standard | Pre-approved, low-risk, well-understood and repeatable (e.g., routine dependency bump passing all gates). | Pre-authorized change template; still requires independent merge approval and passing checks. |
+| Normal | Default. Any non-trivial change to production. | At least [1] independent reviewer + all required checks pass. High-risk changes may require [Engineering Lead] or [CTO] sign-off. |
+| Emergency | Needed to restore service or remediate an active incident where the normal path would cause unacceptable delay. | Verbal/async approval by [on-call lead / Engineering Lead]; retroactive review per §7. |
+
+[Define optional change freeze windows — e.g., around [release dates / open-enrollment periods] — and the exception path to deploy during them.]
+
+## 6. GitHub Controls (branch protection)
+The following **shall** be configured on production-impacting repositories and branches ([main / release/*]):
+- Require a pull request before merging; **prohibit direct pushes** to protected branches.
+- Require at least [1] approving review from someone other than the author; dismiss stale approvals on new commits.
+- Require [CODEOWNERS] approval for security-sensitive paths (e.g., `infra/`, IAM, CI workflows).
+- Require status checks to pass before merge: build, tests, SAST, SCA, secret scanning, and IaC scanning (per `secure-sdlc-policy.md.template`).
+- Require branches to be up to date and require linear history / signed commits [where adopted].
+- Restrict who can push to and administer protected branches; disallow force-push and branch deletion.
+- Use [GitHub] **environment protection rules** for production deployments (required reviewers, wait timers) and OIDC-federated, short-lived AWS credentials — no long-lived secrets in the pipeline.
+
+## 7. Emergency Changes
+1. The on-call responder may deploy an emergency change with expedited approval from [on-call lead / Engineering Lead], recording the justification at the time of change.
+2. Emergency changes **shall** still be captured as a PR (raised retroactively if necessary) and **shall not** disable security gates without explicit, logged authorization.
+3. Within [2 business days], the change **shall** receive full post-hoc review, the ticket completed, and any disabled controls re-enabled and verified.
+4. Recurring emergencies for the same root cause **shall** trigger a corrective action per `../governance/management-review.md.template`.
+
+## 8. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Engineering Lead] and [Security Officer], time-bound, and recorded in the exceptions log.
+
+## 9. Compliance, Monitoring & Enforcement
+Compliance is verified through review of [GitHub] branch-protection settings, PR/merge audit logs, and deployment records during internal audit and continuous control monitoring. Evidence includes PR approval history, required-check results, and deployment logs (CloudTrail for AWS changes). Unauthorized or unreviewed production changes are treated as security events and investigated per `../resilience/incident-response-plan.md.template`. Violations are handled per `../people/hr-security-policy.md.template`.
+
+## 10. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 09.b Change Management; 10.h Control of Operational Software; 10.k Change Control Procedures |
+| HIPAA | 164.308(a)(1)(ii)(D) Information System Activity Review; 164.312(b) Audit Controls |
+| SOC 2 (TSC) | CC8.1 Change Management |
+| ISO 27001:2022 | A.8.32 Change management; A.8.31 Separation of development, test and production environments |
+
+## 11. Related Documents
+- `secure-sdlc-policy.md.template`
+- `vulnerability-and-patch-management.md.template`
+- `logging-and-monitoring-policy.md.template`
+- `../resilience/incident-response-plan.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+- `../governance/roles-and-responsibilities.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

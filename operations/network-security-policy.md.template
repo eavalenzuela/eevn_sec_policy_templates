@@ -1,0 +1,92 @@
+<!--
+TEMPLATE: Network Security Policy. The single most-tested control: NO 0.0.0.0/0
+ingress to databases / PHI-bearing resources, and prod/non-prod isolation. Keep
+CIDRs, account names, and VPC IDs as [PLACEHOLDERS]. Tie controls to concrete AWS
+constructs (VPC, subnets, security groups, NACLs, WAF, PrivateLink/VPC
+endpoints) and to the hardening standard + logging policy.
+-->
+
+# Network Security Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-OPS-07 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer]/[Platform Engineering Lead] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All cloud networks and network-connected systems in scope of the ISMS |
+
+> **Status:** [DRAFT until approved. Once [CTO] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy defines how [COMPANY] segments and protects its networks so that systems handling PHI are isolated, exposed only as necessary, and protected from untrusted networks. It minimizes attack surface and lateral movement across the [AWS] environment.
+
+## 2. Scope
+Applies to all [AWS] VPCs, subnets, security groups, network ACLs, gateways, load balancers, [WAF], and connectivity (VPN, [PrivateLink], peering, Transit Gateway) in scope of the ISMS, and to [Snowflake] network policies. It covers production and non-production environments and any connectivity between them.
+
+## 3. Policy
+1. Networks **shall** be segmented by trust level and function (e.g., public/edge, application, data tiers) using separate subnets and security groups; PHI-bearing data stores reside in **private subnets** with no direct internet route.
+2. **Production and non-production environments shall be isolated** — preferably in **separate [AWS] accounts/VPCs** — with no flat network connectivity; non-prod **shall not** contain production PHI.
+3. **Security groups and NACLs shall enforce least-privilege, default-deny.** **No security group shall allow `0.0.0.0/0` ingress to databases, data stores, or other PHI-bearing/internal services**; administrative ports (SSH/RDP/DB ports) **shall not** be open to the internet.
+4. Inbound internet exposure **shall** be limited to explicitly intended public endpoints (e.g., the application load balancer), fronted by a **[WAF]** and TLS termination per `cryptography-and-key-management.md.template`.
+5. Private connectivity (**VPC endpoints / [PrivateLink]**) **shall** be used to reach [AWS] services and [Snowflake] where feasible, keeping traffic off the public internet.
+6. Administrative/remote access to private resources **shall** be brokered through controlled paths (e.g., [SSM Session Manager], bastion, or zero-trust access) — not direct internet exposure — with MFA per `../access/access-control-policy.md.template`.
+7. Network flows **shall** be logged (**VPC Flow Logs**, [WAF] logs) and monitored per `logging-and-monitoring-policy.md.template`; GuardDuty analyzes network threats.
+8. All network configuration **shall** be defined as code and changed through `change-management-policy.md.template`; security-group changes that increase exposure trigger alerts.
+9. [Snowflake] **shall** enforce network policies restricting access to approved IP ranges/[PrivateLink].
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Platform Engineering Lead] | Designs and implements segmentation, security groups, WAF, and private connectivity as code. |
+| [Security Officer] | Approves network architecture; oversees exposure findings and monitoring. |
+| Service Owners | Request least-privilege network access; justify any new exposure. |
+| [CTO] | Approves this policy and material network exceptions. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Segmentation Architecture
+- **Account/VPC structure:** Separate accounts/VPCs for [prod], [non-prod], [shared services], [security/log-archive] (`configuration-and-hardening-standard.md.template`).
+- **Subnet tiers:** Public (edge/NAT/LB) → private app → private data; PHI data stores in private data subnets only.
+- **East-west controls:** Security groups scoped to source security group (not broad CIDRs); microsegmentation between tiers; default-deny NACLs as a secondary boundary.
+- **Egress:** Controlled outbound via NAT/[egress filtering]; restrict egress from data tiers.
+
+## 6. Perimeter & Edge Protection
+- **[WAF]** on public endpoints with managed + custom rules (OWASP categories), logging enabled.
+- **TLS** terminated at the edge with TLS [1.2]+ (`cryptography-and-key-management.md.template`); HSTS where applicable.
+- DDoS protection via [AWS Shield]; rate limiting at the WAF/edge.
+
+## 7. Exceptions
+Exceptions to this policy require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer] and [CTO], time-bound, and recorded in the exceptions log. Any internet exposure of a data store is treated as high-risk and requires explicit approval and compensating controls.
+
+## 8. Compliance, Monitoring & Enforcement
+Compliance is verified through [AWS Config]/[Security Hub] rules (e.g., open-to-world security groups, public data stores), IaC scanning in CI, and flow-log/WAF review during internal audit. Newly opened broad ingress generates alerts and is investigated per `../resilience/incident-response-plan.md.template`. Violations are handled per `../people/hr-security-policy.md.template`.
+
+## 9. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 01.m Segregation in Networks; 01.n Network Connection Control; 09.m Network Controls |
+| HIPAA | 164.312(e)(1) Transmission Security; 164.312(a)(1) Access Control |
+| SOC 2 (TSC) | CC6.1, CC6.6 |
+| ISO 27001:2022 | A.8.20 Networks security; A.8.21 Security of network services; A.8.22 Segregation of networks |
+
+## 10. Related Documents
+- `configuration-and-hardening-standard.md.template`
+- `cryptography-and-key-management.md.template`
+- `logging-and-monitoring-policy.md.template`
+- `change-management-policy.md.template`
+- `../access/access-control-policy.md.template`
+- `../resilience/incident-response-plan.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |
