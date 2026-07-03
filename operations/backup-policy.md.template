@@ -32,7 +32,7 @@ This policy ensures that [COMPANY] can recover PHI and critical systems after da
 Applies to all in-scope production data stores and the configuration needed to rebuild systems: [RDS]/databases, [EBS] volumes, [S3] data, [Snowflake], application configuration/secrets metadata, and IaC. It covers backup creation, encryption, isolation, retention, and restore testing.
 
 ## 3. Policy
-1. All critical/PHI-bearing data stores **shall** be backed up on a defined schedule (§5) sufficient to meet the **RPO/RTO** defined in `resilience/business-continuity-and-../resilience/disaster-recovery-plan.md.template`.
+1. All critical/PHI-bearing data stores **shall** be backed up on a defined schedule (§5) sufficient to meet the **RPO/RTO** defined in `../resilience/business-continuity-plan.md.template` and `../resilience/disaster-recovery-plan.md.template`.
 2. **Backups shall be encrypted at rest and in transit** using approved keys (`cryptography-and-key-management.md.template`); PHI in backups receives the same protection as production PHI.
 3. **Backups shall be immutable / WORM-protected** for their retention period (e.g., **[S3 Object Lock] / [AWS Backup Vault Lock]**) so they cannot be altered or deleted by operational roles or an attacker — providing ransomware resilience.
 4. **Backups shall be copied to a separate [AWS] account and a separate region** (cross-account, cross-region) to survive account compromise or regional failure; the backup/vault account is access-restricted and isolated from production credentials.
@@ -63,7 +63,7 @@ See `../governance/roles-and-responsibilities.md.template` for full role definit
 
 ## 6. Restore Testing
 1. Restore tests **shall** be performed at least [quarterly] (and after major changes) for representative systems, validating data integrity and that RTO/RPO are achievable.
-2. Tests **shall** be documented (date, scope, result, time-to-restore, issues) and feed `resilience/business-continuity-and-../resilience/disaster-recovery-plan.md.template`.
+2. Tests **shall** be documented (date, scope, result, time-to-restore, issues) in the BC/DR test & exercise log (`../resilience/bcdr-test-exercise-log.md.template`) and feed `../resilience/business-continuity-plan.md.template` and `../resilience/disaster-recovery-plan.md.template`.
 3. Test restores using PHI **shall** occur in a controlled, access-restricted environment and the data removed afterward (no PHI persisted in non-prod, per `secure-sdlc-policy.md.template`).
 4. Failures or RTO/RPO misses **shall** trigger corrective action.
 
@@ -82,7 +82,9 @@ Compliance is verified by reviewing backup job success rates, immutability/isola
 | ISO 27001:2022 | A.8.13 Information backup; A.8.14 Redundancy of information processing facilities |
 
 ## 10. Related Documents
-- `resilience/business-continuity-and-../resilience/disaster-recovery-plan.md.template`
+- `../resilience/business-continuity-plan.md.template`
+- `../resilience/disaster-recovery-plan.md.template`
+- `../resilience/bcdr-test-exercise-log.md.template`
 - `cryptography-and-key-management.md.template`
 - `logging-and-monitoring-policy.md.template`
 - `secure-sdlc-policy.md.template`

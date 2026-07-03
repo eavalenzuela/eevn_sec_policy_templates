@@ -1,0 +1,91 @@
+<!--
+TEMPLATE: This is a REGISTER, not a policy — the central vendor/BAA register that
+third-party-risk-management-policy.md.template (POL-VEN-01) §3 mandates. It is the one
+place that answers: which vendors touch our data, at what risk tier, with what assurance,
+and — for PHI — is there an executed BAA? The non-negotiable check assessors run: every
+vendor that creates, receives, maintains, or transmits PHI has BAA Status = Executed with
+a date BEFORE PHI was first shared. The example rows are illustrative — replace them with
+your real vendors. If maintained in a [GRC tool / spreadsheet], this file documents the
+canonical schema and points to the system of record.
+-->
+
+# Vendor & BAA Register
+
+| Field | Value |
+|---|---|
+| Document ID | REG-VEN-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Confidential |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO / CEO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All third parties with access to [COMPANY] data, systems, or facilities |
+
+> **Status:** [DRAFT / LIVING RECORD — the register is a continuously maintained artifact. "Last Reviewed" reflects the most recent register-wide review per POL-VEN-01.]
+
+---
+
+## 1. Purpose
+This register is the single, authoritative record of [COMPANY]'s third-party relationships: the service each vendor provides, the data it can access, its assigned risk tier, its assurance evidence, its contract and BAA status, and its review and offboarding state. It operationalizes `third-party-risk-management-policy.md.template` (POL-VEN-01) and `../healthcare/baa-management-procedure.md.template` (POL-HIP-06), and is the primary evidence that vendor risk is managed across the relationship lifecycle.
+
+## 2. Scope
+All third parties within the ISMS scope (`../governance/isms-scope-statement.md.template`) that access, process, store, or transmit [COMPANY] data (including PHI), connect to its systems, or provide services critical to the SaaS platform — e.g., [AWS], [Snowflake], [GitHub], subprocessors, and professional-services firms. Subprocessor chains of Tier 1 vendors are tracked at least by reference.
+
+## 3. How to Use This Register
+1. Add a row at vendor intake, **before** onboarding completes; risk-tier per POL-VEN-01 §5.
+2. **BAA Required = Yes** for any vendor that creates, receives, maintains, or transmits PHI on [COMPANY]'s behalf; PHI **shall not** be shared until BAA Status is `Executed` (POL-HIP-06).
+3. Record current **assurance** (SOC 2 Type II / HITRUST / ISO 27001 report and its date); stale assurance (older than [12 months]) triggers reassessment.
+4. Set **Next Review** per tier cadence in POL-VEN-01; overdue reviews are flagged by the [Security Officer].
+5. On termination, complete offboarding per POL-VEN-01 §9, set Status = `Offboarded`, and retain the row and BAA per retention requirements.
+
+**Status values:** `Onboarding` · `Active` · `Under Review` · `Remediation` · `Offboarding` · `Offboarded`.
+
+## 4. Vendor & BAA Register
+<!-- TEMPLATE: Keep all columns. The rows below are EXAMPLES — replace with your real vendors. -->
+
+| Vendor ID | Vendor | Service | Data Accessed | Risk Tier | BAA Required | BAA Status (Date) | Assurance (Date) | Contract Expiry | Last Review | Next Review | Owner | Status |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| VEN-001 | [AWS] | Cloud infrastructure hosting production and PHI | PHI, Confidential | Tier 1 | Yes | Executed ([YYYY-MM-DD]) | SOC 2 Type II ([YYYY-MM-DD]); HITRUST CSF | [YYYY-MM-DD] | [YYYY-MM-DD] | [YYYY-MM-DD] | [Platform Lead] | Active |
+| VEN-002 | [Snowflake] | Analytics data warehouse holding PHI tables | PHI, Confidential | Tier 1 | Yes | Executed ([YYYY-MM-DD]) | SOC 2 Type II ([YYYY-MM-DD]); HITRUST CSF | [YYYY-MM-DD] | [YYYY-MM-DD] | [YYYY-MM-DD] | [Data Platform Owner] | Active |
+| VEN-003 | [GitHub] | Source control and CI/CD (no PHI) | Confidential (source code, secrets metadata) | Tier 2 | No | N/A | SOC 2 Type II ([YYYY-MM-DD]) | [YYYY-MM-DD] | [YYYY-MM-DD] | [YYYY-MM-DD] | [Engineering Lead] | Active |
+| VEN-[NNN] | [Vendor] | [Service description] | [PHI / Confidential / Internal / None] | [Tier 1–3] | [Yes/No] | [Executed (date) / In Negotiation / N/A] | [Report type (date)] | [YYYY-MM-DD] | [YYYY-MM-DD] | [YYYY-MM-DD] | [Owner] | [Status] |
+
+## 5. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns the register; verifies BAA-before-PHI; flags stale assurance and overdue reviews. |
+| [Privacy Officer] | Confirms BAA Required determinations and BAA terms (with counsel). |
+| [Procurement / Vendor Owner] | Initiates intake; keeps relationship rows current; drives renewals and offboarding. |
+| Vendor Owners | Maintain their vendors' entries; provide assurance evidence at review. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 6. Exceptions
+Onboarding or continuing a vendor outside the required process (e.g., an expired BAA still in use) requires documented risk acceptance per `../governance/exceptions-and-waivers.md.template` — except that **PHI sharing without an executed BAA is not waivable** (POL-GOV-11 §6).
+
+## 7. Compliance, Monitoring & Enforcement
+The register is reviewed for completeness, current assurance, executed BAAs, and timely reassessment per POL-VEN-01 §11, and reported to management review (`../governance/management-review.md.template`). Assessors review it as primary evidence of the third-party risk process. A vendor breach or BAA lapse triggers `../healthcare/hipaa-breach-notification-procedure.md.template` evaluation and the incident process.
+
+## 8. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 05.i External Party Risks; 05.k Third-Party Agreements; 09.e/09.f Service Delivery & Monitoring |
+| HIPAA | 164.308(b)(1) BA Contracts; 164.314(a) Organizational Requirements; 164.504(e) BAA Content |
+| SOC 2 (TSC) | CC9.2 Vendor Risk Management |
+| ISO 27001:2022 | A.5.19–A.5.22 Supplier Relationships |
+
+## 9. Related Documents
+- `third-party-risk-management-policy.md.template`
+- `../healthcare/baa-management-procedure.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+- `../governance/management-review.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft (register schema + example rows) |

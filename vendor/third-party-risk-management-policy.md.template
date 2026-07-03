@@ -5,7 +5,7 @@ creates, receives, maintains, or transmits PHI on [COMPANY]'s behalf MUST have a
 executed Business Associate Agreement BEFORE PHI is shared. BAA execution and tracking
 are handled in the BAA Management Procedure (../healthcare/baa-management-procedure.md.template),
 which this policy references. Keep risk tiers and review cadence tuned to your risk
-appetite. Delete <!-- TEMPLATE: ... --> comments once each section is written.
+appetite. Delete the TEMPLATE guidance comments once each section is written.
 -->
 
 # Third-Party Risk Management Policy
@@ -35,7 +35,7 @@ This policy applies to all third parties that create, receive, maintain, or tran
 ## 3. Policy
 1. No third party **shall** be granted access to [COMPANY] data or systems until it has completed due diligence (§5) appropriate to its risk tier (§4).
 2. **Any vendor that creates, receives, maintains, or transmits PHI shall have an executed Business Associate Agreement (BAA) in place BEFORE any PHI is shared.** No BAA, no PHI — without exception.
-3. A central **vendor/BAA register** (`[vendor & BAA tracker register]`) **shall** be maintained, recording each vendor, the data it accesses, its risk tier, review status, contract/BAA status and dates, and offboarding state.
+3. A central **vendor/BAA register** (`vendor-register.md.template`, REG-VEN-01) **shall** be maintained, recording each vendor, the data it accesses, its risk tier, review status, contract/BAA status and dates, and offboarding state.
 4. Contracts with third parties handling [COMPANY] data **shall** include the security, privacy, breach-notification, audit, and data-handling clauses required by this policy (§7).
 5. Third parties **shall** be reassessed on a cadence driven by their risk tier (§8), and on material change (incident, scope change, ownership change).
 6. Subprocessors engaged by a vendor to handle PHI **shall** themselves be bound by equivalent (BAA-flow-down) obligations.
@@ -119,7 +119,7 @@ Compliance is verified through periodic review of the vendor/BAA register for co
 ## 14. Related Documents
 - `../healthcare/baa-management-procedure.md.template`
 - `../healthcare/hipaa-breach-notification-procedure.md.template`
-- `[vendor & BAA tracker register]`
+- `vendor-register.md.template`
 - `../governance/roles-and-responsibilities.md.template`
 - `../governance/exceptions-and-waivers.md.template`
 - `../people/hr-security-policy.md.template`

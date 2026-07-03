@@ -1,0 +1,93 @@
+<!--
+TEMPLATE: This is a REGISTER, not a policy — the BC/DR test & exercise log that the
+Business Continuity Plan (§ Testing & Maintenance), the Disaster Recovery Plan (§ DR
+Testing), and the Backup Policy (§ Restore Testing) all require. It is primary HITRUST
+12.e / HIPAA 164.308(a)(7)(ii)(D) evidence: a plan that has never been exercised is a
+document, not a capability, and a backup that has never been test-restored is not a valid
+recovery point. Record EVERY exercise — tabletops, functional failovers, and restore
+tests — including the ones that went badly; findings feeding corrective actions are what
+"tested and maintained" looks like to an assessor. The example rows are illustrative.
+-->
+
+# BC/DR Test & Exercise Log
+
+| Field | Value |
+|---|---|
+| Document ID | REG-RES-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All BC/DR tests, exercises, and restore validations for systems in ISMS scope |
+
+> **Status:** [DRAFT / LIVING RECORD — the log is a continuously maintained artifact appended after every test or exercise.]
+
+---
+
+## 1. Purpose
+This log is the single record of every business-continuity, disaster-recovery, and backup-restore test performed at [COMPANY]: what was exercised, against which scenario, what RTO/RPO was achieved versus target, what failed, and what corrective actions resulted. It is the evidence that the BCP (`business-continuity-plan.md.template`), the DRP (`disaster-recovery-plan.md.template`), and the Backup Policy (`../operations/backup-policy.md.template`) are operated — not merely written.
+
+## 2. Scope
+All planned tests and exercises of continuity and recovery capability within the ISMS scope (`../governance/isms-scope-statement.md.template`): tabletop exercises, functional/simulation tests, region or account failovers, restore-from-backup validations (including [Snowflake] Time Travel/replication tests), and post-incident recovery reviews credited as tests.
+
+## 3. How to Use This Log
+1. Schedule tests to satisfy the cadence in the BCP (at least annually) and the Backup Policy (restore tests at least [quarterly]).
+2. Append a row for **every** test, including failed or aborted ones — a failed test with tracked corrective actions is good evidence; a gap in the log is a finding.
+3. Record **RTO/RPO achieved vs. target** for functional tests; tabletops record scenario and decisions instead.
+4. Findings **shall** be tracked to closure in `../governance/corrective-action-poam.md.template`; reference the POA&M ID.
+5. Test restores using PHI **shall** note the controlled environment used and confirm post-test data removal (Backup Policy §6).
+6. Summarize results at management review (`../governance/management-review.md.template`).
+
+**Test types:** `Tabletop` · `Functional` · `Failover` · `Restore Validation` · `Post-Incident Review`.
+**Results:** `Pass` · `Pass with Findings` · `Fail` · `Aborted`.
+
+## 4. Test & Exercise Log
+<!-- TEMPLATE: Keep all columns. The rows below are EXAMPLES — replace with real test records. -->
+
+| Test ID | Date | Type | Plan(s) Exercised | Scenario | Systems / Scope | Participants | RTO Target / Achieved | RPO Target / Achieved | Result | Findings | Corrective Actions (POA&M ref) | PHI Used & Removed |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| TST-001 | [YYYY-MM-DD] | Tabletop | BCP + IRP | Ransomware encrypts production account | [AWS] prod account, comms, decision chain | [Exec team, Security, Platform] | N/A | N/A | Pass with Findings | Contact tree outdated; vendor escalation path unclear | [POA&M-012] | No |
+| TST-002 | [YYYY-MM-DD] | Restore Validation | DRP + Backup Policy | Restore [RDS] PITR snapshot to isolated account | [RDS] primary database | [Platform Engineering] | [4h] / [2h35m] | [15m] / [5m] | Pass | Restore runbook step 7 stale | [POA&M-013] | Yes — removed [YYYY-MM-DD] |
+| TST-[NNN] | [YYYY-MM-DD] | [Type] | [BCP/DRP/Backup] | [Scenario] | [Systems] | [Participants] | [target / achieved] | [target / achieved] | [Result] | [Findings] | [POA&M ref] | [Yes/No] |
+
+## 5. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns the log; verifies test cadence is met; reports results to management review. |
+| [Platform Engineering Lead] | Executes functional/restore tests; records RTO/RPO results; maintains runbooks. |
+| [BC Coordinator] | Plans and facilitates tabletop exercises; records decisions and findings. |
+| Finding Owners | Drive corrective actions to closure in the POA&M. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 6. Exceptions
+Missing a required test window requires documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], with the test rescheduled — the cadence requirement re-applies when the exception lapses.
+
+## 7. Compliance, Monitoring & Enforcement
+The log is reviewed at internal audit (`../governance/internal-audit-program.md.template`) and management review as primary evidence of HITRUST 12.e and HIPAA testing-and-revision requirements. Overdue tests and unclosed findings are flagged by the [Security Officer] and tracked in the POA&M.
+
+## 8. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 12.e Testing, Maintaining and Reassessing Business Continuity Plans; 09.l Back-up |
+| HIPAA | 164.308(a)(7)(ii)(D) Testing and Revision Procedures; 164.308(a)(7)(ii)(A) Data Backup Plan |
+| SOC 2 (TSC) | A1.3 Recovery Testing; CC7.5 |
+| ISO 27001:2022 | A.5.29 ICT readiness for business continuity; A.8.13/A.8.14 |
+
+## 9. Related Documents
+- `business-continuity-plan.md.template`
+- `disaster-recovery-plan.md.template`
+- `incident-response-plan.md.template`
+- `../operations/backup-policy.md.template`
+- `../governance/corrective-action-poam.md.template`
+- `../governance/management-review.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft (log schema + example rows) |

@@ -5,7 +5,7 @@ responsibility model — [COMPANY] does not operate the data centers and relies 
 attestations (SOC 2 / ISO / HITRUST inheritance). [COMPANY] remains responsible for its
 own offices, endpoints, and clean desk / clear screen. State this inheritance explicitly
 (§6); assessors expect it. If [COMPANY] is fully remote, scope offices to "any [COMPANY]-
-controlled workspace" and home-office expectations. Delete <!-- TEMPLATE: ... --> comments
+controlled workspace" and home-office expectations. Delete the TEMPLATE guidance comments
 once each section is written.
 -->
 
@@ -39,7 +39,7 @@ This policy applies to all [COMPANY]-controlled workspaces ([offices, co-working
 3. Workforce members **shall** observe a **clean desk** policy: PHI and confidential materials are not left unattended and are secured ([locked storage / shredding]) when not in use.
 4. Workforce members **shall** observe a **clear screen** policy: devices auto-lock after [N — e.g. 10] minutes of inactivity and are locked when unattended.
 5. Endpoints **shall** be encrypted at rest, enrolled in [MDM], and physically secured when traveling or working in public.
-6. Disposal of media and printed PHI **shall** use secure destruction (shredding, cryptographic erasure) per `[media-disposal / data-classification]`.
+6. Disposal of media and printed PHI **shall** use secure destruction (shredding, cryptographic erasure) per `../asset-data/data-retention-and-disposal.md.template` and `../asset-data/data-classification-and-handling.md.template`.
 7. Data-center physical and environmental controls **shall** be inherited from [AWS] and validated through AWS's third-party attestations (§6).
 
 ## 4. Facility & Office Security

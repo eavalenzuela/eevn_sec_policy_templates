@@ -46,7 +46,7 @@ Applies to all controlled ISMS documents — policies, procedures, standards, pl
 |---|---|
 | Document Owner | Authors and maintains the document; initiates annual review. |
 | Approver | Reviews and signs off; authorizes the document to take effect. |
-| [Security Officer / CISO] | Owns the document-control process and the master document register. |
+| [Security Officer / CISO] | Owns the document-control process and the master document register (`document-register.md.template`). |
 | [GitHub] Maintainers | Enforce PR review and protected branches for the policy repo. |
 | All Workforce | Use only current approved documents; acknowledge as required. |
 
@@ -82,7 +82,7 @@ Documents are classified per `../asset-data/data-classification-and-handling.md.
 Deviations from this policy (e.g., a document maintained outside [GitHub]) require documented risk acceptance per `exceptions-and-waivers.md.template`, approved by the [Security Officer].
 
 ## 10. Compliance, Monitoring & Enforcement
-A master document register tracks every controlled document, its owner, approval, and review dates; overdue reviews are flagged and tracked as corrective actions (`corrective-action-poam.md.template`). Document governance is verified at internal audit and management review. Working from or distributing uncontrolled/outdated documents is a policy violation handled per `../people/hr-security-policy.md.template`.
+A master document register (`document-register.md.template`, REG-GOV-01) tracks every controlled document, its owner, approval, and review dates; overdue reviews are flagged and tracked as corrective actions (`corrective-action-poam.md.template`). Document governance is verified at internal audit and management review. Working from or distributing uncontrolled/outdated documents is a policy violation handled per `../people/hr-security-policy.md.template`.
 
 ## 11. Framework Mapping
 | Framework | Reference |
@@ -94,6 +94,7 @@ A master document register tracks every controlled document, its owner, approval
 
 ## 12. Related Documents
 - `../_TEMPLATE.md.template`
+- `document-register.md.template`
 - `information-security-policy.md.template`
 - `exceptions-and-waivers.md.template`
 - `corrective-action-poam.md.template`

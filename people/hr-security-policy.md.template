@@ -4,7 +4,7 @@ during, and after employment. It is the home of the disciplinary process referen
 most other policies; the HIPAA workforce sanctions specifics live in
 ../healthcare/sanctions-policy.md.template, which this policy cross-references. Background
 check scope and disciplinary steps must be reviewed by HR/Legal for local employment law.
-Keep specifics as [PLACEHOLDERS]. Delete <!-- TEMPLATE: ... --> comments once each section
+Keep specifics as [PLACEHOLDERS]. Delete the TEMPLATE guidance comments once each section
 is written.
 -->
 
@@ -61,7 +61,7 @@ Workforce members **shall**:
 - Protect credentials; never share accounts; use MFA.
 - Access PHI only as needed for their job (minimum necessary).
 - Follow clean desk / clear screen and physical security per `physical-and-environmental-security-policy.md.template`.
-- Use [COMPANY] systems acceptably per `[acceptable-use-policy]`; not install unauthorized software or exfiltrate data.
+- Use [COMPANY] systems acceptably per `../asset-data/acceptable-use-policy.md.template`; not install unauthorized software or exfiltrate data.
 - Report suspected incidents or breaches immediately.
 
 ## 8. Offboarding Security

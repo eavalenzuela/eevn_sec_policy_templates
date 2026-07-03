@@ -4,7 +4,7 @@ running during disruption. It is the business-facing counterpart to the technica
 Disaster Recovery Plan (disaster-recovery-plan.md.template), which it references for IT
 recovery. Fill the Business Impact Analysis (BIA) table with your real critical functions
 and RTO/RPO targets. Keep environment-specifics as [PLACEHOLDERS]. Delete
-<!-- TEMPLATE: ... --> comments once each section is written.
+the TEMPLATE guidance comments once each section is written.
 -->
 
 # Business Continuity Plan
@@ -59,7 +59,7 @@ For each critical function, define how continuity is achieved:
 - **Workforce continuity:** Remote-work capability, cross-training, and documented succession for key roles so no single person is a single point of failure.
 - **Facilities:** [Alternate work locations / fully remote posture]; loss of a physical office does not halt operations.
 - **Third-party dependencies:** Identify critical vendors, their SLAs, and fallback options; manage vendor resilience per `../vendor/third-party-risk-management-policy.md.template`.
-- **Data:** Backups and restoration are governed by `[backup-policy]` and validated through DR testing.
+- **Data:** Backups and restoration are governed by `../operations/backup-policy.md.template` and validated through DR testing.
 - **Manual workarounds:** [Documented interim procedures] for the highest-priority functions when systems are unavailable.
 
 ## 7. Crisis Management & Communications
@@ -81,7 +81,7 @@ For each critical function, define how continuity is achieved:
 See `../governance/roles-and-responsibilities.md.template` for full role definitions.
 
 ## 9. Testing & Maintenance
-This plan is **tested at least annually** through [tabletop exercise / functional test / simulation], including at least one scenario exercising the DR Plan. Test scope, participants, findings, and corrective actions are documented and tracked to closure. The plan and BIA are reviewed at least annually and after any significant organizational, regulatory, or infrastructure change.
+This plan is **tested at least annually** through [tabletop exercise / functional test / simulation], including at least one scenario exercising the DR Plan. Test scope, participants, findings, and corrective actions are documented in the BC/DR test & exercise log (`bcdr-test-exercise-log.md.template`) and tracked to closure. The plan and BIA are reviewed at least annually and after any significant organizational, regulatory, or infrastructure change.
 
 ## 10. Exceptions
 Exceptions to this plan require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log.
@@ -100,6 +100,7 @@ Compliance is verified through BIA currency, test completion, RTO/RPO achievemen
 ## 13. Related Documents
 - `disaster-recovery-plan.md.template`
 - `incident-response-plan.md.template`
+- `bcdr-test-exercise-log.md.template`
 - `../healthcare/hipaa-breach-notification-procedure.md.template`
 - `../vendor/third-party-risk-management-policy.md.template`
 - `../governance/roles-and-responsibilities.md.template`

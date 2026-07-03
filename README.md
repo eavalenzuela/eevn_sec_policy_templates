@@ -50,6 +50,26 @@ ISMS.
 
 ---
 
+## Tooling
+
+Two stdlib-Python tools keep the set consistent and make instantiation mechanical
+(no dependencies; also run in CI via `.github/workflows/check.yml`):
+
+- **`make check`** (`tools/check_templates.py`) — structural linter. Verifies every
+  template's metadata header, Status line, required sections, well-formed and unique
+  Document IDs (domain code must match the directory), that every backticked
+  `*.md.template` cross-reference resolves, that no template contains a nested HTML
+  comment (which breaks rendered previews), and that this README's coverage index and
+  the templates on disk agree 1:1. Run it after adding or renaming any template.
+- **`make render OUT=../myorg-policies CONFIG=myorg.conf`** (`tools/render.py`) —
+  instantiates the set: strips the `.template` suffix, substitutes `[PLACEHOLDER]`
+  values from a `KEY = value` config (start from `tools/example.conf`), strips the
+  `<!-- TEMPLATE: ... -->` guidance comments, rewrites cross-references to the
+  rendered names, and prints the remaining placeholders per file as your tailoring
+  worklist.
+
+---
+
 ## Build order
 
 Start with the **(P)** governance backbone, then risk, then operational policies.
@@ -59,11 +79,11 @@ Don't write all of them at once.
 governance/   The program backbone — write these FIRST
 risk/         Risk methodology + registers
 asset-data/   Asset inventory, data classification, retention
-access/        Access control, identity, JML, PAM, recertification
-operations/   Change, SSDLC, vuln mgmt, crypto, logging, network, endpoint, backup
-resilience/   Incident response, BCP, DR
-vendor/       Third-party / supply-chain risk (BAA tracker lives with discovery artifacts)
-people/        Awareness training, HR security, physical security
+access/       Access control, identity, JML, PAM, recertification
+operations/   Change, SSDLC, vuln mgmt, crypto, logging, network, endpoint, backup, AI use
+resilience/   Incident response, BCP, DR, test & exercise log
+vendor/       Third-party / supply-chain risk + vendor/BAA register
+people/       Awareness training, HR security, physical security
 compliance/   Legal/regulatory register
 healthcare/   HIPAA-specific: breach notification, NPP, minimum necessary,
               individual rights, de-identification, BAA management, sanctions
@@ -89,6 +109,7 @@ Every template carries a full Framework Mapping table (HITRUST CSF / HIPAA / SOC
 | POL-GOV-09 | Corrective Action & POA&M | 00 Mgmt Program; corrective action plan |
 | POL-GOV-10 | Document Control | 04.a Policy Document; 04.b Review of Policy |
 | POL-GOV-11 | Exceptions & Waivers | 00 Mgmt Program; risk acceptance / exceptions |
+| REG-GOV-01 | Document Register | 04.a Policy Document; 04.b Review; documentation control |
 
 ### Risk (`risk/`)
 | ID | Document | Primary HITRUST CSF refs |
@@ -128,6 +149,7 @@ Every template carries a full Framework Mapping table (HITRUST CSF / HIPAA / SOC
 | POL-OPS-07 | Network Security Policy | 01.m Segregation in Networks; 01.n Connection Control; 09.m Network Controls |
 | POL-OPS-08 | Endpoint Security Policy | 08.j Mobile Computing; 09.j Controls Against Malicious Code |
 | POL-OPS-09 | Backup Policy | 09.l Back-up; 12.c Continuity Plans |
+| POL-OPS-10 | AI Acceptable Use Policy | 07.c Acceptable Use; 06.d Data Protection; 10.b/10.k SDLC |
 
 ### Resilience (`resilience/`)
 | ID | Document | Primary HITRUST CSF refs |
@@ -135,11 +157,13 @@ Every template carries a full Framework Mapping table (HITRUST CSF / HIPAA / SOC
 | POL-RES-01 | Incident Response Plan | 11.a–11.d Information Security Incident Management |
 | POL-RES-02 | Business Continuity Plan | 12.a/12.b/12.c/12.e Business Continuity Management |
 | POL-RES-03 | Disaster Recovery Plan | 12.c/12.d/12.e Continuity Plans; 09.l Back-up |
+| REG-RES-01 | BC/DR Test & Exercise Log | 12.e Testing, Maintaining and Reassessing; 09.l Back-up |
 
 ### Vendor (`vendor/`)
 | ID | Document | Primary HITRUST CSF refs |
 |---|---|---|
 | POL-VEN-01 | Third-Party Risk Management | 05.i External Party Risks; 05.k Third-Party Agreements; 09.e/09.f Service Delivery & Monitoring |
+| REG-VEN-01 | Vendor & BAA Register | 05.i External Party Risks; 05.k Third-Party Agreements |
 
 ### People (`people/`)
 | ID | Document | Primary HITRUST CSF refs |

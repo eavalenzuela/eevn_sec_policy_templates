@@ -1,0 +1,89 @@
+<!--
+TEMPLATE: This is a REGISTER, not a policy — the master document register that
+document-control.md.template (POL-GOV-10) requires. It is the single index of every
+controlled ISMS document: what exists, who owns it, what version is in effect, and when
+it is next due for review. Assessors use it to answer "is every policy current and
+approved?" in one pass — overdue Next Review dates here are findings waiting to happen.
+The example rows are illustrative — replace them with your real document set. If the
+register is maintained in a [GRC tool / spreadsheet], this file documents the canonical
+schema and points to the system of record.
+-->
+
+# Document Register
+
+| Field | Value |
+|---|---|
+| Document ID | REG-GOV-01 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CEO / Board] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All controlled ISMS documents (policies, procedures, standards, plans, registers) |
+
+> **Status:** [DRAFT / LIVING RECORD — the register is a continuously maintained artifact. "Last Reviewed" reflects the most recent register-wide review.]
+
+---
+
+## 1. Purpose
+This register is the single, authoritative index of every controlled ISMS document at [COMPANY]: its ID, current approved version, owner, approver, effective date, and review status. It is the mechanism by which `document-control.md.template` (POL-GOV-10) is operated — it makes overdue reviews visible, proves each document has a named owner and a recorded approval, and gives assessors one place to verify the document set is current.
+
+## 2. Scope
+All controlled documents within the ISMS scope (`isms-scope-statement.md.template`): policies, procedures, standards, plans, and registers — including this one. Uncontrolled working notes and drafts that have never been approved are out of scope until they enter the document lifecycle.
+
+## 3. How to Use This Register
+1. Add a row when a new controlled document enters DRAFT; update it at every approval, review, and supersession.
+2. **Version** is the currently effective approved version (or the draft version if none is yet approved) per POL-GOV-10 §6.
+3. **Next Review** must be at most 12 months after Last Reviewed; the [Security Officer] flags overdue rows and tracks them as corrective actions in `corrective-action-poam.md.template`.
+4. **Ack Required** marks documents workforce members must acknowledge (e.g., Acceptable Use); acknowledgement evidence lives with [HR / LMS records].
+5. Retired documents are marked `Superseded`/`Retired`, never deleted — retention follows POL-GOV-10 §8 (6-year HIPAA minimum).
+
+**Status values:** `Draft` · `Approved` · `In Review` · `Superseded` · `Retired`.
+
+## 4. Document Register
+<!-- TEMPLATE: Keep all columns. The rows below are EXAMPLES — replace with your real document set. Path is the repo-relative location of the controlled source. -->
+
+| Doc ID | Title | Path / Location | Owner | Approver | Version | Status | Effective Date | Last Reviewed | Next Review | Ack Required |
+|---|---|---|---|---|---|---|---|---|---|---|
+| POL-GOV-01 | Information Security Policy | `governance/information-security-policy.md` | [Security Officer] | [CEO] | [1.0] | [Approved] | [YYYY-MM-DD] | [YYYY-MM-DD] | [YYYY-MM-DD] | Yes |
+| POL-DAT-04 | Acceptable Use Policy | `asset-data/acceptable-use-policy.md` | [Security Officer] | [CTO] | [1.0] | [Approved] | [YYYY-MM-DD] | [YYYY-MM-DD] | [YYYY-MM-DD] | Yes |
+| [DOC-ID] | [Title] | [`path/to/document.md`] | [Owner] | [Approver] | [x.y] | [Status] | [YYYY-MM-DD] | [YYYY-MM-DD] | [YYYY-MM-DD] | [Yes/No] |
+
+## 5. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns and maintains the register; flags overdue reviews; reports document-set currency at management review. |
+| Document Owners | Keep their rows current; initiate reviews before Next Review. |
+| Approvers | Sign off on new versions; approval is recorded here and in the document's Version History. |
+
+See `roles-and-responsibilities.md.template` for full role definitions.
+
+## 6. Exceptions
+Deviations from register maintenance (e.g., a document tracked outside this register) require documented risk acceptance per `exceptions-and-waivers.md.template`, approved by the [Security Officer].
+
+## 7. Compliance, Monitoring & Enforcement
+The register is reviewed at internal audit (`internal-audit-program.md.template`) and management review (`management-review.md.template`) as the primary evidence that document control operates. Overdue reviews and unowned documents are tracked as corrective actions per `corrective-action-poam.md.template`.
+
+## 8. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 04.a Information Security Policy Document; 04.b Review; documentation control |
+| HIPAA | 164.316(b)(1) Documentation; 164.316(b)(2) Time limit, availability, updates |
+| SOC 2 (TSC) | CC2.2, CC2.3, CC5.3 |
+| ISO 27001:2022 | Clause 7.5 Documented information; A.5.37 |
+
+## 9. Related Documents
+- `document-control.md.template`
+- `corrective-action-poam.md.template`
+- `internal-audit-program.md.template`
+- `management-review.md.template`
+- `isms-scope-statement.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft (register schema + example rows) |

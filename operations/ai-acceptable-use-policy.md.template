@@ -1,0 +1,115 @@
+<!--
+TEMPLATE: This policy governs AI/LLM use in a PHI environment — both workforce use of
+generative-AI tools AND AI features built into the product. The Acceptable Use Policy
+already PROHIBITS pasting PHI into unapproved AI tools; this policy defines what an
+APPROVED AI tool is, what data may flow to it under which terms, and how AI features in
+the product are built and reviewed. The non-negotiables for healthcare: (1) no PHI to any
+AI service without an executed BAA and contractual no-training terms, (2) minimum
+necessary / de-identification applied before PHI reaches a model, and (3) a human remains
+accountable for consequential decisions. Keep the approved-tools table current — an
+unapproved tool in wide use is a finding. HITRUST offers an AI security assessment; map
+its requirements here during scoping if you pursue it.
+-->
+
+# AI Acceptable Use Policy
+
+| Field | Value |
+|---|---|
+| Document ID | POL-OPS-10 |
+| Version | [0.1 — DRAFT] |
+| Classification | Internal |
+| Owner | [Security Officer / CISO] |
+| Approver | [CTO] |
+| Effective Date | [YYYY-MM-DD] |
+| Last Reviewed | [YYYY-MM-DD] |
+| Next Review | [YYYY-MM-DD — at most 12 months out] |
+| Applies To | All workforce members, contractors, and all AI/LLM systems used by or built into [COMPANY] services |
+
+> **Status:** [DRAFT until approved. Once [CTO] signs off, set to APPROVED and record in Version History.]
+
+---
+
+## 1. Purpose
+This policy defines how [COMPANY] uses artificial-intelligence systems — third-party generative-AI tools used by the workforce and AI/LLM features built into the product — without exposing PHI, Confidential data, or intellectual property, and without delegating consequential decisions to unaccountable automation. It turns the Acceptable Use Policy's prohibition on unapproved AI tools into a managed, auditable capability: approved tools, contractual guardrails, data rules, and secure engineering requirements.
+
+## 2. Scope
+Applies to all workforce members and contractors, and to: external AI services and assistants ([ChatGPT], [Claude], [Copilot], code assistants, transcription/meeting tools), AI capabilities embedded in approved SaaS, models and AI services used inside the product ([AWS Bedrock], [Snowflake Cortex], hosted or self-hosted models), and the data pipelines that feed them. It covers use with any [COMPANY] data classification, with PHI receiving the strictest treatment.
+
+## 3. Policy
+1. Workforce members **shall** use only AI tools listed in the **Approved AI Tools register** (§5); any other AI tool **shall not** receive [COMPANY] data of any classification above Public.
+2. **PHI shall not be provided to any AI service without** (a) an executed BAA covering the AI processing, (b) contractual terms prohibiting training/retention on [COMPANY] data, and (c) approval recorded in §5 — all three, before first use (`../vendor/third-party-risk-management-policy.md.template`).
+3. Data supplied to AI systems **shall** follow the data rules in §6, applying **minimum necessary** (`../healthcare/minimum-necessary-standard.md.template`) and preferring de-identified data (`../healthcare/de-identification-and-limited-data-set.md.template`) wherever the purpose permits.
+4. AI output that informs **consequential decisions** (clinical, coverage, employment, security response) **shall** be reviewed by an accountable human before action; AI **shall not** be the sole basis for such decisions.
+5. AI-generated code **shall** pass the same review, testing, and scanning gates as human-written code (`secure-sdlc-policy.md.template`); AI-generated content **shall** be reviewed for accuracy, licensing, and data leakage before external use.
+6. AI features in the product **shall** go through threat modeling that explicitly covers AI-specific risks — prompt injection, data exfiltration via model output, training-data poisoning, excessive agency of tool-using agents — per `secure-sdlc-policy.md.template`.
+7. Secrets, credentials, and keys **shall not** be provided to AI tools; AI systems **shall** authenticate to [COMPANY] resources with least-privilege, dedicated identities (`../access/access-control-policy.md.template`).
+8. Prompts and outputs of product AI features that can touch PHI **shall** be logged per `logging-and-monitoring-policy.md.template`, with logs protected to the same standard as the data class involved.
+9. Every AI system in use **shall** be recorded in the Approved AI Tools register with its data ceiling, contractual basis, and owner; the register is reviewed at least [quarterly].
+
+## 4. Roles & Responsibilities
+| Role | Responsibility |
+|---|---|
+| [Security Officer / CISO] | Owns this policy and the Approved AI Tools register; evaluates and approves tools; monitors compliance. |
+| [Privacy Officer] | Confirms BAA/no-training terms and minimum-necessary compliance for any PHI-adjacent AI use. |
+| [Engineering Lead] | Ensures AI features meet SSDLC/threat-modeling requirements; owns product AI system entries. |
+| Managers | Route AI tool requests through the approval process; prevent shadow-AI adoption in their teams. |
+| All Workforce / Contractors | Use only approved tools within their data ceiling; report accidental exposure immediately. |
+
+See `../governance/roles-and-responsibilities.md.template` for full role definitions.
+
+## 5. Approved AI Tools Register
+<!-- TEMPLATE: The register of what is allowed and at what data ceiling. The rows are EXAMPLES — replace with your real approvals. "Data Ceiling" is the highest classification permitted (see §6). -->
+
+| Tool / System | Use | Data Ceiling | BAA | No-Training Terms | Approved By | Review Date |
+|---|---|---|---|---|---|---|
+| [Code assistant — e.g. Copilot Business] | Code authoring assistance | Confidential (no PHI, no secrets) | N/A | [Yes — org setting (date)] | [Security Officer] | [YYYY-MM-DD] |
+| [Enterprise LLM — e.g. Claude / ChatGPT Enterprise] | Drafting, analysis | Confidential (no PHI) | [No] | [Yes — enterprise terms (date)] | [Security Officer] | [YYYY-MM-DD] |
+| [Product AI service — e.g. AWS Bedrock] | In-product AI features | PHI (per §3.2 conditions) | [Executed (date)] | [Yes — service terms (date)] | [Security Officer + Privacy Officer] | [YYYY-MM-DD] |
+| [Tool] | [Use] | [Ceiling] | [Yes/No/N-A] | [Yes/No (date)] | [Approver] | [YYYY-MM-DD] |
+
+## 6. Data Rules by Classification
+<!-- TEMPLATE: Align tiers with data-classification-and-handling.md.template. -->
+
+| Classification | Rule for AI use |
+|---|---|
+| Public | Any approved tool. |
+| Internal | Approved tools with enterprise/no-training terms. |
+| Confidential (incl. source code) | Approved tools with no-training terms and access controls; no secrets or credentials ever. |
+| PHI / Restricted | Only tools meeting **all** §3.2 conditions (BAA + no-training + recorded approval); minimum necessary applied; de-identify where the purpose permits. |
+
+## 7. Incident Handling
+Suspected or actual exposure of PHI or Confidential data to an unapproved AI tool **shall** be reported immediately per `../resilience/incident-response-plan.md.template` and assessed for breach-notification obligations per `../healthcare/hipaa-breach-notification-procedure.md.template`. Prompt-injection or model-abuse findings in product features are handled as security incidents.
+
+## 8. Exceptions
+Exceptions (e.g., a pilot of a new AI tool) require documented risk acceptance per `../governance/exceptions-and-waivers.md.template`, approved by the [Security Officer], time-bound, and recorded in the exceptions log. The §3.2 PHI conditions are **not** waivable (POL-GOV-11 §6).
+
+## 9. Compliance, Monitoring & Enforcement
+Compliance is monitored through the Approved AI Tools register review, [DLP/egress monitoring or browser controls] where deployed, SSDLC gate evidence for product AI features, and workforce acknowledgment via the AUP. Violations are handled per `../people/hr-security-policy.md.template`; PHI mishandling follows `../healthcare/sanctions-policy.md.template`.
+
+## 10. Framework Mapping
+| Framework | Reference |
+|---|---|
+| HITRUST CSF | 07.c Acceptable Use of Assets; 06.d Data Protection & Privacy; 10.b/10.k SDLC controls; HITRUST AI Security Assessment criteria where scoped |
+| HIPAA | 164.502(b) Minimum Necessary; 164.514 De-identification; 164.308(b)(1) BA Contracts; 164.312(a)(1) Access Control |
+| SOC 2 (TSC) | CC6.7 Data Transmission; CC9.2 Vendor Risk; CC3.2 Risk Identification |
+| ISO 27001:2022 | A.5.10 Acceptable use; A.5.19–A.5.22 Suppliers; A.8.28 Secure coding; see also ISO/IEC 42001 (AI management) |
+
+## 11. Related Documents
+- `../asset-data/acceptable-use-policy.md.template`
+- `../asset-data/data-classification-and-handling.md.template`
+- `secure-sdlc-policy.md.template`
+- `logging-and-monitoring-policy.md.template`
+- `../vendor/third-party-risk-management-policy.md.template`
+- `../vendor/vendor-register.md.template`
+- `../healthcare/minimum-necessary-standard.md.template`
+- `../healthcare/de-identification-and-limited-data-set.md.template`
+- `../healthcare/hipaa-breach-notification-procedure.md.template`
+- `../resilience/incident-response-plan.md.template`
+- `../governance/exceptions-and-waivers.md.template`
+
+---
+
+## Version History
+| Version | Date | Author | Approver | Change |
+|---|---|---|---|---|
+| 0.1 | [YYYY-MM-DD] | [Name] | — | Initial draft |

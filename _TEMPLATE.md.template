@@ -1,7 +1,7 @@
 <!--
 TEMPLATE: This is the canonical skeleton every policy/procedure in this repo follows.
 Copy it, rename to <name>.md (strip the .template suffix), and fill the [PLACEHOLDERS].
-Delete <!-- TEMPLATE: ... --> comments once the section is written.
+Delete the TEMPLATE guidance comments once the section is written.
 Keep the metadata table, the section ordering, and the Version History — assessors
 look for these. Not every section applies to every document; delete N/A sections
 rather than leaving them empty, but never delete Purpose, Scope, Policy, Roles,

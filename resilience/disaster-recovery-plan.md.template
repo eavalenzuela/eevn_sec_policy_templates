@@ -4,8 +4,8 @@ business-facing Business Continuity Plan (business-continuity-plan.md.template).
 covers AWS multi-AZ/region architecture, backup restoration, and recovery procedures.
 RTO/RPO targets here MUST be consistent with the BIA in the BCP. Backup creation,
 retention, and encryption are governed by the backup policy — this plan covers
-RESTORATION. Record real DR test results in the DR test log. Keep environment-specifics
-as [PLACEHOLDERS]. Delete <!-- TEMPLATE: ... --> comments once each section is written.
+RESTORATION. Record real DR test results in the BC/DR test & exercise log (bcdr-test-exercise-log.md.template). Keep environment-specifics
+as [PLACEHOLDERS]. Delete the TEMPLATE guidance comments once each section is written.
 -->
 
 # Disaster Recovery Plan
@@ -35,10 +35,10 @@ This plan covers the technical recovery of all production systems that create, r
 ## 3. Policy
 1. Production systems **shall** be deployed across multiple [AWS] Availability Zones to tolerate the loss of a single AZ without data loss.
 2. A documented cross-region recovery capability **shall** exist for [AWS region] → [DR region] to tolerate the loss of an entire region.
-3. Backups **shall** be created, encrypted, and retained per `[backup-policy]`; this plan governs their **restoration** and the validation that restores succeed.
+3. Backups **shall** be created, encrypted, and retained per `../operations/backup-policy.md.template`; this plan governs their **restoration** and the validation that restores succeed.
 4. Each in-scope system **shall** have defined RTO and RPO targets (§5) consistent with the BIA in `business-continuity-plan.md.template`.
 5. Recovery procedures (runbooks) **shall** be documented, version-controlled, and executable by more than one engineer.
-6. DR capability **shall** be tested at least annually (§8), with results recorded in the DR test log; restores **shall** be validated for integrity and, where PHI is involved, confidentiality.
+6. DR capability **shall** be tested at least annually (§8), with results recorded in the BC/DR test & exercise log (`bcdr-test-exercise-log.md.template`); restores **shall** be validated for integrity and, where PHI is involved, confidentiality.
 7. Recovery actions **shall** preserve encryption and access controls on PHI; recovered systems **shall not** be brought online with weakened security.
 
 ## 4. Recovery Architecture
@@ -70,7 +70,7 @@ Detailed, version-controlled runbooks are maintained in [runbook repository / lo
 3. If the disaster stems from a security incident, response is coordinated with `incident-response-plan.md.template`; if PHI may be affected, `../healthcare/hipaa-breach-notification-procedure.md.template` is invoked in parallel.
 
 ## 8. DR Testing & Test Records
-DR capability is **tested at least annually** (e.g., simulated region failover, restore-from-backup validation, IaC rebuild). Each test records: date, scope, participants, RTO/RPO achieved vs. target, issues found, and corrective actions. Test records are retained in the [DR test log] and reviewed at management review. A backup that has never been test-restored is not considered a valid recovery point.
+DR capability is **tested at least annually** (e.g., simulated region failover, restore-from-backup validation, IaC rebuild). Each test records: date, scope, participants, RTO/RPO achieved vs. target, issues found, and corrective actions. Test records are retained in the BC/DR test & exercise log (`bcdr-test-exercise-log.md.template`) and reviewed at management review. A backup that has never been test-restored is not considered a valid recovery point.
 
 | Test Date | Scope | RTO Achieved | RPO Achieved | Result | Corrective Actions |
 |---|---|---|---|---|---|
@@ -105,7 +105,8 @@ Compliance is verified through DR test completion, RTO/RPO achievement, backup-r
 ## 13. Related Documents
 - `business-continuity-plan.md.template`
 - `incident-response-plan.md.template`
-- `[backup-policy]` (backup creation, retention, encryption)
+- `bcdr-test-exercise-log.md.template`
+- `../operations/backup-policy.md.template` (backup creation, retention, encryption)
 - `../healthcare/hipaa-breach-notification-procedure.md.template`
 - `../governance/roles-and-responsibilities.md.template`
 - `../governance/exceptions-and-waivers.md.template`

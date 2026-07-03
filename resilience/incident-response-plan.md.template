@@ -4,7 +4,7 @@ with your tooling, channels, and on-call rotation. KEEP the cross-reference to t
 Breach Notification Procedure — any incident touching PHI MUST run that procedure in
 parallel, and its notification clock starts on discovery, not confirmation. The severity
 matrix and SLAs are starting points; tune them to your business but keep them testable.
-Delete <!-- TEMPLATE: ... --> comments once each section is written.
+Delete the TEMPLATE guidance comments once each section is written.
 -->
 
 # Incident Response Plan
@@ -65,7 +65,7 @@ Limit spread and damage using short-term (e.g., isolate the [EC2/ECS] workload, 
 Remove the root cause: patch the vulnerability, remove malware, rotate all exposed secrets and keys, rebuild compromised hosts from known-good images, and close the entry path.
 
 ### 5.6 Recover
-Restore affected systems and data to normal operation per `disaster-recovery-plan.md.template` and `[backup-policy]`, validate integrity, and monitor closely for recurrence before declaring the incident resolved.
+Restore affected systems and data to normal operation per `disaster-recovery-plan.md.template` and `../operations/backup-policy.md.template`, validate integrity, and monitor closely for recurrence before declaring the incident resolved.
 
 ### 5.7 Post-Incident Activity
 Within [TARGET — e.g. 10 business days] of resolution, conduct a blameless post-incident review covering timeline, root cause, what worked, what failed, and corrective actions. Update runbooks, controls, and this plan accordingly.
